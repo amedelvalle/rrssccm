@@ -8,7 +8,7 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-  
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
@@ -21,15 +21,16 @@
       --text-main: #1f2937;
       --text-muted: #6b7280;
       --border-color: #e5e7eb;
+
       --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
       --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
       --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
       --r: 12px;
     }
 
-    body{ 
-      background: var(--bg-body); 
-      font-family: 'Inter', sans-serif; 
+    body{
+      background: var(--bg-body);
+      font-family: 'Inter', sans-serif;
       color: var(--text-main);
       -webkit-font-smoothing: antialiased;
     }
@@ -46,12 +47,12 @@
     .brand-icon { width: 32px; height: 32px; background: #eff6ff; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--primary); }
 
     .app-shell{ max-width: 1400px; }
-    .cardx { 
-      background: var(--bg-card); 
-      border: 1px solid var(--border-color); 
-      border-radius: var(--r); 
-      box-shadow: var(--shadow-sm); 
-      overflow: hidden; 
+    .cardx {
+      background: var(--bg-card);
+      border: 1px solid var(--border-color);
+      border-radius: var(--r);
+      box-shadow: var(--shadow-sm);
+      overflow: hidden;
       transition: box-shadow 0.2s;
     }
     .cardx:hover { box-shadow: var(--shadow-md); }
@@ -65,7 +66,7 @@
     .btn-primary:hover { background: var(--primary-hover); border-color: var(--primary-hover); transform: translateY(-1px); }
     .btn-light { background: #fff; border-color: var(--border-color); color: #374151; }
     .btn-light:hover { background: #f9fafb; border-color: #d1d5db; color: #111827; }
-    
+
     .nav-tabs { border-bottom: 1px solid var(--border-color); gap: 1rem; }
     .nav-tabs .nav-link { border: none; color: var(--text-muted); font-weight: 500; padding: 0.75rem 0.25rem; background: transparent; transition: color 0.2s; }
     .nav-tabs .nav-link:hover { color: var(--primary); }
@@ -80,10 +81,11 @@
       letter-spacing: 0.05em;
       border-bottom: 1px solid var(--border-color);
       padding: 0.75rem 1rem;
+      white-space: nowrap;
     }
     .table tbody td { padding: 0.875rem 1rem; border-bottom: 1px solid var(--border-color); vertical-align: middle; font-size: 0.875rem; }
     .table-hover tbody tr:hover { background: #f9fafb; }
-    
+
     .badge-status { padding: 4px 10px; border-radius: 99px; font-size: 0.75rem; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; }
     .badge-status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
     .st-draft { background: #f3f4f6; color: #4b5563; }
@@ -97,12 +99,13 @@
 
     .loading { position: fixed; inset: 0; background: rgba(255,255,255,0.8); backdrop-filter: blur(2px); display: none; align-items: center; justify-content: center; z-index: 3000; }
     .loading .box { background: white; padding: 20px 40px; border-radius: 12px; box-shadow: var(--shadow-lg); border: 1px solid var(--border-color); display: flex; flex-direction: column; align-items: center; gap: 10px; }
-    
+
     .alert-stack { position: fixed; top: 80px; right: 20px; z-index: 2500; display: flex; flex-direction: column; gap: 10px; width: 380px; }
     .alert-card { background: white; border: 1px solid var(--border-color); border-left: 4px solid var(--primary); border-radius: 8px; box-shadow: var(--shadow-md); padding: 12px 16px; display: flex; gap: 12px; align-items: start; animation: slideIn 0.3s ease; }
     .alert-card.success { border-left-color: #059669; }
     .alert-card.danger { border-left-color: #dc2626; }
-    
+    .alert-card.warning { border-left-color: #d97706; }
+
     @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
     .hidden { display: none !important; }
     .truncate-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
@@ -131,11 +134,12 @@
 
   <div class="container-fluid app-shell my-5 px-4">
 
+    <!-- LOGIN -->
     <div id="loginView" class="cardx p-5 mx-auto" style="max-width: 480px;">
       <div class="text-center mb-4">
         <div class="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-circle mb-3" style="width: 48px; height: 48px;"><i class="bi bi-shield-lock-fill fs-5"></i></div>
         <h4 class="fw-bold">Iniciar Sesión</h4>
-        <p class="text-muted small">Accede al panel de control de Marketing</p>
+        <p class="text-muted small">Accede al panel de Marketing</p>
       </div>
 
       <div class="mb-3">
@@ -152,20 +156,19 @@
         <button class="btn btn-link px-0 small text-decoration-none" id="btnForgotPass" type="button">¿Olvidaste tu clave?</button>
       </div>
 
-      <button class="btn btn-primary w-100 py-2" id="btnSignIn">Ingresar al Sistema</button>
+      <button class="btn btn-primary w-100 py-2" id="btnSignIn">Ingresar</button>
       <div class="text-center mt-3 small text-muted">Powered by Supabase</div>
     </div>
 
+    <!-- APP -->
     <div id="appView" class="hidden">
       <div class="d-flex flex-wrap gap-3 align-items-center justify-content-between mb-4">
         <div>
           <h3 class="fw-bold mb-1">Panel de Control</h3>
-          <div class="mini">Gestión integral de campañas y resultados.</div>
+          <div class="mini">Campañas, piezas, métricas y leads.</div>
         </div>
 
         <div class="d-flex flex-wrap gap-2">
-          <button class="btn btn-light bg-white" id="btnSeed"><i class="bi bi-database-add me-2 text-muted"></i>Seed Inicial</button>
-          <div class="vr mx-2 text-muted"></div>
           <button class="btn btn-primary" id="btnNewCampaign"><i class="bi bi-plus-lg me-1"></i>Campaña</button>
           <button class="btn btn-primary" id="btnNewPiece"><i class="bi bi-plus-lg me-1"></i>Pieza</button>
           <button class="btn btn-primary" id="btnNewMetric"><i class="bi bi-plus-lg me-1"></i>Métrica</button>
@@ -181,7 +184,7 @@
         </li>
         <li class="nav-item" role="presentation">
           <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabPieces" type="button" role="tab">
-            <i class="bi bi-grid me-2"></i>Contenido (Piezas)
+            <i class="bi bi-grid me-2"></i>Piezas
           </button>
         </li>
         <li class="nav-item" role="presentation">
@@ -191,29 +194,29 @@
         </li>
         <li class="nav-item" role="presentation">
           <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabLeads" type="button" role="tab">
-            <i class="bi bi-people me-2"></i>Leads & CRM
+            <i class="bi bi-people me-2"></i>Leads
           </button>
         </li>
       </ul>
 
       <div class="tab-content">
 
+        <!-- CAMPAIGNS -->
         <div class="tab-pane fade show active" id="tabCampaigns" role="tabpanel">
           <div class="cardx">
             <div class="p-3 border-bottom d-flex align-items-center justify-content-between bg-light bg-opacity-50">
-              <span class="fw-bold small text-uppercase text-muted tracking-wide">Listado de Campañas</span>
+              <span class="fw-bold small text-uppercase text-muted">Listado de Campañas</span>
               <button class="btn btn-sm btn-white border" id="btnReloadCampaigns"><i class="bi bi-arrow-clockwise"></i></button>
             </div>
             <div class="table-responsive">
               <table class="table table-hover mb-0 align-middle" id="tblCampaigns">
                 <thead>
                   <tr>
-                    <th>Código</th>
-                    <th>Bimestre</th>
-                    <th>Año</th>
                     <th>Nombre</th>
-                    <th>Objetivo</th>
-                    <th>Vigencia</th>
+                    <th>Bimestre</th>
+                    <th>Inicio</th>
+                    <th>Fin</th>
+                    <th>Estado</th>
                     <th class="text-end">Acciones</th>
                   </tr>
                 </thead>
@@ -223,41 +226,32 @@
           </div>
         </div>
 
+        <!-- PIECES -->
         <div class="tab-pane fade" id="tabPieces" role="tabpanel">
           <div class="cardx">
             <div class="p-4 border-bottom">
               <div class="row g-3">
-                <div class="col-6 col-md-2">
-                  <label class="form-label mini fw-bold">Bimestre</label>
-                  <select class="form-select" id="fBim">
-                    <option value="">Todos</option>
-                    <option value="1">B1</option><option value="2">B2</option><option value="3">B3</option>
-                    <option value="4">B4</option><option value="5">B5</option><option value="6">B6</option>
-                  </select>
-                </div>
-                <div class="col-6 col-md-3">
+                <div class="col-12 col-md-4">
                   <label class="form-label mini fw-bold">Campaña</label>
                   <select class="form-select" id="fCamp"></select>
                 </div>
-                <div class="col-6 col-md-2">
-                  <label class="form-label mini fw-bold">Canal</label>
-                  <select class="form-select" id="fChannel">
-                    <option value="">Todos</option>
-                    <option>Instagram</option><option>Facebook</option><option>YouTube</option><option>Spotify</option><option>Blog</option><option>WhatsApp</option>
-                  </select>
-                </div>
-                <div class="col-6 col-md-2">
-                  <label class="form-label mini fw-bold">Estado</label>
-                  <select class="form-select" id="fStatus">
-                    <option value="">Todos</option>
-                    <option>Borrador</option><option>Programado</option><option>Publicado</option><option>Pausado</option>
-                  </select>
-                </div>
+
                 <div class="col-12 col-md-3">
+                  <label class="form-label mini fw-bold">Estado</label>
+                  <input class="form-control" id="fPieceStatus" placeholder="idea, borrador, publicado...">
+                </div>
+
+                <div class="col-12 col-md-5">
                   <label class="form-label mini fw-bold">Buscar</label>
                   <div class="input-group">
                     <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-muted"></i></span>
-                    <input class="form-control border-start-0 ps-0" id="fQ" placeholder="Buscar...">
+                    <input class="form-control border-start-0 ps-0" id="fQ" placeholder="Nombre, hook, ad_id...">
+                  </div>
+                </div>
+
+                <div class="col-12">
+                  <div class="small text-muted">
+                    Nota: <b>format</b> y <b>bimester</b> son enums en Supabase; si tu valor no coincide con el enum, Supabase rechazará el insert/update.
                   </div>
                 </div>
               </div>
@@ -267,32 +261,35 @@
               <table class="table table-hover mb-0 align-middle" id="tblPieces">
                 <thead>
                   <tr>
-                    <th>Código</th>
+                    <th>Nombre</th>
                     <th>Campaña</th>
                     <th>Canal</th>
                     <th>Formato</th>
-                    <th>Embudo</th>
                     <th>Estado</th>
                     <th>Hook</th>
-                    <th>Fecha</th>
+                    <th>CTA</th>
                     <th class="text-end">Acciones</th>
                   </tr>
                 </thead>
                 <tbody></tbody>
               </table>
             </div>
+
             <div class="p-2 border-top bg-light text-end">
-                <button class="btn btn-sm btn-link text-decoration-none text-muted" id="btnReloadPieces"><i class="bi bi-arrow-clockwise me-1"></i>Actualizar tabla</button>
+              <button class="btn btn-sm btn-link text-decoration-none text-muted" id="btnReloadPieces">
+                <i class="bi bi-arrow-clockwise me-1"></i>Actualizar tabla
+              </button>
             </div>
           </div>
         </div>
 
+        <!-- METRICS -->
         <div class="tab-pane fade" id="tabMetrics" role="tabpanel">
           <div class="cardx">
             <div class="p-4 border-bottom">
               <div class="row g-3">
-                <div class="col-12 col-md-5">
-                  <label class="form-label mini fw-bold">Pieza de Contenido</label>
+                <div class="col-12 col-md-6">
+                  <label class="form-label mini fw-bold">Pieza</label>
                   <select class="form-select" id="mPiece"></select>
                 </div>
                 <div class="col-6 col-md-3">
@@ -303,9 +300,9 @@
                   <label class="form-label mini fw-bold">Hasta</label>
                   <input type="date" class="form-control" id="mTo">
                 </div>
-                 <div class="col-12 col-md-1 d-flex align-items-end">
-                    <button class="btn btn-light w-100" id="btnReloadMetrics"><i class="bi bi-arrow-clockwise"></i></button>
-                 </div>
+              </div>
+              <div class="d-flex justify-content-end mt-3">
+                <button class="btn btn-light" id="btnReloadMetrics"><i class="bi bi-arrow-clockwise me-1"></i>Filtrar</button>
               </div>
             </div>
 
@@ -315,12 +312,9 @@
                   <tr>
                     <th class="text-start">Pieza</th>
                     <th>Fecha</th>
-                    <th>Impres.</th>
-                    <th>Alcance</th>
-                    <th>Plays</th>
-                    <th>Leads</th>
-                    <th>Citas</th>
-                    <th>Showups</th>
+                    <th>Volumen</th>
+                    <th>Interacciones</th>
+                    <th>Gasto</th>
                     <th class="text-end">Acciones</th>
                   </tr>
                 </thead>
@@ -330,6 +324,7 @@
           </div>
         </div>
 
+        <!-- LEADS -->
         <div class="tab-pane fade" id="tabLeads" role="tabpanel">
           <div class="cardx">
             <div class="p-4 border-bottom">
@@ -344,8 +339,11 @@
                 </div>
                 <div class="col-12 col-md-4">
                   <label class="form-label mini fw-bold">Buscar</label>
-                  <input class="form-control" id="lQ" placeholder="Nombre, teléfono...">
+                  <input class="form-control" id="lQ" placeholder="Nombre, teléfono, email...">
                 </div>
+              </div>
+              <div class="small text-muted mt-3">
+                Nota: <b>triage_status</b> y <b>clinical_outcome</b> son enums.
               </div>
             </div>
 
@@ -353,21 +351,22 @@
               <table class="table table-hover mb-0 align-middle" id="tblLeads">
                 <thead>
                   <tr>
-                    <th>Código</th>
                     <th>Fecha</th>
-                    <th>Origen</th>
-                    <th>Contexto</th>
                     <th>Nombre</th>
                     <th>Teléfono</th>
-                    <th>Estado</th>
+                    <th>Email</th>
+                    <th>Origen</th>
+                    <th>Triage</th>
+                    <th>Cita</th>
                     <th class="text-end">Acciones</th>
                   </tr>
                 </thead>
                 <tbody></tbody>
               </table>
             </div>
-             <div class="p-2 border-top bg-light text-end">
-                <button class="btn btn-sm btn-link text-decoration-none text-muted" id="btnReloadLeads"><i class="bi bi-arrow-clockwise me-1"></i>Actualizar tabla</button>
+
+            <div class="p-2 border-top bg-light text-end">
+              <button class="btn btn-sm btn-link text-decoration-none text-muted" id="btnReloadLeads"><i class="bi bi-arrow-clockwise me-1"></i>Actualizar tabla</button>
             </div>
           </div>
         </div>
@@ -376,6 +375,7 @@
     </div>
   </div>
 
+  <!-- Forgot Password -->
   <div class="modal fade" id="forgotPassModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content cardx">
@@ -384,7 +384,7 @@
           <button class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
-          <p class="text-muted small">Ingresa tu correo y te enviaremos un enlace mágico.</p>
+          <p class="text-muted small">Ingresa tu correo y te enviaremos un enlace.</p>
           <input type="email" class="form-control mb-3" id="fp_email" placeholder="tu@correo.com">
           <div class="d-flex justify-content-end gap-2">
             <button class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
@@ -395,6 +395,7 @@
     </div>
   </div>
 
+  <!-- Set New Password -->
   <div class="modal fade" id="setNewPassModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content cardx">
@@ -416,6 +417,7 @@
     </div>
   </div>
 
+  <!-- Campaign Modal -->
   <div class="modal fade" id="campaignModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content cardx">
@@ -425,108 +427,157 @@
         </div>
         <div class="modal-body">
           <input type="hidden" id="c_id">
+
           <div class="row g-3">
+            <div class="col-12">
+              <label class="form-label small fw-bold">Nombre *</label>
+              <input class="form-control" id="c_name" placeholder="Ej: Diabetes Control" required>
+            </div>
+
             <div class="col-6">
-              <label class="form-label small fw-bold">Bimestre</label>
+              <label class="form-label small fw-bold">Bimestre * (campaign_bimester)</label>
               <select class="form-select" id="c_bim">
-                <option value="1">B1</option><option value="2">B2</option><option value="3">B3</option>
-                <option value="4">B4</option><option value="5">B5</option><option value="6">B6</option>
+                <option value="B1">B1</option><option value="B2">B2</option><option value="B3">B3</option>
+                <option value="B4">B4</option><option value="B5">B5</option><option value="B6">B6</option>
               </select>
             </div>
+
             <div class="col-6">
-              <label class="form-label small fw-bold">Año</label>
-              <input class="form-control" id="c_year" value="2026">
+              <label class="form-label small fw-bold">Estado</label>
+              <input class="form-control" id="c_status" placeholder="planificada, activa...">
             </div>
-            <div class="col-12">
-              <label class="form-label small fw-bold">Nombre de Campaña</label>
-              <input class="form-control" id="c_name" placeholder="Ej: Diabetes Control">
+
+            <div class="col-6">
+              <label class="form-label small fw-bold">Inicio *</label>
+              <input type="date" class="form-control" id="c_start" required>
             </div>
-            <div class="col-12">
-               <label class="form-label small fw-bold">Código (Opcional)</label>
-               <input class="form-control font-monospace text-muted" id="c_code" placeholder="Generado automáticamente">
+            <div class="col-6">
+              <label class="form-label small fw-bold">Fin *</label>
+              <input type="date" class="form-control" id="c_end" required>
             </div>
+
             <div class="col-12">
               <label class="form-label small fw-bold">Objetivo</label>
-              <input class="form-control" id="c_objective" placeholder="Ej: Generar 50 leads cualificados">
+              <input class="form-control" id="c_objective" placeholder="Ej: Generar leads cualificados">
             </div>
-            <div class="col-6">
-              <label class="form-label small fw-bold">Inicio</label>
-              <input type="date" class="form-control" id="c_start">
+
+            <div class="col-12">
+              <label class="form-label small fw-bold">Evento ancla</label>
+              <input class="form-control" id="c_anchor_event" placeholder="(Opcional)">
             </div>
-            <div class="col-6">
-              <label class="form-label small fw-bold">Fin</label>
-              <input type="date" class="form-control" id="c_end">
+
+            <div class="col-12">
+              <label class="form-label small fw-bold">Lead Magnet</label>
+              <input class="form-control" id="c_lead_magnet" placeholder="(Opcional)">
+            </div>
+
+            <div class="col-12">
+              <label class="form-label small fw-bold">Presupuesto planificado</label>
+              <input class="form-control" id="c_budget" type="number" step="0.01" min="0">
             </div>
           </div>
+
+          <div class="small text-muted mt-3">
+            Campos con * son requeridos (en tu tabla <b>start_date/end_date</b> son NOT NULL).
+          </div>
+
         </div>
         <div class="modal-footer border-0">
           <button class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
-          <button class="btn btn-primary" id="btnSaveCampaign">Guardar Cambios</button>
+          <button class="btn btn-primary" id="btnSaveCampaign">Guardar</button>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Piece Modal -->
   <div class="modal fade" id="pieceModal" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content cardx">
         <div class="modal-header">
-          <h5 class="modal-title fw-bold" id="pieceModalTitle">Pieza de Contenido</h5>
+          <h5 class="modal-title fw-bold" id="pieceModalTitle">Pieza</h5>
           <button class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
           <input type="hidden" id="p_id">
+
           <div class="row g-3">
             <div class="col-md-6">
-              <label class="form-label small fw-bold">Campaña Asociada</label>
+              <label class="form-label small fw-bold">Campaña</label>
               <select class="form-select" id="p_campaign"></select>
             </div>
+
             <div class="col-md-6">
-              <label class="form-label small fw-bold">Canal</label>
-              <select class="form-select" id="p_channel">
-                <option>Instagram</option><option>Facebook</option><option>YouTube</option><option>Spotify</option><option>Blog</option><option>WhatsApp</option>
-              </select>
+              <label class="form-label small fw-bold">Canal (channel_id)</label>
+              <select class="form-select" id="p_channel_id"></select>
+              <div class="mini mt-1">Si no carga canales, quedará en “Sin canal” (NULL).</div>
             </div>
-            <div class="col-6 col-md-3">
-              <label class="form-label small fw-bold">Formato</label>
-              <input class="form-control" id="p_format" placeholder="Reel, Story...">
+
+            <div class="col-12">
+              <label class="form-label small fw-bold">Nombre *</label>
+              <input class="form-control" id="p_name" placeholder="Ej: Reel educación paciente" required>
             </div>
-            <div class="col-6 col-md-3">
-              <label class="form-label small fw-bold">Etapa Funnel</label>
-              <input class="form-control" id="p_funnel" placeholder="Awareness...">
+
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">Formato * (piece_format)</label>
+              <input class="form-control" id="p_format" list="dl_piece_format" placeholder="Debe coincidir con enum (ej: reel)">
+              <datalist id="dl_piece_format">
+                <option value="reel"></option>
+                <option value="post"></option>
+                <option value="story"></option>
+                <option value="video"></option>
+                <option value="blog"></option>
+                <option value="email"></option>
+                <option value="whatsapp"></option>
+                <option value="banner"></option>
+              </datalist>
             </div>
-            <div class="col-6 col-md-3">
+
+            <div class="col-md-6">
               <label class="form-label small fw-bold">Estado</label>
-              <select class="form-select" id="p_status">
-                <option>Borrador</option><option>Programado</option><option>Publicado</option><option>Pausado</option>
-              </select>
+              <input class="form-control" id="p_status" placeholder="idea, borrador, publicado...">
             </div>
-            <div class="col-6 col-md-3">
-               <label class="form-label small fw-bold">Código</label>
-               <input class="form-control font-monospace" id="p_code" placeholder="Auto">
+
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">Pilar</label>
+              <input class="form-control" id="p_pillar" placeholder="(Opcional)">
             </div>
+
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">Estilo visual</label>
+              <input class="form-control" id="p_visual_style" placeholder="(Opcional)">
+            </div>
+
             <div class="col-12">
-              <label class="form-label small fw-bold">Hook (Gancho)</label>
-              <input class="form-control fw-semibold" id="p_hook" placeholder="Título atractivo...">
+              <label class="form-label small fw-bold">Hook / Copy (hook_copy)</label>
+              <textarea class="form-control" id="p_hook_copy" rows="2"></textarea>
             </div>
-            <div class="col-12">
-              <label class="form-label small fw-bold">Copy / Caption</label>
-              <textarea class="form-control" id="p_copy" rows="4"></textarea>
+
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">CTA destino</label>
+              <input class="form-control" id="p_cta" placeholder="(URL / WhatsApp / Landing)">
             </div>
-            <div class="col-12 col-md-6">
-              <label class="form-label small fw-bold">Programación</label>
-              <input type="datetime-local" class="form-control" id="p_scheduled">
+
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">Ad ID</label>
+              <input class="form-control" id="p_ad_id" placeholder="(Opcional)">
             </div>
           </div>
+
+          <div class="small text-muted mt-3">
+            Nota: <b>format</b> es NOT NULL y es enum. Si no coincide, Supabase rechazará.
+          </div>
+
         </div>
         <div class="modal-footer border-0">
           <button class="btn btn-light" data-bs-dismiss="modal">Cerrar</button>
-          <button class="btn btn-primary" id="btnSavePiece">Guardar Pieza</button>
+          <button class="btn btn-primary" id="btnSavePiece">Guardar</button>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Metric Modal -->
   <div class="modal fade" id="metricModal" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content cardx">
@@ -542,46 +593,40 @@
               <select class="form-select" id="mx_piece"></select>
             </div>
             <div class="col-md-4">
-              <label class="form-label small fw-bold">Fecha de Corte</label>
+              <label class="form-label small fw-bold">Fecha (date)</label>
               <input type="date" class="form-control" id="mx_date">
             </div>
-            
+
             <div class="col-12"><hr class="text-muted"></div>
 
-            <div class="col-6 col-md-2 text-center">
-                <label class="form-label small text-muted">Impresiones</label>
-                <input class="form-control text-center fw-bold" id="mx_impressions" type="number" min="0">
+            <div class="col-12 col-md-4 text-center">
+              <label class="form-label small text-muted">Volumen</label>
+              <input class="form-control text-center fw-bold" id="mx_volume" type="number" min="0">
             </div>
-            <div class="col-6 col-md-2 text-center">
-                <label class="form-label small text-muted">Alcance</label>
-                <input class="form-control text-center fw-bold" id="mx_reach" type="number" min="0">
+            <div class="col-12 col-md-4 text-center">
+              <label class="form-label small text-muted">Interacciones</label>
+              <input class="form-control text-center fw-bold" id="mx_interactions" type="number" min="0">
             </div>
-             <div class="col-6 col-md-2 text-center">
-                <label class="form-label small text-muted">Plays</label>
-                <input class="form-control text-center fw-bold" id="mx_plays" type="number" min="0">
-            </div>
-             <div class="col-6 col-md-2 text-center">
-                <label class="form-label small text-primary fw-bold">Leads</label>
-                <input class="form-control text-center fw-bold border-primary" id="mx_leads" type="number" min="0">
-            </div>
-             <div class="col-6 col-md-2 text-center">
-                <label class="form-label small text-muted">Citas</label>
-                <input class="form-control text-center fw-bold" id="mx_appointments" type="number" min="0">
-            </div>
-             <div class="col-6 col-md-2 text-center">
-                <label class="form-label small text-success fw-bold">Showups</label>
-                <input class="form-control text-center fw-bold border-success" id="mx_showups" type="number" min="0">
+            <div class="col-12 col-md-4 text-center">
+              <label class="form-label small text-muted">Gasto</label>
+              <input class="form-control text-center fw-bold" id="mx_spend" type="number" step="0.01" min="0">
             </div>
           </div>
+
+          <div class="small text-muted mt-3">
+            Tu tabla <b>piece_metrics</b> es por pieza + fecha (UNIQUE <span class="mono">piece_id,date</span>).
+          </div>
+
         </div>
         <div class="modal-footer border-0">
           <button class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
-          <button class="btn btn-primary" id="btnSaveMetric">Guardar Métrica</button>
+          <button class="btn btn-primary" id="btnSaveMetric">Guardar</button>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- Lead Modal -->
   <div class="modal fade" id="leadModal" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content cardx">
@@ -591,57 +636,98 @@
         </div>
         <div class="modal-body">
           <input type="hidden" id="ld_id">
+
           <div class="row g-3">
-            <div class="col-md-4">
-               <label class="form-label small fw-bold">Origen</label>
-               <input class="form-control" id="ld_source" placeholder="Ej: Instagram DM">
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">Nombre completo *</label>
+              <input class="form-control" id="ld_full_name" required>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
+              <label class="form-label small fw-bold">Teléfono</label>
+              <input class="form-control" id="ld_phone">
+            </div>
+            <div class="col-md-3">
+              <label class="form-label small fw-bold">Email</label>
+              <input class="form-control" id="ld_email" type="email">
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">Origen (source_detail)</label>
+              <input class="form-control" id="ld_source_detail" placeholder="Ej: Instagram DM / Landing / Referido">
+            </div>
+
+            <div class="col-md-3">
               <label class="form-label small fw-bold">Campaña</label>
               <select class="form-select" id="ld_campaign"></select>
             </div>
-            <div class="col-md-4">
-              <label class="form-label small fw-bold">Pieza (Opcional)</label>
+            <div class="col-md-3">
+              <label class="form-label small fw-bold">Pieza</label>
               <select class="form-select" id="ld_piece"></select>
             </div>
 
-            <div class="col-md-6">
-              <label class="form-label small fw-bold">Nombre Completo</label>
-              <input class="form-control" id="ld_name">
+            <div class="col-md-3">
+              <label class="form-label small fw-bold">Triage (triage_status)</label>
+              <input class="form-control" id="ld_triage_status" list="dl_triage_status" placeholder="nuevo">
+              <datalist id="dl_triage_status">
+                <option value="nuevo"></option>
+                <option value="contactado"></option>
+                <option value="en_seguimiento"></option>
+                <option value="cerrado"></option>
+                <option value="descartado"></option>
+              </datalist>
             </div>
-            <div class="col-md-6">
-              <label class="form-label small fw-bold">Teléfono / Contacto</label>
-              <input class="form-control" id="ld_phone">
+
+            <div class="col-md-3">
+              <label class="form-label small fw-bold">Resultado (clinical_outcome)</label>
+              <input class="form-control" id="ld_clinical_outcome" list="dl_clinical_outcome" placeholder="pendiente">
+              <datalist id="dl_clinical_outcome">
+                <option value="pendiente"></option>
+                <option value="cita_agendada"></option>
+                <option value="atendido"></option>
+                <option value="no_contesta"></option>
+                <option value="no_interes"></option>
+              </datalist>
             </div>
 
             <div class="col-md-6">
-               <label class="form-label small fw-bold">Interés Principal</label>
-               <input class="form-control" id="ld_interest">
+              <label class="form-label small fw-bold">Notas (triage_notes)</label>
+              <textarea class="form-control" id="ld_triage_notes" rows="2"></textarea>
             </div>
-            <div class="col-md-6">
-              <label class="form-label small fw-bold">Estado del Lead</label>
-              <select class="form-select" id="ld_status">
-                <option>Nuevo</option><option>Contactado</option><option>En seguimiento</option><option>Cerrado</option><option>Descartado</option>
-              </select>
+
+            <div class="col-md-4">
+              <label class="form-label small fw-bold">Fecha/hora cita (appointment_date)</label>
+              <input class="form-control" id="ld_appointment_date" type="datetime-local">
             </div>
-            <div class="col-12">
-              <label class="form-label small fw-bold">Notas</label>
-              <textarea class="form-control" id="ld_notes" rows="2"></textarea>
+
+            <div class="col-md-4">
+              <label class="form-label small fw-bold">Ticket (ticket_value)</label>
+              <input class="form-control" id="ld_ticket_value" type="number" step="0.01" min="0">
             </div>
+
+            <div class="col-md-4 d-flex align-items-end">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="ld_is_retained">
+                <label class="form-check-label small fw-bold" for="ld_is_retained">Retenido (is_retained)</label>
+              </div>
+            </div>
+
           </div>
+
         </div>
         <div class="modal-footer border-0">
           <button class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
-          <button class="btn btn-primary" id="btnSaveLead">Guardar Lead</button>
+          <button class="btn btn-primary" id="btnSaveLead">Guardar</button>
         </div>
       </div>
     </div>
   </div>
 
+  <!-- LOADING -->
   <div class="loading" id="loading">
     <div class="box">
       <div class="spinner-border text-primary" role="status"></div>
       <div class="fw-bold">Procesando...</div>
+      <div class="small text-muted">Si tarda demasiado, revisa red/RLS.</div>
     </div>
   </div>
 
@@ -650,47 +736,52 @@
   <script type="module">
     import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-    // === CONFIG APP (GitHub Pages) ===
-    const APP_URL = "https://amedelvalle.github.io/rrssccm/";
-
-    // === CONFIG SUPABASE ===
-    // Si este proyecto NO es el tuyo, reemplaza por tu URL real (Settings -> API -> Project URL)
+    // === SUPABASE (tu proyecto) ===
     const SUPABASE_URL = "https://rofwgcrsfrovspiholbo.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_M7gyUpsbCPRopdrmDjEeLA_SHXlnP-C";
     const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // MANTENIENDO TU LÓGICA DE MAPEO INTACTA
+    // === MAP REAL (alineado a tu BD) ===
     const MAP = {
-      campaigns: { table:'campaigns', id:'id', code:'code', bimester:'bimester', year:'year', name:'name', objective:'objective', start:'start_date', end:'end_date', created_at:'created_at' },
-      pieces:    { table:'pieces', id:'id', code:'code', campaign_id:'campaign_id', channel:'channel', format:'format', funnel:'funnel_stage', status:'status', hook:'hook', copy:'copy_caption', scheduled:'scheduled_at', created_at:'created_at' },
-      metrics:   { table:'piece_metrics', id:'id', piece_id:'piece_id', date:'cut_date', impressions:'impressions', reach:'reach', plays:'plays', leads:'leads', appointments:'appointments', showups:'showups' },
-      leads:     { table:'leads', id:'id', code:'code', created_at:'created_at', source:'source_channel', campaign_id:'campaign_id', piece_id:'piece_id', name:'name', phone:'phone', interest:'interest', status:'status', notes:'note' }
+      campaigns: { table:'campaigns', id:'id', name:'name', bimester:'bimester', start:'start_date', end:'end_date', objective:'objective', status:'status', anchor_event:'anchor_event', lead_magnet:'lead_magnet', budget_planned:'budget_planned', created_at:'created_at' },
+      pieces:    { table:'pieces', id:'id', campaign_id:'campaign_id', channel_id:'channel_id', name:'name', format:'format', pillar:'pillar', hook_copy:'hook_copy', visual_style:'visual_style', cta_destination:'cta_destination', ad_id:'ad_id', status:'status', created_at:'created_at' },
+      metrics:   { table:'piece_metrics', id:'id', piece_id:'piece_id', date:'date', volume:'volume', interactions:'interactions', spend:'spend', created_at:'created_at' },
+      leads:     { table:'leads', id:'id', created_at:'created_at', full_name:'full_name', phone:'phone', email:'email', source_detail:'source_detail', campaign_id:'campaign_id', piece_id:'piece_id', triage_status:'triage_status', triage_notes:'triage_notes', clinical_outcome:'clinical_outcome', appointment_date:'appointment_date', ticket_value:'ticket_value', is_retained:'is_retained', updated_at:'updated_at' },
+      profiles:  { table:'profiles', id:'id', full_name:'full_name', role:'role' },
+      channels:  { table:'channels', id:'id', name:'name' } // asumimos columns id + name (si no, hacemos fallback)
     };
 
     const el = (id) => document.getElementById(id);
     const showLoading = (v) => el('loading').style.display = v ? 'flex' : 'none';
     const esc = (s) => String(s ?? '').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'","&#039;");
-    const fmtDT = (v) => { if(!v) return ''; try{ const d=new Date(v); return d.toISOString().slice(0,16).replace('T',' '); }catch(_){ return String(v);} };
+    const asNumber = (v) => { const n = Number(v); return Number.isFinite(n) ? n : 0; };
+    const fmtDate = (v) => v ? String(v).slice(0,10) : '';
+    const fmtDTLocal = (v) => {
+      if (!v) return '';
+      try {
+        const d = new Date(v);
+        // datetime-local expects: YYYY-MM-DDTHH:mm
+        const pad = (x)=> String(x).padStart(2,'0');
+        return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+      } catch(_) { return ''; }
+    };
+    const fmtMoney = (v) => {
+      const n = Number(v);
+      if (!Number.isFinite(n)) return '0.00';
+      return n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+    };
 
-    function getStatusBadge(status) {
-      const s = String(status || '').toLowerCase();
-      let cls = 'st-draft';
-      if(s.includes('publicado') || s.includes('contactado')) cls = 'st-published';
-      if(s.includes('programado') || s.includes('seguimiento')) cls = 'st-scheduled';
-      if(s.includes('pausado')) cls = 'st-paused';
-      if(s.includes('cerrado') || s.includes('descartado')) cls = 'st-closed';
-      return `<span class="badge-status ${cls}">${esc(status)}</span>`;
-    }
+    // hard stop to avoid "pegado"
+    const withTimeout = (p, ms = 15000) =>
+      Promise.race([
+        p,
+        new Promise((_, rej) => setTimeout(() => rej(new Error('Timeout de red (15s). Reintenta.')), ms))
+      ]);
 
-    function getChannelIcon(channel) {
-      const c = String(channel || '').toLowerCase();
-      let icon = 'bi-globe', color = '#6b7280';
-      if(c.includes('insta')) { icon='bi-instagram'; color='#e1306c'; }
-      else if(c.includes('face')) { icon='bi-facebook'; color='#1877f2'; }
-      else if(c.includes('youtu')) { icon='bi-youtube'; color='#ff0000'; }
-      else if(c.includes('whats')) { icon='bi-whatsapp'; color='#25d366'; }
-      else if(c.includes('spoti')) { icon='bi-spotify'; color='#1db954'; }
-      return `<i class="bi ${icon} me-1" style="color:${color}"></i> ${esc(channel)}`;
+    async function runWithLoading(fn){
+      showLoading(true);
+      try { return await fn(); }
+      finally { showLoading(false); }
     }
 
     function showAlert(type, title, message, ttlMs = 4500){
@@ -700,7 +791,7 @@
       const icon = type === 'success' ? 'bi-check-circle-fill text-success' :
                    type === 'warning' ? 'bi-exclamation-triangle-fill text-warning' :
                    type === 'danger'  ? 'bi-x-circle-fill text-danger' : 'bi-info-circle-fill text-primary';
-      
+
       card.innerHTML = `
         <i class="${icon} fs-5 mt-1"></i>
         <div class="flex-grow-1">
@@ -720,36 +811,58 @@
       const low = raw.toLowerCase();
       if (low.includes('invalid login credentials')) return 'Correo o contraseña incorrectos.';
       if (low.includes('email not confirmed')) return 'Tu correo aún no está confirmado.';
+      if (low.includes('permission denied') || low.includes('row level security') || low.includes('rls')) return 'Permiso denegado (RLS). Revisa policies o rol del usuario.';
       return raw;
     }
 
-    function openSetNewPasswordModal(){
-      // Asegura vista correcta
-      el('loginView').classList.add('hidden');
-      el('appView').classList.add('hidden');
-      el('whoami').textContent = 'Recuperación';
-      el('btnLogout').disabled = true;
-
-      // Abre modal
-      const m = new bootstrap.Modal(el('setNewPassModal'), { backdrop: 'static', keyboard: false });
-      m.show();
-      showAlert('info','Recuperación','Define tu nueva contraseña.');
+    // Status badge is "cosmetic"
+    function getStatusBadge(status) {
+      const s = String(status || '').toLowerCase();
+      let cls = 'st-draft';
+      if (s.includes('public') || s.includes('activo')) cls = 'st-published';
+      if (s.includes('plan') || s.includes('prog')) cls = 'st-scheduled';
+      if (s.includes('paus')) cls = 'st-paused';
+      if (s.includes('cerr') || s.includes('desc')) cls = 'st-closed';
+      return `<span class="badge-status ${cls}">${esc(status || '—')}</span>`;
     }
 
-    const state = { user:null, profile:null, campaigns:[], pieces:[], metrics:[], leads:[] };
+    // --- STATE ---
+    const state = {
+      user: null,
+      profile: null,
+      campaigns: [],
+      pieces: [],
+      metrics: [],
+      leads: [],
+      channels: [],
+      bound: false
+    };
 
-    function campaignLabel(c){
-      const name = c[MAP.campaigns.name] ?? '';
-      return name.trim();
-    }
-    function pieceLabel(p){
-      const code = p[MAP.pieces.code] ?? '—';
-      const hook = (p[MAP.pieces.hook] ?? '').slice(0,30);
-      return `${code} · ${hook}`.trim();
+    // --- RECOVERY FLOW (PKCE ?code=) ---
+    async function bootstrapRecoverySessionIfNeeded(){
+      const url = new URL(window.location.href);
+      const code = url.searchParams.get('code');
+      if(!code) return;
+
+      await runWithLoading(async () => {
+        try{
+          const { error } = await supabase.auth.exchangeCodeForSession(code);
+          if(error) throw error;
+
+          url.searchParams.delete('code');
+          history.replaceState(null, '', url.toString());
+
+          showAlert('success','Recovery listo','Ahora puedes cambiar tu contraseña.');
+          new bootstrap.Modal(el('setNewPassModal')).show();
+        }catch(err){
+          showAlert('danger','Error recovery', humanize(err));
+        }
+      });
     }
 
     async function handleSession(session){
       state.user = session?.user || null;
+
       if (!state.user){
         el('loginView').classList.remove('hidden');
         el('appView').classList.add('hidden');
@@ -757,123 +870,143 @@
         el('btnLogout').disabled = true;
         return;
       }
+
+      // profile (full_name)
       try{
-        const { data: prof } = await supabase.from('profiles').select('*').eq('id', state.user.id).maybeSingle();
+        const { data: prof, error } = await withTimeout(
+          supabase.from(MAP.profiles.table).select('*').eq(MAP.profiles.id, state.user.id).maybeSingle(),
+          15000
+        );
+        if (error) throw error;
         state.profile = prof || null;
-      }catch(_){ state.profile = null; }
-      
+      }catch(_){
+        state.profile = null;
+      }
+
       el('loginView').classList.add('hidden');
       el('appView').classList.remove('hidden');
-      el('whoami').textContent = state.profile?.display_name || state.user.email || 'Usuario';
+      el('whoami').textContent = state.profile?.[MAP.profiles.full_name] || state.user.email || 'Usuario';
       el('btnLogout').disabled = false;
-      
+
+      if(!state.bound) bindUIOnce();
+
+      // load initial
       if(state.campaigns.length === 0) await refreshAll();
     }
 
+    // --- LOGIN ---
     async function init(){
-      // Si vienes desde el correo de recovery (Supabase) muchas veces trae hash con type=recovery
-      const hash = window.location.hash || '';
-      if (hash.toLowerCase().includes('type=recovery')) {
-        openSetNewPasswordModal();
-      }
+      await bootstrapRecoverySessionIfNeeded();
 
       const { data } = await supabase.auth.getSession();
       await handleSession(data.session);
 
       supabase.auth.onAuthStateChange(async (event, session) => {
-        if (event === 'PASSWORD_RECOVERY') openSetNewPasswordModal();
+        if (event === 'PASSWORD_RECOVERY') new bootstrap.Modal(el('setNewPassModal')).show();
         await handleSession(session);
       });
 
-      bindFilters();
+      // Escape: close loading overlay in dev
+      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') showLoading(false); });
     }
 
-    // Login
     el('btnSignIn').addEventListener('click', async ()=>{
       const email = el('loginEmail').value.trim();
       const password = el('loginPass').value;
       if (!email || !password) return showAlert('warning','Faltan datos','Ingresa tu correo y contraseña.');
-      showLoading(true);
-      try{
-        const { error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) throw error;
-        showAlert('success','Bienvenido','Iniciando sesión...');
-      }catch(err){ showAlert('danger','Error', humanize(err)); }
-      finally{ showLoading(false); }
+
+      await runWithLoading(async () => {
+        try{
+          const { error } = await withTimeout(supabase.auth.signInWithPassword({ email, password }), 15000);
+          if (error) throw error;
+          showAlert('success','Bienvenido','Iniciando sesión...');
+        }catch(err){
+          showAlert('danger','Error', humanize(err));
+        }
+      });
     });
 
     el('btnLogout').addEventListener('click', async () => {
-      showLoading(true);
-      await supabase.auth.signOut();
-      window.location.reload(); 
+      await runWithLoading(async () => {
+        await supabase.auth.signOut();
+      });
+      window.location.reload();
     });
 
     el('btnForgotPass').addEventListener('click', () => new bootstrap.Modal(el('forgotPassModal')).show());
-    
+
     el('btnSendResetEmail').addEventListener('click', async ()=>{
       const email = el('fp_email').value.trim();
       if (!email) return showAlert('warning','Email requerido','Ingresa tu correo.');
-      showLoading(true);
-      try{
-        // Forzar tu GitHub Pages (evita problemas si abres desde otro dominio o file://)
-        const redirectTo = APP_URL;
-        const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo });
-        if(error) throw error;
-        bootstrap.Modal.getInstance(el('forgotPassModal'))?.hide();
-        showAlert('success','Enviado','Revisa tu bandeja de entrada.');
-      }catch(err){ showAlert('danger','Error', humanize(err)); }
-      finally{ showLoading(false); }
+
+      await runWithLoading(async () => {
+        try{
+          // GitHub Pages: redirect to same page
+          const redirectTo = window.location.origin + window.location.pathname;
+          const { error } = await withTimeout(supabase.auth.resetPasswordForEmail(email, { redirectTo }), 15000);
+          if(error) throw error;
+          bootstrap.Modal.getInstance(el('forgotPassModal'))?.hide();
+          showAlert('success','Enviado','Revisa tu bandeja de entrada.');
+        }catch(err){
+          showAlert('danger','Error', humanize(err));
+        }
+      });
     });
 
     el('btnSetNewPass').addEventListener('click', async ()=>{
-      const p1 = el('np1').value; const p2 = el('np2').value;
+      const p1 = el('np1').value;
+      const p2 = el('np2').value;
       if (!p1 || p1.length < 6) return showAlert('warning','Seguridad','Mínimo 6 caracteres.');
       if (p1 !== p2) return showAlert('warning','Error','Las contraseñas no coinciden.');
-      showLoading(true);
-      try{
-        const { error } = await supabase.auth.updateUser({ password: p1 });
-        if (error) throw error;
-        bootstrap.Modal.getInstance(el('setNewPassModal'))?.hide();
-        showAlert('success','Listo','Contraseña actualizada. Puedes iniciar sesión.');
-        // Limpia hash para evitar reabrir modal si refrescan
-        if (window.location.hash) history.replaceState(null, '', window.location.pathname + window.location.search);
-      }catch(err){ showAlert('danger','Error', humanize(err)); }
-      finally{ showLoading(false); }
+
+      await runWithLoading(async () => {
+        try{
+          const { error } = await withTimeout(supabase.auth.updateUser({ password: p1 }), 15000);
+          if (error) throw error;
+          bootstrap.Modal.getInstance(el('setNewPassModal'))?.hide();
+          showAlert('success','Listo','Contraseña actualizada.');
+        }catch(err){
+          showAlert('danger','Error', humanize(err));
+        }
+      });
     });
 
-    // --- DATA ---
+    // --- LOADERS ---
     async function refreshAll(){
-      showLoading(true);
-      try{
-        await Promise.all([loadCampaigns(), loadPieces(), loadMetrics(), loadLeads()]);
-        applyPiecesFilters();
-        applyLeadsFilters();
-      }catch(err){
-        console.error(err);
-        showAlert('danger','Error de conexión','No se pudieron cargar los datos.');
-      }finally{
-        showLoading(false);
-      }
+      await runWithLoading(async () => {
+        try{
+          await Promise.all([loadCampaigns(), loadChannels()]);
+          await Promise.all([loadPieces(), loadMetrics(), loadLeads()]);
+          updateSelects();
+          applyPiecesFilters();
+          applyLeadsFilters();
+          showAlert('success','OK','Datos cargados.');
+        }catch(err){
+          console.error(err);
+          showAlert('danger','Error de conexión', humanize(err));
+        }
+      });
     }
 
-    // -- CAMPAIGNS --
+    // --- CAMPAIGNS ---
     async function loadCampaigns(){
-      const { data, error } = await supabase.from(MAP.campaigns.table).select('*').order(MAP.campaigns.created_at, { ascending:false });
-      if(error){ showAlert('danger','Error', error.message); return; }
+      const { data, error } = await withTimeout(
+        supabase.from(MAP.campaigns.table).select('*').order(MAP.campaigns.created_at, { ascending:false }),
+        15000
+      );
+      if(error) throw error;
       state.campaigns = data || [];
       renderCampaigns(state.campaigns);
-      updateSelects();
     }
-    
+
     function renderCampaigns(rows){
       el('tblCampaigns').querySelector('tbody').innerHTML = rows.map(r => `
         <tr>
-          <td><span class="mono">${esc(r[MAP.campaigns.code] ?? '—')}</span></td>
-          <td><span class="badge bg-light text-dark border">B${esc(r[MAP.campaigns.bimester])}</span></td>
-          <td>${esc(r[MAP.campaigns.year])}</td>
           <td class="fw-bold text-primary">${esc(r[MAP.campaigns.name])}</td>
-          <td class="text-muted small text-truncate" style="max-width:150px;">${esc(r[MAP.campaigns.objective])}</td>
-          <td class="small">${fmtDT(r[MAP.campaigns.start]).split(' ')[0]}</td>
+          <td><span class="badge bg-light text-dark border"> ${esc(r[MAP.campaigns.bimester])}</span></td>
+          <td class="small">${esc(fmtDate(r[MAP.campaigns.start]))}</td>
+          <td class="small">${esc(fmtDate(r[MAP.campaigns.end]))}</td>
+          <td>${getStatusBadge(r[MAP.campaigns.status])}</td>
           <td class="text-end">
              <button class="btn btn-sm btn-white border" onclick="editCamp('${r[MAP.campaigns.id]}')"><i class="bi bi-pencil-fill text-muted"></i></button>
              <button class="btn btn-sm btn-white border ms-1" onclick="delCamp('${r[MAP.campaigns.id]}')"><i class="bi bi-trash-fill text-danger opacity-50"></i></button>
@@ -884,423 +1017,580 @@
 
     window.editCamp = (id) => openCampaignModal(state.campaigns.find(x => String(x[MAP.campaigns.id]) === String(id)));
     window.delCamp = async (id) => {
-      if(!confirm('¿Borrar campaña?')) return;
-      const { error } = await supabase.from(MAP.campaigns.table).delete().eq(MAP.campaigns.id, id);
-      if(error) return showAlert('danger','Error', error.message);
-      await loadCampaigns();
-      await loadPieces(); // por dependencias
-      showAlert('success','Eliminado','Campaña eliminada.');
+      if(!confirm('¿Borrar campaña? (Esto borrará piezas por ON DELETE CASCADE)')) return;
+      await runWithLoading(async () => {
+        try{
+          const { error } = await withTimeout(
+            supabase.from(MAP.campaigns.table).delete().eq(MAP.campaigns.id, id),
+            15000
+          );
+          if(error) throw error;
+          await loadCampaigns();
+          await loadPieces();
+          updateSelects();
+          showAlert('success','Eliminado','Campaña borrada.');
+        }catch(err){
+          showAlert('danger','Error', humanize(err));
+        }
+      });
     };
 
     function openCampaignModal(row=null){
       el('c_id').value = row?.[MAP.campaigns.id] || '';
-      el('c_bim').value = row?.[MAP.campaigns.bimester] || '1';
-      el('c_year').value = row?.[MAP.campaigns.year] || '2026';
       el('c_name').value = row?.[MAP.campaigns.name] || '';
-      el('c_code').value = row?.[MAP.campaigns.code] || '';
+      el('c_bim').value = row?.[MAP.campaigns.bimester] || 'B1';
+      el('c_status').value = row?.[MAP.campaigns.status] || '';
+      el('c_start').value = fmtDate(row?.[MAP.campaigns.start]) || '';
+      el('c_end').value = fmtDate(row?.[MAP.campaigns.end]) || '';
       el('c_objective').value = row?.[MAP.campaigns.objective] || '';
-      el('c_start').value = row?.[MAP.campaigns.start] || '';
-      el('c_end').value = row?.[MAP.campaigns.end] || '';
+      el('c_anchor_event').value = row?.[MAP.campaigns.anchor_event] || '';
+      el('c_lead_magnet').value = row?.[MAP.campaigns.lead_magnet] || '';
+      el('c_budget').value = row?.[MAP.campaigns.budget_planned] ?? 0;
       new bootstrap.Modal(el('campaignModal')).show();
     }
 
     el('btnSaveCampaign').onclick = async () => {
-       const payload = {};
-       payload[MAP.campaigns.name] = el('c_name').value.trim();
-       payload[MAP.campaigns.year] = Number(el('c_year').value) || 2026;
-       payload[MAP.campaigns.bimester] = Number(el('c_bim').value) || 1;
-       payload[MAP.campaigns.objective] = el('c_objective').value.trim() || null;
-       payload[MAP.campaigns.start] = el('c_start').value || null;
-       payload[MAP.campaigns.end] = el('c_end').value || null;
-       if (el('c_code').value.trim()) payload[MAP.campaigns.code] = el('c_code').value.trim();
-       
-       const id = el('c_id').value;
-       const q = id
-         ? supabase.from(MAP.campaigns.table).update(payload).eq(MAP.campaigns.id, id)
-         : supabase.from(MAP.campaigns.table).insert(payload);
+      const name = el('c_name').value.trim();
+      const start = el('c_start').value;
+      const end = el('c_end').value;
+      if(!name) return showAlert('warning','Validación','Nombre es obligatorio.');
+      if(!start || !end) return showAlert('warning','Validación','Inicio y fin son obligatorios.');
 
-       showLoading(true);
-       const { error } = await q;
-       showLoading(false);
+      await runWithLoading(async () => {
+        try{
+          const payload = {};
+          payload[MAP.campaigns.name] = name;
+          payload[MAP.campaigns.bimester] = el('c_bim').value;
+          payload[MAP.campaigns.start] = start;
+          payload[MAP.campaigns.end] = end;
+          payload[MAP.campaigns.objective] = el('c_objective').value.trim() || null;
+          payload[MAP.campaigns.status] = el('c_status').value.trim() || null;
+          payload[MAP.campaigns.anchor_event] = el('c_anchor_event').value.trim() || null;
+          payload[MAP.campaigns.lead_magnet] = el('c_lead_magnet').value.trim() || null;
+          payload[MAP.campaigns.budget_planned] = asNumber(el('c_budget').value);
 
-       if(error) return showAlert('danger','Error', error.message);
+          const id = el('c_id').value;
+          const q = id
+            ? supabase.from(MAP.campaigns.table).update(payload).eq(MAP.campaigns.id, id)
+            : supabase.from(MAP.campaigns.table).insert(payload);
 
-       bootstrap.Modal.getInstance(el('campaignModal'))?.hide();
-       await loadCampaigns();
-       await loadPieces();
-       showAlert('success','Guardado','Campaña guardada.');
-    };
+          const { error } = await withTimeout(q, 15000);
+          if(error) throw error;
 
-    el('btnSeed').onclick = async () => {
-        if(!confirm('Esto creará campañas base para 2026. ¿Continuar?')) return;
-        showLoading(true);
-        for(let b=1; b<=6; b++){
-            const { error } = await supabase.from(MAP.campaigns.table).insert({
-                [MAP.campaigns.year]: 2026,
-                [MAP.campaigns.bimester]: b,
-                [MAP.campaigns.name]: `Campaña Base B${b}`
-            });
-            if(error) console.warn(error);
+          bootstrap.Modal.getInstance(el('campaignModal'))?.hide();
+          await loadCampaigns();
+          updateSelects();
+          showAlert('success','Guardado','Campaña actualizada.');
+        }catch(err){
+          showAlert('danger','Error', humanize(err));
         }
-        await loadCampaigns();
-        showLoading(false);
-        showAlert('success','Listo','Seed creado.');
+      });
     };
 
-    // -- PIECES --
+    // --- CHANNELS (best-effort) ---
+    async function loadChannels(){
+      // If your channels table isn't compatible with select('id,name'), we'll fallback.
+      try{
+        const { data, error } = await withTimeout(
+          supabase.from(MAP.channels.table).select(`${MAP.channels.id},${MAP.channels.name}`).order(MAP.channels.id, { ascending:true }),
+          15000
+        );
+        if(error) throw error;
+        state.channels = data || [];
+      }catch(_){
+        state.channels = []; // fallback
+      }
+    }
+
+    function channelNameById(id){
+      if(!id) return '—';
+      const row = state.channels.find(c => String(c[MAP.channels.id]) === String(id));
+      return row ? (row[MAP.channels.name] ?? String(id)) : String(id);
+    }
+
+    // --- PIECES ---
     async function loadPieces(){
-      const { data, error } = await supabase.from(MAP.pieces.table).select('*').order(MAP.pieces.created_at, { ascending:false });
-      if(error){ showAlert('danger','Error', error.message); return; }
+      const { data, error } = await withTimeout(
+        supabase.from(MAP.pieces.table).select('*').order(MAP.pieces.created_at, { ascending:false }),
+        15000
+      );
+      if(error) throw error;
       state.pieces = data || [];
-      applyPiecesFilters();
-      updateSelects();
+      renderPieces(state.pieces);
     }
 
     function renderPieces(rows){
-       el('tblPieces').querySelector('tbody').innerHTML = rows.map(r => {
-         const camp = state.campaigns.find(c => String(c[MAP.campaigns.id]) === String(r[MAP.pieces.campaign_id]));
-         return `
-         <tr>
-           <td><span class="mono">${esc(r[MAP.pieces.code] ?? '-')}</span></td>
-           <td class="small text-muted">${esc(camp ? camp[MAP.campaigns.name] : 'Sin campaña')}</td>
-           <td>${getChannelIcon(r[MAP.pieces.channel])}</td>
-           <td><span class="badge bg-light text-dark border fw-normal">${esc(r[MAP.pieces.format])}</span></td>
-           <td class="small">${esc(r[MAP.pieces.funnel])}</td>
-           <td>${getStatusBadge(r[MAP.pieces.status])}</td>
-           <td class="truncate-2 small fw-bold" style="max-width:200px" title="${esc(r[MAP.pieces.hook])}">${esc(r[MAP.pieces.hook])}</td>
-           <td class="small text-muted">${r[MAP.pieces.scheduled] ? fmtDT(r[MAP.pieces.scheduled]) : '-'}</td>
-           <td class="text-end">
-             <button class="btn btn-sm btn-white border" onclick="editPiece('${r[MAP.pieces.id]}')"><i class="bi bi-pencil-fill text-muted"></i></button>
-             <button class="btn btn-sm btn-white border ms-1" onclick="delPiece('${r[MAP.pieces.id]}')"><i class="bi bi-trash-fill text-danger opacity-50"></i></button>
-           </td>
-         </tr>
-       `}).join('');
-    }
-
-    function resetPieceForm(){
-      el('p_id').value = '';
-      el('p_campaign').value = '';
-      el('p_channel').value = 'Instagram';
-      el('p_format').value = '';
-      el('p_funnel').value = '';
-      el('p_status').value = 'Borrador';
-      el('p_hook').value = '';
-      el('p_copy').value = '';
-      el('p_code').value = '';
-      el('p_scheduled').value = '';
+      el('tblPieces').querySelector('tbody').innerHTML = rows.map(r => {
+        const camp = state.campaigns.find(c => c[MAP.campaigns.id] == r[MAP.pieces.campaign_id]);
+        return `
+          <tr>
+            <td class="fw-bold">${esc(r[MAP.pieces.name])}</td>
+            <td class="small text-muted">${esc(camp ? camp[MAP.campaigns.name] : 'Sin campaña')}</td>
+            <td class="small">${esc(channelNameById(r[MAP.pieces.channel_id]))}</td>
+            <td><span class="badge bg-light text-dark border fw-normal">${esc(r[MAP.pieces.format])}</span></td>
+            <td>${getStatusBadge(r[MAP.pieces.status])}</td>
+            <td class="truncate-2 small" style="max-width:220px" title="${esc(r[MAP.pieces.hook_copy])}">${esc(r[MAP.pieces.hook_copy])}</td>
+            <td class="truncate-2 small" style="max-width:180px" title="${esc(r[MAP.pieces.cta_destination])}">${esc(r[MAP.pieces.cta_destination])}</td>
+            <td class="text-end">
+              <button class="btn btn-sm btn-white border" onclick="editPiece('${r[MAP.pieces.id]}')"><i class="bi bi-pencil-fill text-muted"></i></button>
+              <button class="btn btn-sm btn-white border ms-1" onclick="delPiece('${r[MAP.pieces.id]}')"><i class="bi bi-trash-fill text-danger opacity-50"></i></button>
+            </td>
+          </tr>
+        `;
+      }).join('');
     }
 
     window.editPiece = (id) => {
-        const row = state.pieces.find(r => String(r[MAP.pieces.id]) === String(id));
-        if(!row) return;
-        el('p_id').value = row[MAP.pieces.id];
-        el('p_campaign').value = row[MAP.pieces.campaign_id] ?? '';
-        el('p_channel').value = row[MAP.pieces.channel] ?? 'Instagram';
-        el('p_format').value = row[MAP.pieces.format] ?? '';
-        el('p_funnel').value = row[MAP.pieces.funnel] ?? '';
-        el('p_status').value = row[MAP.pieces.status] ?? 'Borrador';
-        el('p_hook').value = row[MAP.pieces.hook] ?? '';
-        el('p_copy').value = row[MAP.pieces.copy] ?? '';
-        el('p_code').value = row[MAP.pieces.code] ?? '';
-        el('p_scheduled').value = row[MAP.pieces.scheduled] ? new Date(row[MAP.pieces.scheduled]).toISOString().slice(0,16) : '';
-        new bootstrap.Modal(el('pieceModal')).show();
+      const row = state.pieces.find(r => String(r[MAP.pieces.id]) === String(id));
+      el('p_id').value = row?.[MAP.pieces.id] || '';
+      el('p_campaign').value = row?.[MAP.pieces.campaign_id] || '';
+      el('p_channel_id').value = row?.[MAP.pieces.channel_id] ?? '';
+      el('p_name').value = row?.[MAP.pieces.name] || '';
+      el('p_format').value = row?.[MAP.pieces.format] || '';
+      el('p_status').value = row?.[MAP.pieces.status] || '';
+      el('p_pillar').value = row?.[MAP.pieces.pillar] || '';
+      el('p_visual_style').value = row?.[MAP.pieces.visual_style] || '';
+      el('p_hook_copy').value = row?.[MAP.pieces.hook_copy] || '';
+      el('p_cta').value = row?.[MAP.pieces.cta_destination] || '';
+      el('p_ad_id').value = row?.[MAP.pieces.ad_id] || '';
+      new bootstrap.Modal(el('pieceModal')).show();
     };
 
     window.delPiece = async (id) => {
-      if(!confirm('¿Borrar pieza?')) return;
-      const { error } = await supabase.from(MAP.pieces.table).delete().eq(MAP.pieces.id, id);
-      if(error) return showAlert('danger','Error', error.message);
-      await loadPieces();
-      showAlert('success','Eliminado','Pieza eliminada.');
+      if(!confirm('¿Borrar pieza? (Esto borrará métricas por ON DELETE CASCADE)')) return;
+      await runWithLoading(async () => {
+        try{
+          const { error } = await withTimeout(
+            supabase.from(MAP.pieces.table).delete().eq(MAP.pieces.id, id),
+            15000
+          );
+          if(error) throw error;
+          await loadPieces();
+          await loadMetrics();
+          updateSelects();
+          showAlert('success','Eliminado','Pieza borrada.');
+        }catch(err){
+          showAlert('danger','Error', humanize(err));
+        }
+      });
     };
 
     el('btnSavePiece').onclick = async () => {
-        const payload = {};
-        payload[MAP.pieces.campaign_id] = el('p_campaign').value || null;
-        payload[MAP.pieces.channel] = el('p_channel').value;
-        payload[MAP.pieces.format] = el('p_format').value || null;
-        payload[MAP.pieces.funnel] = el('p_funnel').value || null;
-        payload[MAP.pieces.status] = el('p_status').value;
-        payload[MAP.pieces.hook] = el('p_hook').value || null;
-        payload[MAP.pieces.copy] = el('p_copy').value || null;
-        if(el('p_code').value.trim()) payload[MAP.pieces.code] = el('p_code').value.trim();
-        payload[MAP.pieces.scheduled] = el('p_scheduled').value ? new Date(el('p_scheduled').value).toISOString() : null;
+      const name = el('p_name').value.trim();
+      const format = el('p_format').value.trim();
+      if(!name) return showAlert('warning','Validación','Nombre es obligatorio.');
+      if(!format) return showAlert('warning','Validación','Formato es obligatorio (enum piece_format).');
 
-        const id = el('p_id').value;
-        const q = id
-          ? supabase.from(MAP.pieces.table).update(payload).eq(MAP.pieces.id, id)
-          : supabase.from(MAP.pieces.table).insert(payload);
+      await runWithLoading(async () => {
+        try{
+          const payload = {};
+          payload[MAP.pieces.campaign_id] = el('p_campaign').value || null;
+          payload[MAP.pieces.channel_id] = el('p_channel_id').value ? Number(el('p_channel_id').value) : null;
+          payload[MAP.pieces.name] = name;
+          payload[MAP.pieces.format] = format;
+          payload[MAP.pieces.status] = el('p_status').value.trim() || null;
+          payload[MAP.pieces.pillar] = el('p_pillar').value.trim() || null;
+          payload[MAP.pieces.visual_style] = el('p_visual_style').value.trim() || null;
+          payload[MAP.pieces.hook_copy] = el('p_hook_copy').value.trim() || null;
+          payload[MAP.pieces.cta_destination] = el('p_cta').value.trim() || null;
+          payload[MAP.pieces.ad_id] = el('p_ad_id').value.trim() || null;
 
-        showLoading(true);
-        const { error } = await q;
-        showLoading(false);
+          const id = el('p_id').value;
+          const q = id
+            ? supabase.from(MAP.pieces.table).update(payload).eq(MAP.pieces.id, id)
+            : supabase.from(MAP.pieces.table).insert(payload);
 
-        if(error) return showAlert('danger','Error', error.message);
+          const { error } = await withTimeout(q, 15000);
+          if(error) throw error;
 
-        bootstrap.Modal.getInstance(el('pieceModal'))?.hide();
-        await loadPieces();
-        showAlert('success','Guardado','Pieza guardada.');
+          bootstrap.Modal.getInstance(el('pieceModal'))?.hide();
+          await loadPieces();
+          updateSelects();
+          showAlert('success','Guardado','Pieza guardada.');
+        }catch(err){
+          showAlert('danger','Error', humanize(err));
+        }
+      });
     };
 
-    // -- METRICS --
-    async function loadMetrics(){
-        const { data, error } = await supabase.from(MAP.metrics.table).select('*').order(MAP.metrics.date, {ascending:false});
-        if(error){ showAlert('danger','Error', error.message); return; }
-        state.metrics = data || [];
-        renderMetrics(state.metrics);
-        updateSelects();
-    }
-    
-    function renderMetrics(rows){
-        el('tblMetrics').querySelector('tbody').innerHTML = rows.map(r => {
-            const p = state.pieces.find(x => String(x[MAP.pieces.id]) === String(r[MAP.metrics.piece_id]));
-            return `
-            <tr>
-              <td class="text-start">
-                  <div class="small fw-bold">${esc(p ? p[MAP.pieces.code] : '-')}</div>
-                  <div class="mini text-muted truncate-2">${esc(p ? p[MAP.pieces.hook] : '')}</div>
-              </td>
-              <td class="mono small">${esc(r[MAP.metrics.date])}</td>
-              <td>${esc(r[MAP.metrics.impressions] ?? 0)}</td>
-              <td>${esc(r[MAP.metrics.reach] ?? 0)}</td>
-              <td>${esc(r[MAP.metrics.plays] ?? 0)}</td>
-              <td class="fw-bold text-primary bg-primary bg-opacity-10">${esc(r[MAP.metrics.leads] ?? 0)}</td>
-              <td>${esc(r[MAP.metrics.appointments] ?? 0)}</td>
-              <td class="fw-bold text-success">${esc(r[MAP.metrics.showups] ?? 0)}</td>
-              <td class="text-end">
-                 <button class="btn btn-sm btn-white border" onclick="editMetric('${r[MAP.metrics.id]}')"><i class="bi bi-pencil-fill text-muted"></i></button>
-              </td>
-            </tr>
-            `;
-        }).join('');
+    function applyPiecesFilters(){
+      const camp = el('fCamp').value;
+      const status = el('fPieceStatus').value.trim().toLowerCase();
+      const q = el('fQ').value.trim().toLowerCase();
+
+      const filtered = state.pieces.filter(r => {
+        if(camp && String(r[MAP.pieces.campaign_id] || '') !== String(camp)) return false;
+        if(status && String(r[MAP.pieces.status] || '').toLowerCase() !== status) return false;
+        if(q){
+          const blob = JSON.stringify({
+            name: r[MAP.pieces.name],
+            hook: r[MAP.pieces.hook_copy],
+            ad_id: r[MAP.pieces.ad_id],
+            cta: r[MAP.pieces.cta_destination],
+            pillar: r[MAP.pieces.pillar]
+          }).toLowerCase();
+          if(!blob.includes(q)) return false;
+        }
+        return true;
+      });
+
+      renderPieces(filtered);
+      updateSelects();
     }
 
-    function resetMetricForm(){
-      el('mx_id').value = '';
-      el('mx_piece').value = '';
-      el('mx_date').value = '';
-      el('mx_impressions').value = 0;
-      el('mx_reach').value = 0;
-      el('mx_plays').value = 0;
-      el('mx_leads').value = 0;
-      el('mx_appointments').value = 0;
-      el('mx_showups').value = 0;
+    // --- METRICS ---
+    async function loadMetrics(){
+      // filters
+      const pieceId = el('mPiece').value || null;
+      const from = el('mFrom').value || null;
+      const to = el('mTo').value || null;
+
+      let q = supabase.from(MAP.metrics.table).select('*').order(MAP.metrics.date, { ascending:false });
+
+      if(pieceId) q = q.eq(MAP.metrics.piece_id, pieceId);
+      if(from) q = q.gte(MAP.metrics.date, from);
+      if(to) q = q.lte(MAP.metrics.date, to);
+
+      const { data, error } = await withTimeout(q, 15000);
+      if(error) throw error;
+      state.metrics = data || [];
+      renderMetrics(state.metrics);
+    }
+
+    function renderMetrics(rows){
+      el('tblMetrics').querySelector('tbody').innerHTML = rows.map(r => {
+        const p = state.pieces.find(x => x[MAP.pieces.id] == r[MAP.metrics.piece_id]);
+        return `
+          <tr>
+            <td class="text-start">
+              <div class="small fw-bold">${esc(p ? p[MAP.pieces.name] : '—')}</div>
+              <div class="mini text-muted truncate-2">${esc(p ? p[MAP.pieces.hook_copy] : '')}</div>
+            </td>
+            <td class="mono small">${esc(r[MAP.metrics.date])}</td>
+            <td>${esc(r[MAP.metrics.volume] ?? 0)}</td>
+            <td>${esc(r[MAP.metrics.interactions] ?? 0)}</td>
+            <td>${esc(fmtMoney(r[MAP.metrics.spend] ?? 0))}</td>
+            <td class="text-end">
+              <button class="btn btn-sm btn-white border" onclick="editMetric('${r[MAP.metrics.id]}')"><i class="bi bi-pencil-fill text-muted"></i></button>
+            </td>
+          </tr>
+        `;
+      }).join('');
     }
 
     window.editMetric = (id) => {
-        const r = state.metrics.find(x => String(x[MAP.metrics.id]) === String(id));
-        if(!r) return;
-        el('mx_id').value = r[MAP.metrics.id];
-        el('mx_piece').value = r[MAP.metrics.piece_id];
-        el('mx_date').value = r[MAP.metrics.date];
-        el('mx_impressions').value = r[MAP.metrics.impressions] ?? 0;
-        el('mx_reach').value = r[MAP.metrics.reach] ?? 0;
-        el('mx_plays').value = r[MAP.metrics.plays] ?? 0;
-        el('mx_leads').value = r[MAP.metrics.leads] ?? 0;
-        el('mx_appointments').value = r[MAP.metrics.appointments] ?? 0;
-        el('mx_showups').value = r[MAP.metrics.showups] ?? 0;
-        new bootstrap.Modal(el('metricModal')).show();
+      const r = state.metrics.find(x => String(x[MAP.metrics.id]) === String(id));
+      el('mx_id').value = r?.[MAP.metrics.id] || '';
+      el('mx_piece').value = r?.[MAP.metrics.piece_id] || '';
+      el('mx_date').value = r?.[MAP.metrics.date] || '';
+      el('mx_volume').value = r?.[MAP.metrics.volume] ?? 0;
+      el('mx_interactions').value = r?.[MAP.metrics.interactions] ?? 0;
+      el('mx_spend').value = r?.[MAP.metrics.spend] ?? 0;
+      new bootstrap.Modal(el('metricModal')).show();
     };
 
     el('btnSaveMetric').onclick = async () => {
-        const payload = {};
-        payload[MAP.metrics.piece_id] = el('mx_piece').value;
-        payload[MAP.metrics.date] = el('mx_date').value;
-        payload[MAP.metrics.impressions] = Number(el('mx_impressions').value || 0);
-        payload[MAP.metrics.reach] = Number(el('mx_reach').value || 0);
-        payload[MAP.metrics.plays] = Number(el('mx_plays').value || 0);
-        payload[MAP.metrics.leads] = Number(el('mx_leads').value || 0);
-        payload[MAP.metrics.appointments] = Number(el('mx_appointments').value || 0);
-        payload[MAP.metrics.showups] = Number(el('mx_showups').value || 0);
+      const pieceId = el('mx_piece').value;
+      const date = el('mx_date').value;
+      if(!pieceId) return showAlert('warning','Validación','Selecciona una pieza.');
+      if(!date) return showAlert('warning','Validación','Fecha es obligatoria.');
 
-        const id = el('mx_id').value;
+      await runWithLoading(async () => {
+        try{
+          const payload = {};
+          payload[MAP.metrics.piece_id] = pieceId;
+          payload[MAP.metrics.date] = date;
+          payload[MAP.metrics.volume] = asNumber(el('mx_volume').value);
+          payload[MAP.metrics.interactions] = asNumber(el('mx_interactions').value);
+          payload[MAP.metrics.spend] = asNumber(el('mx_spend').value);
 
-        let q;
-        if(id) {
-          q = supabase.from(MAP.metrics.table).update(payload).eq(MAP.metrics.id, id);
-        } else {
-          q = supabase.from(MAP.metrics.table).upsert(payload, { onConflict: `${MAP.metrics.piece_id},${MAP.metrics.date}` });
+          const id = el('mx_id').value;
+
+          // If editing an existing row: update by id.
+          // If new: upsert by unique (piece_id, date).
+          const q = id
+            ? supabase.from(MAP.metrics.table).update(payload).eq(MAP.metrics.id, id)
+            : supabase.from(MAP.metrics.table).upsert(payload, { onConflict: `${MAP.metrics.piece_id},${MAP.metrics.date}` });
+
+          const { error } = await withTimeout(q, 15000);
+          if(error) throw error;
+
+          bootstrap.Modal.getInstance(el('metricModal'))?.hide();
+          await loadMetrics();
+          showAlert('success','Guardado','Métrica guardada.');
+        }catch(err){
+          showAlert('danger','Error', humanize(err));
         }
-
-        showLoading(true);
-        const { error } = await q;
-        showLoading(false);
-
-        if(error) return showAlert('danger','Error', error.message);
-
-        bootstrap.Modal.getInstance(el('metricModal'))?.hide();
-        await loadMetrics();
-        showAlert('success','Guardado','Métrica guardada.');
+      });
     };
 
-    // -- LEADS --
+    // --- LEADS ---
     async function loadLeads(){
-        const { data, error } = await supabase.from(MAP.leads.table).select('*').order(MAP.leads.created_at, {ascending:false});
-        if(error){ showAlert('danger','Error', error.message); return; }
-        state.leads = data || [];
-        applyLeadsFilters();
+      const { data, error } = await withTimeout(
+        supabase.from(MAP.leads.table).select('*').order(MAP.leads.created_at, {ascending:false}),
+        15000
+      );
+      if(error) throw error;
+      state.leads = data || [];
+      renderLeads(state.leads);
     }
 
     function renderLeads(rows){
-        el('tblLeads').querySelector('tbody').innerHTML = rows.map(r => {
-             const c = state.campaigns.find(x=> String(x[MAP.campaigns.id]) === String(r[MAP.leads.campaign_id]));
-             const p = state.pieces.find(x=> String(x[MAP.pieces.id]) === String(r[MAP.leads.piece_id]));
-             return `
-             <tr>
-                <td><span class="mono">${esc(r[MAP.leads.code] ?? '—')}</span></td>
-                <td class="small text-muted">${fmtDT(r[MAP.leads.created_at])}</td>
-                <td><span class="badge bg-light text-dark border">${esc(r[MAP.leads.source] ?? '')}</span></td>
-                <td>
-                    <div class="mini text-truncate" style="max-width:120px">${esc(c?.[MAP.campaigns.name] || '')}</div>
-                    <div class="mini text-muted">${esc(p?.[MAP.pieces.code] || '')}</div>
-                </td>
-                <td class="fw-bold text-primary">${esc(r[MAP.leads.name] ?? '')}</td>
-                <td>${esc(r[MAP.leads.phone] ?? '')}</td>
-                <td>${getStatusBadge(r[MAP.leads.status] ?? '')}</td>
-                <td class="text-end">
-                    <button class="btn btn-sm btn-white border" onclick="editLead('${r[MAP.leads.id]}')"><i class="bi bi-pencil-fill text-muted"></i></button>
-                    <button class="btn btn-sm btn-white border ms-1" onclick="delLead('${r[MAP.leads.id]}')"><i class="bi bi-trash-fill text-danger opacity-50"></i></button>
-                </td>
-             </tr>
-             `;
-        }).join('');
-    }
+      el('tblLeads').querySelector('tbody').innerHTML = rows.map(r => {
+        const c = state.campaigns.find(x=>x[MAP.campaigns.id] == r[MAP.leads.campaign_id]);
+        const p = state.pieces.find(x=>x[MAP.pieces.id] == r[MAP.leads.piece_id]);
 
-    function resetLeadForm(){
-      el('ld_id').value = '';
-      el('ld_source').value = '';
-      el('ld_campaign').value = '';
-      el('ld_piece').value = '';
-      el('ld_name').value = '';
-      el('ld_phone').value = '';
-      el('ld_interest').value = '';
-      el('ld_status').value = 'Nuevo';
-      el('ld_notes').value = '';
+        const tri = r[MAP.leads.triage_status] ?? '—';
+        const appt = r[MAP.leads.appointment_date] ? fmtDTLocal(r[MAP.leads.appointment_date]).replace('T',' ') : '—';
+
+        const origin = [
+          r[MAP.leads.source_detail] || '',
+          c ? c[MAP.campaigns.name] : '',
+          p ? p[MAP.pieces.name] : ''
+        ].filter(Boolean).join(' · ');
+
+        return `
+          <tr>
+            <td class="small text-muted">${esc(String(r[MAP.leads.created_at] || '').slice(0,19).replace('T',' '))}</td>
+            <td class="fw-bold text-primary">${esc(r[MAP.leads.full_name])}</td>
+            <td>${esc(r[MAP.leads.phone] || '')}</td>
+            <td class="small">${esc(r[MAP.leads.email] || '')}</td>
+            <td class="truncate-2 small text-muted" style="max-width:220px" title="${esc(origin)}">${esc(origin)}</td>
+            <td>${getStatusBadge(tri)}</td>
+            <td class="small">${esc(appt)}</td>
+            <td class="text-end">
+              <button class="btn btn-sm btn-white border" onclick="editLead('${r[MAP.leads.id]}')"><i class="bi bi-pencil-fill text-muted"></i></button>
+              <button class="btn btn-sm btn-white border ms-1" onclick="delLead('${r[MAP.leads.id]}')"><i class="bi bi-trash-fill text-danger opacity-50"></i></button>
+            </td>
+          </tr>
+        `;
+      }).join('');
     }
 
     window.editLead = (id) => {
-        const r = state.leads.find(x => String(x[MAP.leads.id]) === String(id));
-        if(!r) return;
-        el('ld_id').value = r[MAP.leads.id];
-        el('ld_source').value = r[MAP.leads.source] ?? '';
-        el('ld_campaign').value = r[MAP.leads.campaign_id] ?? '';
-        el('ld_piece').value = r[MAP.leads.piece_id] ?? '';
-        el('ld_name').value = r[MAP.leads.name] ?? '';
-        el('ld_phone').value = r[MAP.leads.phone] ?? '';
-        el('ld_interest').value = r[MAP.leads.interest] ?? '';
-        el('ld_status').value = r[MAP.leads.status] ?? 'Nuevo';
-        el('ld_notes').value = r[MAP.leads.notes] ?? '';
-        new bootstrap.Modal(el('leadModal')).show();
+      const r = state.leads.find(x => String(x[MAP.leads.id]) === String(id));
+
+      el('ld_id').value = r?.[MAP.leads.id] || '';
+      el('ld_full_name').value = r?.[MAP.leads.full_name] || '';
+      el('ld_phone').value = r?.[MAP.leads.phone] || '';
+      el('ld_email').value = r?.[MAP.leads.email] || '';
+      el('ld_source_detail').value = r?.[MAP.leads.source_detail] || '';
+      el('ld_campaign').value = r?.[MAP.leads.campaign_id] || '';
+      el('ld_piece').value = r?.[MAP.leads.piece_id] || '';
+      el('ld_triage_status').value = r?.[MAP.leads.triage_status] || 'nuevo';
+      el('ld_triage_notes').value = r?.[MAP.leads.triage_notes] || '';
+      el('ld_clinical_outcome').value = r?.[MAP.leads.clinical_outcome] || 'pendiente';
+      el('ld_appointment_date').value = r?.[MAP.leads.appointment_date] ? fmtDTLocal(r[MAP.leads.appointment_date]) : '';
+      el('ld_ticket_value').value = r?.[MAP.leads.ticket_value] ?? 0;
+      el('ld_is_retained').checked = !!r?.[MAP.leads.is_retained];
+
+      new bootstrap.Modal(el('leadModal')).show();
     };
 
     window.delLead = async (id) => {
-      if(!confirm('¿Borrar?')) return;
-      const { error } = await supabase.from(MAP.leads.table).delete().eq(MAP.leads.id, id);
-      if(error) return showAlert('danger','Error', error.message);
-      await loadLeads();
-      showAlert('success','Eliminado','Lead eliminado.');
+      if(!confirm('¿Borrar lead?')) return;
+      await runWithLoading(async () => {
+        try{
+          const { error } = await withTimeout(
+            supabase.from(MAP.leads.table).delete().eq(MAP.leads.id, id),
+            15000
+          );
+          if(error) throw error;
+          await loadLeads();
+          showAlert('success','Eliminado','Lead borrado.');
+        }catch(err){
+          showAlert('danger','Error', humanize(err));
+        }
+      });
     };
 
     el('btnSaveLead').onclick = async () => {
-         const payload = {};
-         payload[MAP.leads.source] = el('ld_source').value || null;
-         payload[MAP.leads.campaign_id] = el('ld_campaign').value || null;
-         payload[MAP.leads.piece_id] = el('ld_piece').value || null;
-         payload[MAP.leads.name] = el('ld_name').value || null;
-         payload[MAP.leads.phone] = el('ld_phone').value || null;
-         payload[MAP.leads.interest] = el('ld_interest').value || null;
-         payload[MAP.leads.status] = el('ld_status').value || 'Nuevo';
-         payload[MAP.leads.notes] = el('ld_notes').value || null;
+      const fullName = el('ld_full_name').value.trim();
+      if(!fullName) return showAlert('warning','Validación','Nombre completo es obligatorio.');
 
-         const id = el('ld_id').value;
-         const q = id
-           ? supabase.from(MAP.leads.table).update(payload).eq(MAP.leads.id, id)
-           : supabase.from(MAP.leads.table).insert(payload);
+      await runWithLoading(async () => {
+        try{
+          const payload = {};
+          payload[MAP.leads.full_name] = fullName;
+          payload[MAP.leads.phone] = el('ld_phone').value.trim() || null;
+          payload[MAP.leads.email] = el('ld_email').value.trim() || null;
+          payload[MAP.leads.source_detail] = el('ld_source_detail').value.trim() || null;
+          payload[MAP.leads.campaign_id] = el('ld_campaign').value || null;
+          payload[MAP.leads.piece_id] = el('ld_piece').value || null;
+          payload[MAP.leads.triage_status] = el('ld_triage_status').value.trim() || null;
+          payload[MAP.leads.triage_notes] = el('ld_triage_notes').value.trim() || null;
+          payload[MAP.leads.clinical_outcome] = el('ld_clinical_outcome').value.trim() || null;
+          payload[MAP.leads.appointment_date] = el('ld_appointment_date').value ? new Date(el('ld_appointment_date').value).toISOString() : null;
+          payload[MAP.leads.ticket_value] = asNumber(el('ld_ticket_value').value);
+          payload[MAP.leads.is_retained] = !!el('ld_is_retained').checked;
 
-         showLoading(true);
-         const { error } = await q;
-         showLoading(false);
+          const id = el('ld_id').value;
+          const q = id
+            ? supabase.from(MAP.leads.table).update(payload).eq(MAP.leads.id, id)
+            : supabase.from(MAP.leads.table).insert(payload);
 
-         if(error) return showAlert('danger','Error', error.message);
+          const { error } = await withTimeout(q, 15000);
+          if(error) throw error;
 
-         bootstrap.Modal.getInstance(el('leadModal'))?.hide();
-         await loadLeads();
-         showAlert('success','Guardado','Lead guardado.');
+          bootstrap.Modal.getInstance(el('leadModal'))?.hide();
+          await loadLeads();
+          showAlert('success','Guardado','Lead guardado.');
+        }catch(err){
+          showAlert('danger','Error', humanize(err));
+        }
+      });
     };
-
-    // --- FILTERS / SELECTS ---
-    function updateSelects(){
-        const campOpts = '<option value="">(Seleccionar)</option>' + state.campaigns.map(c=>`<option value="${c[MAP.campaigns.id]}">${esc(campaignLabel(c))}</option>`).join('');
-        el('fCamp').innerHTML = '<option value="">Todas</option>' + state.campaigns.map(c=>`<option value="${c[MAP.campaigns.id]}">${esc(campaignLabel(c))}</option>`).join('');
-        el('p_campaign').innerHTML = campOpts;
-        el('ld_campaign').innerHTML = campOpts;
-        el('lCamp').innerHTML = el('fCamp').innerHTML;
-
-        const pieceOpts = '<option value="">(Seleccionar)</option>' + state.pieces.map(p=>`<option value="${p[MAP.pieces.id]}">${esc(pieceLabel(p))}</option>`).join('');
-        el('mPiece').innerHTML = pieceOpts;
-        el('ld_piece').innerHTML = pieceOpts;
-        el('mx_piece').innerHTML = pieceOpts;
-        el('lPiece').innerHTML = pieceOpts;
-    }
-
-    function applyPiecesFilters(){
-        const bim = el('fBim').value;           // NUEVO: se usa
-        const camp = el('fCamp').value;
-        const chan = el('fChannel').value;
-        const stat = el('fStatus').value;
-        const q = (el('fQ').value || '').toLowerCase();
-
-        const filtered = state.pieces.filter(r => {
-            const campaign = state.campaigns.find(c => String(c[MAP.campaigns.id]) === String(r[MAP.pieces.campaign_id]));
-            if (bim && String(campaign?.[MAP.campaigns.bimester] ?? '') !== String(bim)) return false;
-            if (camp && String(r[MAP.pieces.campaign_id] ?? '') !== String(camp)) return false;
-            if (chan && String(r[MAP.pieces.channel] ?? '') !== String(chan)) return false;
-            if (stat && String(r[MAP.pieces.status] ?? '') !== String(stat)) return false;
-            if (q && !JSON.stringify(r).toLowerCase().includes(q)) return false;
-            return true;
-        });
-
-        renderPieces(filtered);
-        updateSelects();
-    }
 
     function applyLeadsFilters(){
       const camp = el('lCamp').value;
       const piece = el('lPiece').value;
-      const q = (el('lQ').value || '').toLowerCase();
+      const q = el('lQ').value.trim().toLowerCase();
 
       const filtered = state.leads.filter(r => {
-        if (camp && String(r[MAP.leads.campaign_id] ?? '') !== String(camp)) return false;
-        if (piece && String(r[MAP.leads.piece_id] ?? '') !== String(piece)) return false;
-        if (q && !JSON.stringify(r).toLowerCase().includes(q)) return false;
+        if(camp && String(r[MAP.leads.campaign_id] || '') !== String(camp)) return false;
+        if(piece && String(r[MAP.leads.piece_id] || '') !== String(piece)) return false;
+        if(q){
+          const blob = JSON.stringify({
+            full_name: r[MAP.leads.full_name],
+            phone: r[MAP.leads.phone],
+            email: r[MAP.leads.email],
+            source: r[MAP.leads.source_detail],
+            triage: r[MAP.leads.triage_status]
+          }).toLowerCase();
+          if(!blob.includes(q)) return false;
+        }
         return true;
       });
 
       renderLeads(filtered);
     }
 
-    function bindFilters(){
-        el('btnNewCampaign').onclick = () => openCampaignModal();
-
-        el('btnNewPiece').onclick = () => { resetPieceForm(); new bootstrap.Modal(el('pieceModal')).show(); };
-        el('btnNewMetric').onclick = () => { resetMetricForm(); new bootstrap.Modal(el('metricModal')).show(); };
-        el('btnNewLead').onclick = () => { resetLeadForm(); new bootstrap.Modal(el('leadModal')).show(); };
-        
-        ['fCamp','fChannel','fStatus','fBim'].forEach(id => el(id)?.addEventListener('change', applyPiecesFilters));
-        el('fQ')?.addEventListener('keyup', applyPiecesFilters);
-
-        ['lCamp','lPiece'].forEach(id => el(id)?.addEventListener('change', applyLeadsFilters));
-        el('lQ')?.addEventListener('keyup', applyLeadsFilters);
-        
-        el('btnReloadCampaigns').onclick = loadCampaigns;
-        el('btnReloadPieces').onclick = loadPieces;
-        el('btnReloadMetrics').onclick = loadMetrics;
-        el('btnReloadLeads').onclick = loadLeads;
+    // --- SELECTS & UI ---
+    function campaignLabel(c){
+      const b = c[MAP.campaigns.bimester] ?? '';
+      const s = fmtDate(c[MAP.campaigns.start]);
+      const e = fmtDate(c[MAP.campaigns.end]);
+      return `${c[MAP.campaigns.name]} · ${b} · ${s}→${e}`.trim();
     }
 
-    // Start
+    function pieceLabel(p){
+      const n = p[MAP.pieces.name] ?? '';
+      const fmt = p[MAP.pieces.format] ?? '';
+      return `${n} · ${fmt}`.trim();
+    }
+
+    function updateSelects(){
+      // campaigns
+      const campOptionsAll = '<option value="">Todas</option>' + state.campaigns.map(c => `<option value="${c[MAP.campaigns.id]}">${esc(campaignLabel(c))}</option>`).join('');
+      const campOptionsPick = '<option value="">(Sin campaña)</option>' + state.campaigns.map(c => `<option value="${c[MAP.campaigns.id]}">${esc(campaignLabel(c))}</option>`).join('');
+
+      el('fCamp').innerHTML = campOptionsAll;
+      el('p_campaign').innerHTML = campOptionsPick;
+      el('ld_campaign').innerHTML = campOptionsPick;
+      el('lCamp').innerHTML = campOptionsAll;
+
+      // pieces
+      const pieceOptionsPick = '<option value="">(Sin pieza)</option>' + state.pieces.map(p => `<option value="${p[MAP.pieces.id]}">${esc(pieceLabel(p))}</option>`).join('');
+      const pieceOptionsAll = '<option value="">Todas</option>' + state.pieces.map(p => `<option value="${p[MAP.pieces.id]}">${esc(pieceLabel(p))}</option>`).join('');
+
+      el('mx_piece').innerHTML = '<option value="">(Seleccionar)</option>' + state.pieces.map(p => `<option value="${p[MAP.pieces.id]}">${esc(pieceLabel(p))}</option>`).join('');
+      el('mPiece').innerHTML = pieceOptionsAll;
+      el('ld_piece').innerHTML = pieceOptionsPick;
+      el('lPiece').innerHTML = pieceOptionsAll;
+
+      // channels (nullable)
+      const chBase = '<option value="">(Sin canal)</option>';
+      const chOpts = state.channels.length
+        ? chBase + state.channels.map(ch => `<option value="${ch[MAP.channels.id]}">${esc(ch[MAP.channels.name] ?? ch[MAP.channels.id])}</option>`).join('')
+        : chBase + `<option value="" disabled>(No se pudo cargar tabla channels)</option>`;
+      el('p_channel_id').innerHTML = chOpts;
+    }
+
+    function clearCampaignForm(){
+      el('c_id').value = '';
+      el('c_name').value = '';
+      el('c_bim').value = 'B1';
+      el('c_status').value = '';
+      el('c_start').value = '';
+      el('c_end').value = '';
+      el('c_objective').value = '';
+      el('c_anchor_event').value = '';
+      el('c_lead_magnet').value = '';
+      el('c_budget').value = 0;
+    }
+
+    function clearPieceForm(){
+      el('p_id').value = '';
+      el('p_campaign').value = '';
+      el('p_channel_id').value = '';
+      el('p_name').value = '';
+      el('p_format').value = '';
+      el('p_status').value = '';
+      el('p_pillar').value = '';
+      el('p_visual_style').value = '';
+      el('p_hook_copy').value = '';
+      el('p_cta').value = '';
+      el('p_ad_id').value = '';
+    }
+
+    function clearMetricForm(){
+      el('mx_id').value = '';
+      el('mx_piece').value = '';
+      el('mx_date').value = '';
+      el('mx_volume').value = 0;
+      el('mx_interactions').value = 0;
+      el('mx_spend').value = 0;
+    }
+
+    function clearLeadForm(){
+      el('ld_id').value = '';
+      el('ld_full_name').value = '';
+      el('ld_phone').value = '';
+      el('ld_email').value = '';
+      el('ld_source_detail').value = '';
+      el('ld_campaign').value = '';
+      el('ld_piece').value = '';
+      el('ld_triage_status').value = 'nuevo';
+      el('ld_triage_notes').value = '';
+      el('ld_clinical_outcome').value = 'pendiente';
+      el('ld_appointment_date').value = '';
+      el('ld_ticket_value').value = 0;
+      el('ld_is_retained').checked = false;
+    }
+
+    function bindUIOnce(){
+      state.bound = true;
+
+      // top buttons
+      el('btnNewCampaign').onclick = () => { clearCampaignForm(); openCampaignModal(null); };
+      el('btnNewPiece').onclick = () => { clearPieceForm(); new bootstrap.Modal(el('pieceModal')).show(); };
+      el('btnNewMetric').onclick = () => { clearMetricForm(); new bootstrap.Modal(el('metricModal')).show(); };
+      el('btnNewLead').onclick = () => { clearLeadForm(); new bootstrap.Modal(el('leadModal')).show(); };
+
+      // reload buttons
+      el('btnReloadCampaigns').onclick = async () => { await runWithLoading(loadCampaigns); updateSelects(); };
+      el('btnReloadPieces').onclick = async () => { await runWithLoading(loadPieces); updateSelects(); applyPiecesFilters(); };
+      el('btnReloadMetrics').onclick = async () => { await runWithLoading(loadMetrics); };
+      el('btnReloadLeads').onclick = async () => { await runWithLoading(loadLeads); applyLeadsFilters(); };
+
+      // filters
+      el('fCamp').addEventListener('change', applyPiecesFilters);
+      el('fPieceStatus').addEventListener('keyup', applyPiecesFilters);
+      el('fQ').addEventListener('keyup', applyPiecesFilters);
+
+      el('lCamp').addEventListener('change', applyLeadsFilters);
+      el('lPiece').addEventListener('change', applyLeadsFilters);
+      el('lQ').addEventListener('keyup', applyLeadsFilters);
+
+      // metrics filter
+      el('btnReloadMetrics').onclick = async () => { await runWithLoading(loadMetrics); };
+
+      // If we change campaign/pieces, keep selects consistent
+      el('p_campaign').addEventListener('change', () => {});
+      el('ld_campaign').addEventListener('change', () => {});
+    }
+
     init();
   </script>
 </body>
 </html>
-
