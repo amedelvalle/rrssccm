@@ -1,1321 +1,1305 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="es">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Evaluación del Regente | Sistema</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Grupo CCM | Plan Digital 2026</title>
 
-  <!-- Bootstrap CSS -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" rel="stylesheet" />
-
-  <!-- Supabase -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-  <!-- html2pdf (PDF export) -->
-  <script src="https://cdn.jsdelivr.net/npm/html2pdf.js@0.10.1/dist/html2pdf.bundle.min.js"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
 
   <style>
-    :root{ --card-radius: 14px; }
-    body { background:#f6f7fb; }
-    .app-shell { max-width: 1200px; }
-    .card { border-radius: var(--card-radius); border: 1px solid rgba(0,0,0,.06); }
-    .soft { color:#6c757d; }
-    .mono { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; }
-    .pill { border-radius: 999px; }
-    .question-card { background:#fff; border:1px solid rgba(0,0,0,.06); border-radius: 12px; padding: 14px; }
-    .q-meta { font-size:.85rem; color:#6c757d; }
-    .sticky-actions { position: sticky; bottom: 0; z-index: 20; }
-    .kpi { background:#fff; border:1px solid rgba(0,0,0,.06); border-radius: 14px; padding: 14px; }
-    .kpi .value { font-size: 1.6rem; font-weight: 700; }
-    .kpi .label { font-size:.85rem; color:#6c757d; }
-    .divider { height: 1px; background: rgba(0,0,0,.08); margin: 12px 0; }
-    .btn { border-radius: 10px; }
-
-    .score-pill { font-weight: 700; padding: .35rem .6rem; border-radius: 999px; font-size: .85rem; }
-    .score-5 { background: rgba(25,135,84,.12); color:#198754; border:1px solid rgba(25,135,84,.22); }
-    .score-4 { background: rgba(13,110,253,.10); color:#0d6efd; border:1px solid rgba(13,110,253,.22); }
-    .score-3 { background: rgba(255,193,7,.14); color:#b07a00; border:1px solid rgba(255,193,7,.30); }
-    .score-2 { background: rgba(253,126,20,.14); color:#b45500; border:1px solid rgba(253,126,20,.30); }
-    .score-1 { background: rgba(220,53,69,.14); color:#dc3545; border:1px solid rgba(220,53,69,.28); }
-    .score-ne { background: rgba(108,117,125,.14); color:#6c757d; border:1px solid rgba(108,117,125,.26); }
-
-    .sig-box{
-      border: 1px dashed rgba(0,0,0,.35);
-      border-radius: 12px;
-      padding: 12px;
-      min-height: 80px;
-      background: #fafafa;
+    :root{
+      --primary: #2563eb;
+      --primary-hover: #1d4ed8;
+      --bg-body: #f3f4f6;
+      --bg-card: #ffffff;
+      --text-main: #1f2937;
+      --text-muted: #6b7280;
+      --border-color: #e5e7eb;
+      --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+      --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+      --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+      --r: 12px;
     }
 
-    /* Header fijo */
-    .app-header-sticky{
-      background:#f6f7fb;
-      padding-top: 10px;
-      padding-bottom: 10px;
-      z-index: 50;
-      border-bottom: 1px solid rgba(0,0,0,.06);
+    body{ 
+      background: var(--bg-body); 
+      font-family: 'Inter', sans-serif; 
+      color: var(--text-main);
+      -webkit-font-smoothing: antialiased;
     }
 
-    /* Tabs */
-    .nav-pills .nav-link{ border-radius: 999px; }
-    .nav-pills .nav-link.active{ background:#0d6efd; }
-
-    /* Spinner min */
-    .mini-spin{ width: 1rem; height: 1rem; border-width: 2px; }
-
-    /* =========================
-       PDF Export Mode (A4)
-       ========================= */
-    body.is-exporting #pdfArea{
-      display:block !important;
-      position: fixed;
-      left: -10000px;   /* fuera de pantalla */
-      top: 0;
-      width: auto;
-      height: auto;
-      overflow: visible;
+    .navbar-ccm {
+      background: rgba(255, 255, 255, 0.9);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--border-color);
+      box-shadow: var(--shadow-sm);
+      padding: 0.75rem 0;
     }
+    .brand-title { font-weight: 700; font-size: 1rem; color: #111827; letter-spacing: -0.025em; }
+    .brand-sub { font-size: 0.75rem; font-weight: 500; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.05em; }
+    .brand-icon { width: 32px; height: 32px; background: #eff6ff; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--primary); }
 
-    body.is-exporting #pdfReport{
-      width: 210mm;          /* A4 */
-      max-width: 210mm;
-      background: #fff;
-      padding: 12mm;         /* margen interno consistente */
-      border: none;
-      border-radius: 0;
-      box-shadow: none !important;
-      font-size: 12px;
+    .app-shell{ max-width: 1400px; }
+    .cardx { 
+      background: var(--bg-card); 
+      border: 1px solid var(--border-color); 
+      border-radius: var(--r); 
+      box-shadow: var(--shadow-sm); 
+      overflow: hidden; 
+      transition: box-shadow 0.2s;
     }
+    .cardx:hover { box-shadow: var(--shadow-md); }
 
-    body.is-exporting #pdfReport .card{
-      box-shadow: none !important;
+    .section-title { font-weight: 700; color: #111827; letter-spacing: -0.025em; font-size: 1.25rem; }
+    .mini { color: var(--text-muted); font-size: 0.875rem; }
+    .mono { font-family: 'SFMono-Regular', Consolas, 'Liberation Mono', Menlo, monospace; font-size: 0.85em; color: var(--primary); background: #eff6ff; padding: 2px 6px; border-radius: 4px; }
+
+    .btn { padding: 0.5rem 1rem; border-radius: 8px; font-weight: 500; font-size: 0.875rem; border: 1px solid transparent; transition: all 0.2s; }
+    .btn-primary { background: var(--primary); border-color: var(--primary); box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05); }
+    .btn-primary:hover { background: var(--primary-hover); border-color: var(--primary-hover); transform: translateY(-1px); }
+    .btn-light { background: #fff; border-color: var(--border-color); color: #374151; }
+    .btn-light:hover { background: #f9fafb; border-color: #d1d5db; color: #111827; }
+    
+    .nav-tabs { border-bottom: 1px solid var(--border-color); gap: 1rem; }
+    .nav-tabs .nav-link { border: none; color: var(--text-muted); font-weight: 500; padding: 0.75rem 0.25rem; background: transparent; transition: color 0.2s; }
+    .nav-tabs .nav-link:hover { color: var(--primary); }
+    .nav-tabs .nav-link.active { color: var(--primary); border-bottom: 2px solid var(--primary); background: transparent; }
+
+    .table thead th {
+      background: #f9fafb;
+      color: #6b7280;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      border-bottom: 1px solid var(--border-color);
+      padding: 0.75rem 1rem;
     }
+    .table tbody td { padding: 0.875rem 1rem; border-bottom: 1px solid var(--border-color); vertical-align: middle; font-size: 0.875rem; }
+    .table-hover tbody tr:hover { background: #f9fafb; }
+    
+    .badge-status { padding: 4px 10px; border-radius: 99px; font-size: 0.75rem; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; }
+    .badge-status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+    .st-draft { background: #f3f4f6; color: #4b5563; }
+    .st-scheduled { background: #eff6ff; color: #2563eb; }
+    .st-published { background: #ecfdf5; color: #059669; }
+    .st-paused { background: #fffbeb; color: #d97706; }
+    .st-closed { background: #fef2f2; color: #dc2626; }
 
-    body.is-exporting .kpi,
-    body.is-exporting .sig-box,
-    body.is-exporting #pdfObsList > div,
-    body.is-exporting #pdfSectionBars > div,
-    body.is-exporting .avoid-break{
-      break-inside: avoid;
-      page-break-inside: avoid;
-    }
+    .form-control, .form-select { border-radius: 8px; border-color: var(--border-color); padding: 0.6rem 0.75rem; font-size: 0.875rem; }
+    .form-control:focus, .form-select:focus { border-color: var(--primary); box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.1); }
 
-    body.is-exporting .progress{ height: 8px !important; }
-    body.is-exporting .badge{ font-size: 11px; }
-
-    @page{
-      size: A4;
-      margin: 10mm;
-    }
+    .loading { position: fixed; inset: 0; background: rgba(255,255,255,0.8); backdrop-filter: blur(2px); display: none; align-items: center; justify-content: center; z-index: 3000; }
+    .loading .box { background: white; padding: 20px 40px; border-radius: 12px; box-shadow: var(--shadow-lg); border: 1px solid var(--border-color); display: flex; flex-direction: column; align-items: center; gap: 10px; }
+    
+    .alert-stack { position: fixed; top: 80px; right: 20px; z-index: 2500; display: flex; flex-direction: column; gap: 10px; width: 380px; }
+    .alert-card { background: white; border: 1px solid var(--border-color); border-left: 4px solid var(--primary); border-radius: 8px; box-shadow: var(--shadow-md); padding: 12px 16px; display: flex; gap: 12px; align-items: start; animation: slideIn 0.3s ease; }
+    .alert-card.success { border-left-color: #059669; }
+    .alert-card.danger { border-left-color: #dc2626; }
+    
+    @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+    .hidden { display: none !important; }
+    .truncate-2 { display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
   </style>
 </head>
 
 <body>
-  <div class="app-header-sticky sticky-top">
-    <div class="container app-shell">
-      <div class="d-flex flex-wrap align-items-center justify-content-between gap-2">
-        <div class="d-flex align-items-center gap-2">
-          <div class="fw-bold">Evaluación del Regente</div>
-          <span id="envBadge" class="badge text-bg-light pill">Cargando…</span>
+  <div class="alert-stack" id="alertStack"></div>
+
+  <nav class="navbar navbar-ccm sticky-top">
+    <div class="container-fluid app-shell px-4">
+      <div class="d-flex align-items-center gap-3">
+        <div class="brand-icon"><i class="bi bi-grid-fill"></i></div>
+        <div class="min-w-0">
+          <div class="brand-title">Grupo CCM</div>
+          <div class="brand-sub">Plan Digital 2026</div>
         </div>
-        <div class="d-flex align-items-center gap-2">
-          <span id="userBadge" class="badge text-bg-light pill">No autenticado</span>
-          <button id="btnLogout" class="btn btn-sm btn-outline-secondary d-none"><i class="bi bi-box-arrow-right"></i> Salir</button>
+      </div>
+
+      <div class="ms-auto d-flex align-items-center gap-2">
+        <span class="badge bg-light text-dark border fw-normal py-2 px-3 rounded-pill" id="whoami">Cargando...</span>
+        <button class="btn btn-light btn-sm" id="btnLogout" disabled><i class="bi bi-box-arrow-right me-1"></i>Salir</button>
+      </div>
+    </div>
+  </nav>
+
+  <div class="container-fluid app-shell my-5 px-4">
+
+    <div id="loginView" class="cardx p-5 mx-auto" style="max-width: 480px;">
+      <div class="text-center mb-4">
+        <div class="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-circle mb-3" style="width: 48px; height: 48px;"><i class="bi bi-shield-lock-fill fs-5"></i></div>
+        <h4 class="fw-bold">Iniciar Sesión</h4>
+        <p class="text-muted small">Accede al panel de control de Marketing</p>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label fw-semibold small">Correo electrónico</label>
+        <input type="email" class="form-control" id="loginEmail" placeholder="nombre@grupoccm.com" autocomplete="username">
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label fw-semibold small">Contraseña</label>
+        <input type="password" class="form-control" id="loginPass" placeholder="••••••••" autocomplete="current-password">
+      </div>
+
+      <div class="d-flex justify-content-between align-items-center mb-4">
+        <button class="btn btn-link px-0 small text-decoration-none" id="btnForgotPass" type="button">¿Olvidaste tu clave?</button>
+      </div>
+
+      <button class="btn btn-primary w-100 py-2" id="btnSignIn">Ingresar al Sistema</button>
+      <div class="text-center mt-3 small text-muted">Powered by Supabase</div>
+    </div>
+
+    <div id="appView" class="hidden">
+      <div class="d-flex flex-wrap gap-3 align-items-center justify-content-between mb-4">
+        <div>
+          <h3 class="fw-bold mb-1">Panel de Control</h3>
+          <div class="mini">Gestión integral de campañas y resultados.</div>
+        </div>
+
+        <div class="d-flex flex-wrap gap-2">
+          <button class="btn btn-light bg-white" id="btnSeed"><i class="bi bi-database-add me-2 text-muted"></i>Seed Inicial</button>
+          <div class="vr mx-2 text-muted"></div>
+          <button class="btn btn-primary" id="btnNewCampaign"><i class="bi bi-plus-lg me-1"></i>Campaña</button>
+          <button class="btn btn-primary" id="btnNewPiece"><i class="bi bi-plus-lg me-1"></i>Pieza</button>
+          <button class="btn btn-primary" id="btnNewMetric"><i class="bi bi-plus-lg me-1"></i>Métrica</button>
+          <button class="btn btn-primary" id="btnNewLead"><i class="bi bi-plus-lg me-1"></i>Lead</button>
+        </div>
+      </div>
+
+      <ul class="nav nav-tabs mb-4" role="tablist">
+        <li class="nav-item" role="presentation">
+          <button class="nav-link active" data-bs-toggle="tab" data-bs-target="#tabCampaigns" type="button" role="tab">
+            <i class="bi bi-calendar-range me-2"></i>Campañas
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabPieces" type="button" role="tab">
+            <i class="bi bi-grid me-2"></i>Contenido (Piezas)
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabMetrics" type="button" role="tab">
+            <i class="bi bi-bar-chart me-2"></i>Métricas
+          </button>
+        </li>
+        <li class="nav-item" role="presentation">
+          <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabLeads" type="button" role="tab">
+            <i class="bi bi-people me-2"></i>Leads & CRM
+          </button>
+        </li>
+      </ul>
+
+      <div class="tab-content">
+
+        <div class="tab-pane fade show active" id="tabCampaigns" role="tabpanel">
+          <div class="cardx">
+            <div class="p-3 border-bottom d-flex align-items-center justify-content-between bg-light bg-opacity-50">
+              <span class="fw-bold small text-uppercase text-muted tracking-wide">Listado de Campañas</span>
+              <button class="btn btn-sm btn-white border" id="btnReloadCampaigns"><i class="bi bi-arrow-clockwise"></i></button>
+            </div>
+            <div class="table-responsive">
+              <table class="table table-hover mb-0 align-middle" id="tblCampaigns">
+                <thead>
+                  <tr>
+                    <th>Código</th>
+                    <th>Bimestre</th>
+                    <th>Año</th>
+                    <th>Nombre</th>
+                    <th>Objetivo</th>
+                    <th>Vigencia</th>
+                    <th class="text-end">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="tabPieces" role="tabpanel">
+          <div class="cardx">
+            <div class="p-4 border-bottom">
+              <div class="row g-3">
+                <div class="col-6 col-md-2">
+                  <label class="form-label mini fw-bold">Bimestre</label>
+                  <select class="form-select" id="fBim">
+                    <option value="">Todos</option>
+                    <option value="1">B1</option><option value="2">B2</option><option value="3">B3</option>
+                    <option value="4">B4</option><option value="5">B5</option><option value="6">B6</option>
+                  </select>
+                </div>
+                <div class="col-6 col-md-3">
+                  <label class="form-label mini fw-bold">Campaña</label>
+                  <select class="form-select" id="fCamp"></select>
+                </div>
+                <div class="col-6 col-md-2">
+                  <label class="form-label mini fw-bold">Canal</label>
+                  <select class="form-select" id="fChannel">
+                    <option value="">Todos</option>
+                    <option>Instagram</option><option>Facebook</option><option>YouTube</option><option>Spotify</option><option>Blog</option><option>WhatsApp</option>
+                  </select>
+                </div>
+                <div class="col-6 col-md-2">
+                  <label class="form-label mini fw-bold">Estado</label>
+                  <select class="form-select" id="fStatus">
+                    <option value="">Todos</option>
+                    <option>Borrador</option><option>Programado</option><option>Publicado</option><option>Pausado</option>
+                  </select>
+                </div>
+                <div class="col-12 col-md-3">
+                  <label class="form-label mini fw-bold">Buscar</label>
+                  <div class="input-group">
+                    <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-muted"></i></span>
+                    <input class="form-control border-start-0 ps-0" id="fQ" placeholder="Buscar...">
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="table table-hover mb-0 align-middle" id="tblPieces">
+                <thead>
+                  <tr>
+                    <th>Código</th>
+                    <th>Campaña</th>
+                    <th>Canal</th>
+                    <th>Formato</th>
+                    <th>Embudo</th>
+                    <th>Estado</th>
+                    <th>Hook</th>
+                    <th>Fecha</th>
+                    <th class="text-end">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+            <div class="p-2 border-top bg-light text-end">
+                <button class="btn btn-sm btn-link text-decoration-none text-muted" id="btnReloadPieces"><i class="bi bi-arrow-clockwise me-1"></i>Actualizar tabla</button>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="tabMetrics" role="tabpanel">
+          <div class="cardx">
+            <div class="p-4 border-bottom">
+              <div class="row g-3">
+                <div class="col-12 col-md-5">
+                  <label class="form-label mini fw-bold">Pieza de Contenido</label>
+                  <select class="form-select" id="mPiece"></select>
+                </div>
+                <div class="col-6 col-md-3">
+                  <label class="form-label mini fw-bold">Desde</label>
+                  <input type="date" class="form-control" id="mFrom">
+                </div>
+                <div class="col-6 col-md-3">
+                  <label class="form-label mini fw-bold">Hasta</label>
+                  <input type="date" class="form-control" id="mTo">
+                </div>
+                 <div class="col-12 col-md-1 d-flex align-items-end">
+                    <button class="btn btn-light w-100" id="btnReloadMetrics"><i class="bi bi-arrow-clockwise"></i></button>
+                 </div>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="table table-hover mb-0 align-middle" id="tblMetrics">
+                <thead class="text-center">
+                  <tr>
+                    <th class="text-start">Pieza</th>
+                    <th>Fecha</th>
+                    <th>Impres.</th>
+                    <th>Alcance</th>
+                    <th>Plays</th>
+                    <th>Leads</th>
+                    <th>Citas</th>
+                    <th>Showups</th>
+                    <th class="text-end">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody class="text-center"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <div class="tab-pane fade" id="tabLeads" role="tabpanel">
+          <div class="cardx">
+            <div class="p-4 border-bottom">
+              <div class="row g-3">
+                <div class="col-12 col-md-4">
+                  <label class="form-label mini fw-bold">Campaña</label>
+                  <select class="form-select" id="lCamp"></select>
+                </div>
+                <div class="col-12 col-md-4">
+                  <label class="form-label mini fw-bold">Pieza</label>
+                  <select class="form-select" id="lPiece"></select>
+                </div>
+                <div class="col-12 col-md-4">
+                  <label class="form-label mini fw-bold">Buscar</label>
+                  <input class="form-control" id="lQ" placeholder="Nombre, teléfono...">
+                </div>
+              </div>
+            </div>
+
+            <div class="table-responsive">
+              <table class="table table-hover mb-0 align-middle" id="tblLeads">
+                <thead>
+                  <tr>
+                    <th>Código</th>
+                    <th>Fecha</th>
+                    <th>Origen</th>
+                    <th>Contexto</th>
+                    <th>Nombre</th>
+                    <th>Teléfono</th>
+                    <th>Estado</th>
+                    <th class="text-end">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody></tbody>
+              </table>
+            </div>
+             <div class="p-2 border-top bg-light text-end">
+                <button class="btn btn-sm btn-link text-decoration-none text-muted" id="btnReloadLeads"><i class="bi bi-arrow-clockwise me-1"></i>Actualizar tabla</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="forgotPassModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content cardx">
+        <div class="modal-header border-0 pb-0">
+          <h5 class="modal-title fw-bold">Recuperar Acceso</h5>
+          <button class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <p class="text-muted small">Ingresa tu correo y te enviaremos un enlace mágico.</p>
+          <input type="email" class="form-control mb-3" id="fp_email" placeholder="tu@correo.com">
+          <div class="d-flex justify-content-end gap-2">
+            <button class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+            <button class="btn btn-primary" id="btnSendResetEmail">Enviar enlace</button>
+          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="container app-shell my-4">
-    <!-- Login -->
-    <div id="loginCard" class="card shadow-sm mb-3">
-      <div class="card-body">
-        <div class="row g-3 align-items-end">
-          <div class="col-md-4">
-            <label class="form-label">Correo</label>
-            <input id="loginEmail" class="form-control" type="email" placeholder="correo@dominio.com" />
-          </div>
-          <div class="col-md-4">
-            <label class="form-label">Contraseña</label>
-            <input id="loginPass" class="form-control" type="password" placeholder="••••••••" />
-          </div>
-          <div class="col-md-4 d-grid">
-            <button id="btnLogin" class="btn btn-primary">
-              <span class="d-inline-flex align-items-center gap-2">
-                <span>Ingresar</span>
-                <span id="loginSpin" class="spinner-border mini-spin d-none" role="status" aria-hidden="true"></span>
-              </span>
-            </button>
-          </div>
+  <div class="modal fade" id="setNewPassModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content cardx">
+        <div class="modal-header border-0 pb-0">
+          <h5 class="modal-title fw-bold">Nueva Contraseña</h5>
         </div>
-        <div id="loginMsg" class="mt-3 small"></div>
-      </div>
-    </div>
-
-    <!-- App -->
-    <div id="appRoot" class="d-none">
-      <div class="card shadow-sm">
-        <div class="card-body">
-          <ul class="nav nav-pills gap-2" id="mainTabs">
-            <li class="nav-item"><button class="nav-link active" data-tab="tabEval"><i class="bi bi-ui-checks"></i> Evaluación</button></li>
-            <li class="nav-item"><button class="nav-link" data-tab="tabDash"><i class="bi bi-bar-chart"></i> Resumen</button></li>
-            <li class="nav-item"><button class="nav-link" data-tab="tabHistory"><i class="bi bi-clock-history"></i> Historial</button></li>
-          </ul>
-
-          <div class="divider"></div>
-
-          <!-- TAB: Evaluación -->
-          <div id="tabEval" class="tab-pane">
-            <div class="row g-3">
-              <div class="col-lg-4">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="d-flex justify-content-between align-items-start">
-                      <div>
-                        <div class="fw-bold">Evaluación actual</div>
-                        <div id="evalMeta" class="small soft">—</div>
-                      </div>
-                      <span id="statusBadge" class="badge text-bg-light pill">—</span>
-                    </div>
-
-                    <div class="divider"></div>
-
-                    <div class="small soft">Objetivo</div>
-                    <div class="fw-semibold">Evaluar desempeño y cumplimiento del Regente</div>
-
-                    <div class="divider"></div>
-
-                    <div class="d-grid gap-2">
-                      <button id="btnSubmit" class="btn btn-success" disabled>
-                        <i class="bi bi-check2-circle"></i> Finalizar (Enviar)
-                      </button>
-                      <button id="btnDraft" class="btn btn-outline-primary" disabled>
-                        <i class="bi bi-save2"></i> Guardar borrador
-                      </button>
-                      <button id="btnPDFHere" class="btn btn-outline-secondary" disabled>
-                        <i class="bi bi-filetype-pdf"></i> Descargar PDF (Finalizada)
-                      </button>
-                      <div id="pdfHint" class="small soft">
-                        Para generar el PDF, la evaluación debe estar <b>Finalizada</b>.
-                      </div>
-                    </div>
-
-                    <div class="divider"></div>
-                    <div class="small soft">Mensaje</div>
-                    <div id="workMsg" class="small">—</div>
-                  </div>
-                </div>
-
-                <div class="card mt-3">
-                  <div class="card-body">
-                    <div class="fw-bold">Filtros</div>
-                    <div class="small soft">Secciones y búsqueda</div>
-                    <div class="divider"></div>
-
-                    <label class="form-label small">Sección</label>
-                    <select id="filterSection" class="form-select">
-                      <option value="">Todas</option>
-                    </select>
-
-                    <label class="form-label small mt-2">Buscar pregunta</label>
-                    <input id="filterText" class="form-control" placeholder="Palabra clave…" />
-
-                    <div class="d-grid mt-3">
-                      <button id="btnApplyFilters" class="btn btn-outline-secondary">
-                        <i class="bi bi-funnel"></i> Aplicar
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-              </div>
-
-              <div class="col-lg-8">
-                <div id="questionList" class="d-grid gap-3">
-                  <!-- preguntas -->
-                </div>
-              </div>
-            </div>
-
-            <div class="sticky-actions mt-3">
-              <div class="card shadow-sm">
-                <div class="card-body d-flex flex-wrap justify-content-between align-items-center gap-2">
-                  <div class="small soft">
-                    <i class="bi bi-info-circle"></i> Guarda borrador para continuar luego. Finaliza cuando todo esté completo.
-                  </div>
-                  <div class="d-flex gap-2">
-                    <button id="btnDraft2" class="btn btn-outline-primary" disabled><i class="bi bi-save2"></i> Guardar borrador</button>
-                    <button id="btnSubmit2" class="btn btn-success" disabled><i class="bi bi-check2-circle"></i> Finalizar</button>
-                    <button id="btnPDF" class="btn btn-outline-secondary" disabled><i class="bi bi-filetype-pdf"></i> PDF</button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-          </div><!-- /tabEval -->
-
-          <!-- TAB: Dashboard -->
-          <div id="tabDash" class="tab-pane d-none">
-            <div class="row g-3">
-              <div class="col-lg-8">
-                <div class="row g-3">
-                  <div class="col-md-4">
-                    <div class="kpi">
-                      <div class="label">Nota ponderada (0–100)</div>
-                      <div id="kpiScore" class="value">—</div>
-                      <div id="kpiQual" class="small soft">—</div>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="kpi">
-                      <div class="label">Preguntas respondidas</div>
-                      <div id="kpiAnswered" class="value">—</div>
-                      <div class="small soft">de <span id="kpiTotal">—</span></div>
-                    </div>
-                  </div>
-                  <div class="col-md-4">
-                    <div class="kpi">
-                      <div class="label">Críticas ≤ 2</div>
-                      <div id="kpiCritical" class="value">—</div>
-                      <div class="small soft">Requieren atención</div>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="card mt-3">
-                  <div class="card-body">
-                    <div class="fw-bold">Promedios por sección</div>
-                    <div class="small soft">Peso aplicado por sección</div>
-                    <div class="divider"></div>
-                    <div id="sectionBars" class="d-grid gap-2"></div>
-                  </div>
-                </div>
-
-                <div class="card mt-3">
-                  <div class="card-body">
-                    <div class="fw-bold">Observaciones</div>
-                    <div class="small soft">Preguntas críticas y evidencias registradas</div>
-                    <div class="divider"></div>
-                    <div id="obsList" class="d-grid gap-2"></div>
-                  </div>
-                </div>
-              </div>
-
-              <div class="col-lg-4">
-                <div class="card">
-                  <div class="card-body">
-                    <div class="fw-bold">Datos</div>
-                    <div class="small soft">Evaluado / Fecha / Laboratorio</div>
-                    <div class="divider"></div>
-                    <div class="small"><b>Evaluado:</b> <span id="dashEvaluatee">—</span></div>
-                    <div class="small"><b>Fecha:</b> <span id="dashDate">—</span></div>
-                    <div class="small"><b>Laboratorio:</b> <span id="dashLab">—</span></div>
-                    <div class="divider"></div>
-                    <div class="small soft">Acciones</div>
-                    <div class="d-grid gap-2 mt-2">
-                      <button id="btnRefreshDash" class="btn btn-outline-secondary"><i class="bi bi-arrow-clockwise"></i> Actualizar</button>
-                      <button id="btnPDFDash" class="btn btn-outline-secondary" disabled><i class="bi bi-filetype-pdf"></i> PDF</button>
-                    </div>
-                  </div>
-                </div>
-
-                <div class="card mt-3">
-                  <div class="card-body">
-                    <div class="fw-bold">Firma</div>
-                    <div class="small soft">Evaluador</div>
-                    <div class="divider"></div>
-                    <div class="sig-box">
-                      <div id="sigName" class="fw-semibold">—</div>
-                      <div id="sigRole" class="small soft">—</div>
-                      <div id="sigDate" class="small soft">—</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div><!-- /tabDash -->
-
-          <!-- TAB: Historial -->
-          <div id="tabHistory" class="tab-pane d-none">
-            <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 mb-2">
-              <div>
-                <div class="fw-bold">Historial</div>
-                <div class="small soft">Evaluaciones finalizadas</div>
-              </div>
-              <button id="btnReloadHistory" class="btn btn-outline-secondary btn-sm"><i class="bi bi-arrow-clockwise"></i> Recargar</button>
-            </div>
-            <div id="historyList" class="d-grid gap-2"></div>
-          </div><!-- /tabHistory -->
-
+        <div class="modal-body">
+          <div class="mb-3">
+             <label class="form-label small fw-bold">Contraseña nueva</label>
+             <input type="password" class="form-control" id="np1">
+          </div>
+          <div class="mb-4">
+             <label class="form-label small fw-bold">Confirmar</label>
+             <input type="password" class="form-control" id="np2">
+          </div>
+          <button class="btn btn-primary w-100" id="btnSetNewPass">Actualizar Password</button>
         </div>
       </div>
     </div>
+  </div>
 
-    <!-- PDF (oculto) -->
-    <div id="pdfArea" style="display:none;">
-      <div id="pdfReport">
-        <div class="d-flex justify-content-between align-items-start">
-          <div>
-            <div class="h5 mb-1">Resumen de Evaluación del Regente</div>
-            <div class="soft">Generado por el sistema (solo evaluaciones finalizadas)</div>
-          </div>
-          <div class="text-end small">
-            <div><b>Fecha:</b> <span id="pdfDate">—</span></div>
-            <div><b>Evaluado:</b> <span id="pdfEvaluatee">—</span></div>
-            <div><b>Laboratorio:</b> <span id="pdfLab">—</span></div>
-          </div>
+  <div class="modal fade" id="campaignModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content cardx">
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold" id="campaignModalTitle">Campaña</h5>
+          <button class="btn-close" data-bs-dismiss="modal"></button>
         </div>
-
-        <div class="divider"></div>
-
-        <div class="row g-2">
-          <div class="col-4">
-            <div class="kpi">
-              <div class="label">Nota ponderada</div>
-              <div id="pdfScore" class="value">—</div>
-              <div id="pdfQual" class="small soft">—</div>
-            </div>
-          </div>
-          <div class="col-4">
-            <div class="kpi">
-              <div class="label">Respondidas</div>
-              <div id="pdfAnswered" class="value">—</div>
-              <div class="small soft">de <span id="pdfTotal">—</span></div>
-            </div>
-          </div>
-          <div class="col-4">
-            <div class="kpi">
-              <div class="label">Críticas ≤ 2</div>
-              <div id="pdfCritical" class="value">—</div>
-              <div class="small soft">Atención prioritaria</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="card mt-3">
-          <div class="card-body">
-            <div class="fw-bold">Promedios por sección</div>
-            <div class="small soft">Peso aplicado por sección</div>
-            <div class="divider"></div>
-            <div id="pdfSectionBars" class="d-grid gap-2"></div>
-          </div>
-        </div>
-
-        <div class="card mt-3">
-          <div class="card-body">
-            <div class="fw-bold">Observaciones</div>
-            <div class="small soft">Críticos y evidencias</div>
-            <div class="divider"></div>
-            <div id="pdfObsList" class="d-grid gap-2"></div>
-          </div>
-        </div>
-
-        <div class="card mt-3">
-          <div class="card-body">
-            <div class="fw-bold">Firma</div>
-            <div class="small soft">Evaluador</div>
-            <div class="divider"></div>
-            <div class="sig-box">
-              <div id="pdfSigName" class="fw-semibold">—</div>
-              <div id="pdfSigRole" class="small soft">—</div>
-              <div id="pdfSigDate" class="small soft">—</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="small soft mt-3">
-          Este documento resume resultados. Para auditoría, conservar evidencias y bitácoras asociadas.
-        </div>
-      </div>
-    </div>
-
-  </div><!-- /container -->
-
-  <!-- Bootstrap JS -->
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
-  <script>
-    // =============================
-    // CONFIG: Supabase
-    // =============================
-    const SUPABASE_URL = "https://rofwgcrsfrovspiholbo.supabase.co";
-    const SUPABASE_ANON_KEY = "sb_publishable_M7gyUpsbCPRopdrmDjEeLA_SHXlnP-C";
-
-    let sb = null;
-
-    function isSupabaseConfigured(){
-      const urlOk =
-        typeof SUPABASE_URL === 'string' &&
-        SUPABASE_URL.startsWith('https://') &&
-        SUPABASE_URL.includes('.supabase.co') &&
-        !SUPABASE_URL.includes('YOURPROJECT');
-
-      const keyOk =
-        typeof SUPABASE_ANON_KEY === 'string' &&
-        SUPABASE_ANON_KEY.length > 40 &&
-        !SUPABASE_ANON_KEY.includes('YOUR_ANON_KEY');
-
-      return urlOk && keyOk;
-    }
-
-    function initSupabase(){
-      if (!isSupabaseConfigured()) return false;
-      try {
-        sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-        return true;
-      } catch (e){
-        console.error('Supabase init error:', e);
-        sb = null;
-        return false;
-      }
-    }
-
-    // =============================
-    // CONSTANTES (secciones/pesos)
-    // =============================
-    const SECTION_WEIGHTS = {
-      "Gestión y administración": 20,
-      "Regencia técnica": 25,
-      "Bioseguridad y riesgos": 20,
-      "Calidad y documentación": 20,
-      "Gestión de equipo e infraestructura": 15
-    };
-
-    const SECTION_ORDER = Object.keys(SECTION_WEIGHTS);
-
-    const QUAL_LABEL = (score100) => {
-      if (score100 >= 90) return { label: "Excelente", msg: "Desempeño sobresaliente." };
-      if (score100 >= 80) return { label: "Muy bueno", msg: "Cumple con alto estándar." };
-      if (score100 >= 70) return { label: "Bueno", msg: "Cumple, con oportunidades de mejora." };
-      if (score100 >= 60) return { label: "Regular", msg: "Requiere acciones correctivas." };
-      return { label: "Deficiente", msg: "Riesgo alto: intervención inmediata." };
-    };
-
-    // =============================
-    // ESTADO
-    // =============================
-    let currentUser = null;
-    let currentEval = null;
-    let questionBank = [];
-    let answersMap = new Map(); // question_id -> {score,evidence}
-    let lastDashboard = null;
-
-    // =============================
-    // Helpers de IDs (soporta id o evaluation_id)
-    // =============================
-    function getEvalId(){
-      return currentEval?.id ?? currentEval?.evaluation_id ?? null;
-    }
-
-    function getEvalIdColumn(){
-      // Preferimos 'id' si existe, si no usamos 'evaluation_id'
-      if (currentEval && typeof currentEval.id !== 'undefined' && currentEval.id !== null) return 'id';
-      return 'evaluation_id';
-    }
-
-    // =============================
-    // UI Helpers
-    // =============================
-    function setLoginMsg(type, text){
-      const el = document.getElementById('loginMsg');
-      el.className = `mt-3 small text-${type}`;
-      el.textContent = text || '';
-    }
-
-    function workMsg(type, text){
-      const el = document.getElementById('workMsg');
-      el.className = `small text-${type}`;
-      el.textContent = text || '';
-    }
-
-    function setStatusBadge(status){
-      const el = document.getElementById('statusBadge');
-      if (!status){
-        el.textContent = '—';
-        el.className = 'badge text-bg-light pill';
-        return;
-      }
-      let cls = 'text-bg-light';
-      if (status === 'draft') cls = 'text-bg-warning';
-      if (status === 'submitted') cls = 'text-bg-success';
-      el.textContent = status === 'submitted' ? 'Finalizada' : (status === 'draft' ? 'Borrador' : status);
-      el.className = `badge ${cls} pill`;
-    }
-
-    function setEnvBadge(){
-      const el = document.getElementById('envBadge');
-      const ok = isSupabaseConfigured();
-      el.textContent = ok ? 'Producción' : 'Config pendiente';
-      el.className = `badge ${ok ? 'text-bg-success' : 'text-bg-warning'} pill`;
-    }
-
-    function enableWorkButtons(enabled){
-      document.getElementById('btnDraft').disabled = !enabled;
-      document.getElementById('btnDraft2').disabled = !enabled;
-      document.getElementById('btnSubmit').disabled = !enabled;
-      document.getElementById('btnSubmit2').disabled = !enabled;
-
-      const allowPDF = enabled && (currentEval?.status === 'submitted');
-      document.getElementById('btnPDF').disabled = !allowPDF;
-      document.getElementById('btnPDFHere').disabled = !allowPDF;
-      document.getElementById('btnPDFDash').disabled = !allowPDF;
-    }
-
-    function switchTab(tabId){
-      for (const btn of document.querySelectorAll('#mainTabs .nav-link')) {
-        btn.classList.toggle('active', btn.dataset.tab === tabId);
-      }
-      for (const pane of document.querySelectorAll('.tab-pane')) {
-        pane.classList.toggle('d-none', pane.id !== tabId);
-      }
-    }
-
-    function switchToDashboardTab(){
-      switchTab('tabDash');
-    }
-
-    function escapeHtml(str) {
-      return String(str ?? '')
-        .replaceAll('&','&amp;')
-        .replaceAll('<','&lt;')
-        .replaceAll('>','&gt;')
-        .replaceAll('"','&quot;')
-        .replaceAll("'","&#039;");
-    }
-
-    // =============================
-    // AUTH
-    // =============================
-    async function login(email, password){
-      if (!sb) { setLoginMsg('danger','Supabase no está configurado.'); return null; }
-
-      setLoginMsg('secondary','Autenticando…');
-      document.getElementById('loginSpin').classList.remove('d-none');
-      const { data, error } = await sb.auth.signInWithPassword({ email, password });
-      document.getElementById('loginSpin').classList.add('d-none');
-      if (error) { setLoginMsg('danger', error.message); return null; }
-      return data.user;
-    }
-
-    async function logout(){
-      try { if (sb) await sb.auth.signOut(); } catch(e){}
-
-      currentUser = null;
-      currentEval = null;
-      answersMap = new Map();
-      lastDashboard = null;
-
-      document.getElementById('appRoot').classList.add('d-none');
-      document.getElementById('loginCard').classList.remove('d-none');
-      document.getElementById('btnLogout').classList.add('d-none');
-      document.getElementById('userBadge').textContent = 'No autenticado';
-      setLoginMsg('secondary','Sesión cerrada.');
-    }
-
-    // =============================
-    // DATA: Load question bank
-    // =============================
-    async function loadQuestionBank(){
-      if (!sb) return;
-
-      workMsg('secondary','Cargando banco de preguntas…');
-
-      const { data, error } = await sb
-        .from('evaluation_questions')
-        .select('*')
-        .order('section', { ascending: true })
-        .order('display_order', { ascending: true });
-
-      if (error) {
-        workMsg('danger', 'Error cargando preguntas: ' + error.message);
-        return;
-      }
-      questionBank = data || [];
-
-      // llenar select de secciones
-      const sel = document.getElementById('filterSection');
-      sel.innerHTML = `<option value="">Todas</option>`;
-      for (const sec of SECTION_ORDER) {
-        const opt = document.createElement('option');
-        opt.value = sec;
-        opt.textContent = sec;
-        sel.appendChild(opt);
-      }
-
-      workMsg('success','Banco de preguntas cargado.');
-      await loadOrCreateEvaluation();
-      await loadAnswers();
-      renderQuestions();
-      enableWorkButtons(true);
-    }
-
-    // =============================
-    // DATA: Evaluation instance (draft)
-    // =============================
-    function todayISO(){
-      const d = new Date();
-      const pad = n => String(n).padStart(2,'0');
-      return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}`;
-    }
-
-    async function loadOrCreateEvaluation(){
-      if (!sb) return;
-
-      // Seleccionar evaluación más reciente del usuario (draft o submitted)
-      const { data, error } = await sb
-        .from('evaluations')
-        .select('*')
-        .eq('evaluator_user_id', currentUser.id)
-        .order('created_at', { ascending: false })
-        .limit(1);
-
-      if (error) {
-        workMsg('danger','Error cargando evaluación: ' + error.message);
-        return;
-      }
-
-      const last = data?.[0];
-      if (last && (last.status === 'draft' || last.status === 'submitted')) {
-        currentEval = last;
-      } else {
-        // crear (incluye evaluator_user_id para RLS/NOT NULL)
-        const payload = {
-          evaluator_user_id: currentUser.id,
-          evaluation_date: todayISO(),
-          status: 'draft'
-        };
-
-        const { data: ins, error: e2 } = await sb
-          .from('evaluations')
-          .insert(payload)
-          .select()
-          .single();
-
-        if (e2) {
-          workMsg('danger','Error creando evaluación: ' + e2.message);
-          return;
-        }
-        currentEval = ins;
-      }
-
-      updateEvalMeta();
-      setStatusBadge(currentEval.status);
-    }
-
-    function updateEvalMeta(){
-      const el = document.getElementById('evalMeta');
-      const name = currentEval?.evaluatee_full_name || '—';
-      const date = currentEval?.evaluation_date || '—';
-      const lab  = currentEval?.lab_name || '—';
-      el.innerHTML = `<b>${escapeHtml(name)}</b><br><span class="soft">Fecha:</span> ${escapeHtml(date)}<br><span class="soft">Lab:</span> ${escapeHtml(lab)}`;
-    }
-
-    // =============================
-    // DATA: Answers
-    // =============================
-    async function loadAnswers(){
-      if (!sb) return;
-
-      const evalId = getEvalId();
-      if (!evalId) return;
-
-      const { data, error } = await sb
-        .from('evaluation_answers')
-        .select('*')
-        .eq('evaluation_id', evalId);
-
-      if (error) {
-        workMsg('danger', 'Error cargando respuestas: ' + error.message);
-        return;
-      }
-
-      answersMap = new Map();
-      for (const r of (data || [])){
-        answersMap.set(r.question_id, { score: r.score, evidence: r.evidence || '' });
-      }
-
-      workMsg('success', 'Respuestas cargadas.');
-    }
-
-    async function saveAnswer(question_id, score, evidence){
-      if (!sb) return false;
-
-      const evalId = getEvalId();
-      if (!evalId) return false;
-
-      const payload = {
-        evaluation_id: evalId,
-        question_id,
-        score,
-        evidence: evidence || null
-      };
-
-      const { error } = await sb
-        .from('evaluation_answers')
-        .upsert(payload, { onConflict: 'evaluation_id,question_id' });
-
-      if (error) {
-        workMsg('danger','No se pudo guardar respuesta: ' + error.message);
-        return false;
-      }
-      answersMap.set(question_id, { score, evidence: evidence || '' });
-      return true;
-    }
-
-    // =============================
-    // RENDER: Questions
-    // =============================
-    function scoreClass(score){
-      if (score === null || score === undefined) return 'score-ne';
-      if (score === 5) return 'score-5';
-      if (score === 4) return 'score-4';
-      if (score === 3) return 'score-3';
-      if (score === 2) return 'score-2';
-      if (score === 1) return 'score-1';
-      return 'score-ne';
-    }
-
-    function renderQuestions(){
-      const list = document.getElementById('questionList');
-      list.innerHTML = '';
-
-      const secFilter = document.getElementById('filterSection').value;
-      const textFilter = document.getElementById('filterText').value.trim().toLowerCase();
-
-      let items = questionBank.slice();
-      if (secFilter) items = items.filter(q => q.section === secFilter);
-      if (textFilter) items = items.filter(q => (q.question_text || '').toLowerCase().includes(textFilter));
-
-      if (!items.length){
-        list.innerHTML = `<div class="soft">No hay preguntas con esos filtros.</div>`;
-        return;
-      }
-
-      for (const q of items){
-        const ans = answersMap.get(q.question_id) || { score: null, evidence: '' };
-        const card = document.createElement('div');
-        card.className = 'question-card';
-
-        card.innerHTML = `
-          <div class="d-flex justify-content-between align-items-start gap-2">
-            <div>
-              <div class="fw-semibold">#${q.question_id}. ${escapeHtml(q.question_text || '')}</div>
-              <div class="q-meta">${escapeHtml(q.section || '')} • Peso sección: <span class="mono">${SECTION_WEIGHTS[q.section] || 0}%</span></div>
-            </div>
-            <div class="score-pill ${scoreClass(ans.score)}">${ans.score ?? 'N/E'}</div>
-          </div>
-
-          <div class="divider"></div>
-
-          <div class="row g-2 align-items-end">
-            <div class="col-md-4">
-              <label class="form-label small">Calificación (1–5)</label>
-              <select class="form-select scoreSel">
-                <option value="">No evaluado</option>
-                <option value="5">5 - Excelente</option>
-                <option value="4">4 - Muy bueno</option>
-                <option value="3">3 - Bueno</option>
-                <option value="2">2 - Regular</option>
-                <option value="1">1 - Deficiente</option>
+        <div class="modal-body">
+          <input type="hidden" id="c_id">
+          <div class="row g-3">
+            <div class="col-6">
+              <label class="form-label small fw-bold">Bimestre</label>
+              <select class="form-select" id="c_bim">
+                <option value="1">B1</option><option value="2">B2</option><option value="3">B3</option>
+                <option value="4">B4</option><option value="5">B5</option><option value="6">B6</option>
               </select>
             </div>
+            <div class="col-6">
+              <label class="form-label small fw-bold">Año</label>
+              <input class="form-control" id="c_year" value="2026">
+            </div>
+            <div class="col-12">
+              <label class="form-label small fw-bold">Nombre de Campaña</label>
+              <input class="form-control" id="c_name" placeholder="Ej: Diabetes Control">
+            </div>
+            <div class="col-12">
+               <label class="form-label small fw-bold">Código (Opcional)</label>
+               <input class="form-control font-monospace text-muted" id="c_code" placeholder="Generado automáticamente">
+            </div>
+            <div class="col-12">
+              <label class="form-label small fw-bold">Objetivo</label>
+              <input class="form-control" id="c_objective" placeholder="Ej: Generar 50 leads cualificados">
+            </div>
+            <div class="col-6">
+              <label class="form-label small fw-bold">Inicio</label>
+              <input type="date" class="form-control" id="c_start">
+            </div>
+            <div class="col-6">
+              <label class="form-label small fw-bold">Fin</label>
+              <input type="date" class="form-control" id="c_end">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer border-0">
+          <button class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+          <button class="btn btn-primary" id="btnSaveCampaign">Guardar Cambios</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="pieceModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content cardx">
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold" id="pieceModalTitle">Pieza de Contenido</h5>
+          <button class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="p_id">
+          <div class="row g-3">
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">Campaña Asociada</label>
+              <select class="form-select" id="p_campaign"></select>
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">Canal</label>
+              <select class="form-select" id="p_channel">
+                <option>Instagram</option><option>Facebook</option><option>YouTube</option><option>Spotify</option><option>Blog</option><option>WhatsApp</option>
+              </select>
+            </div>
+            <div class="col-6 col-md-3">
+              <label class="form-label small fw-bold">Formato</label>
+              <input class="form-control" id="p_format" placeholder="Reel, Story...">
+            </div>
+            <div class="col-6 col-md-3">
+              <label class="form-label small fw-bold">Etapa Funnel</label>
+              <input class="form-control" id="p_funnel" placeholder="Awareness...">
+            </div>
+            <div class="col-6 col-md-3">
+              <label class="form-label small fw-bold">Estado</label>
+              <select class="form-select" id="p_status">
+                <option>Borrador</option><option>Programado</option><option>Publicado</option><option>Pausado</option>
+              </select>
+            </div>
+            <div class="col-6 col-md-3">
+               <label class="form-label small fw-bold">Código</label>
+               <input class="form-control font-monospace" id="p_code" placeholder="Auto">
+            </div>
+            <div class="col-12">
+              <label class="form-label small fw-bold">Hook (Gancho)</label>
+              <input class="form-control fw-semibold" id="p_hook" placeholder="Título atractivo...">
+            </div>
+            <div class="col-12">
+              <label class="form-label small fw-bold">Copy / Caption</label>
+              <textarea class="form-control" id="p_copy" rows="4"></textarea>
+            </div>
+            <div class="col-12 col-md-6">
+              <label class="form-label small fw-bold">Programación</label>
+              <input type="datetime-local" class="form-control" id="p_scheduled">
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer border-0">
+          <button class="btn btn-light" data-bs-dismiss="modal">Cerrar</button>
+          <button class="btn btn-primary" id="btnSavePiece">Guardar Pieza</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal fade" id="metricModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content cardx">
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold" id="metricModalTitle">Registro de Métricas</h5>
+          <button class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="mx_id">
+          <div class="row g-3 align-items-end">
             <div class="col-md-8">
-              <label class="form-label small">Evidencia / Observación (opcional)</label>
-              <input class="form-control evInput" placeholder="Describe evidencia, hallazgo o comentario…" />
+              <label class="form-label small fw-bold">Pieza</label>
+              <select class="form-select" id="mx_piece"></select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label small fw-bold">Fecha de Corte</label>
+              <input type="date" class="form-control" id="mx_date">
+            </div>
+            
+            <div class="col-12"><hr class="text-muted"></div>
+
+            <div class="col-6 col-md-2 text-center">
+                <label class="form-label small text-muted">Impresiones</label>
+                <input class="form-control text-center fw-bold" id="mx_impressions" type="number" min="0">
+            </div>
+            <div class="col-6 col-md-2 text-center">
+                <label class="form-label small text-muted">Alcance</label>
+                <input class="form-control text-center fw-bold" id="mx_reach" type="number" min="0">
+            </div>
+             <div class="col-6 col-md-2 text-center">
+                <label class="form-label small text-muted">Plays</label>
+                <input class="form-control text-center fw-bold" id="mx_plays" type="number" min="0">
+            </div>
+             <div class="col-6 col-md-2 text-center">
+                <label class="form-label small text-primary fw-bold">Leads</label>
+                <input class="form-control text-center fw-bold border-primary" id="mx_leads" type="number" min="0">
+            </div>
+             <div class="col-6 col-md-2 text-center">
+                <label class="form-label small text-muted">Citas</label>
+                <input class="form-control text-center fw-bold" id="mx_appointments" type="number" min="0">
+            </div>
+             <div class="col-6 col-md-2 text-center">
+                <label class="form-label small text-success fw-bold">Showups</label>
+                <input class="form-control text-center fw-bold border-success" id="mx_showups" type="number" min="0">
             </div>
           </div>
+        </div>
+        <div class="modal-footer border-0">
+          <button class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+          <button class="btn btn-primary" id="btnSaveMetric">Guardar Métrica</button>
+        </div>
+      </div>
+    </div>
+  </div>
 
-          <div class="d-flex justify-content-end mt-2">
-            <button class="btn btn-sm btn-outline-primary btnSave">
-              <i class="bi bi-check2"></i> Guardar
-            </button>
-          </div>
-        `;
-
-        const sel = card.querySelector('.scoreSel');
-        if (ans.score) sel.value = String(ans.score);
-        const ev = card.querySelector('.evInput');
-        ev.value = ans.evidence || '';
-
-        card.querySelector('.btnSave').addEventListener('click', async () => {
-          const val = sel.value ? Number(sel.value) : null;
-          const evidence = ev.value || '';
-          const ok = await saveAnswer(q.question_id, val, evidence);
-          if (ok){
-            workMsg('success', `Respuesta guardada (#${q.question_id}).`);
-            renderQuestions();
-            await renderDashboard();
-          }
-        });
-
-        list.appendChild(card);
-      }
-    }
-
-    // =============================
-    // DASHBOARD
-    // =============================
-    function computeDashboard(){
-      const total = questionBank.length;
-      let answered = 0;
-
-      const sectionSum = {};
-      const sectionCnt = {};
-      for (const sec of SECTION_ORDER){ sectionSum[sec]=0; sectionCnt[sec]=0; }
-
-      const rows = [];
-      for (const q of questionBank){
-        const ans = answersMap.get(q.question_id) || { score: null, evidence: '' };
-        const score = (ans.score === null || ans.score === undefined || ans.score === '') ? null : Number(ans.score);
-        const evidence = (ans.evidence || '').trim();
-
-        if (score !== null) {
-          answered++;
-          sectionSum[q.section] += score;
-          sectionCnt[q.section] += 1;
-        }
-
-        rows.push({
-          question_id: q.question_id,
-          section: q.section,
-          text: q.question_text,
-          score,
-          evidence
-        });
-      }
-
-      const sectionAvg = {};
-      for (const sec of SECTION_ORDER){
-        sectionAvg[sec] = sectionCnt[sec] ? sectionSum[sec]/sectionCnt[sec] : null;
-      }
-
-      let weighted = 0;
-      for (const sec of SECTION_ORDER){
-        const w = SECTION_WEIGHTS[sec] || 0;
-        const avg = sectionAvg[sec];
-        const pct = (avg === null) ? 0 : (avg/5)*100;
-        weighted += (pct * w/100);
-      }
-      const score100 = Math.round(weighted * 10) / 10;
-      const qual = QUAL_LABEL(score100);
-
-      const criticalLow = rows.filter(r => r.score !== null && r.score <= 2);
-      const obsEvidence = rows.filter(r => (r.evidence || '').trim().length > 0);
-
-      return { total, answered, score100, qual, sectionAvg, criticalLow, obsEvidence, rows };
-    }
-
-    async function renderDashboard(){
-      if (!questionBank.length) return;
-      const dash = computeDashboard();
-      lastDashboard = { dash, rows: dash.rows };
-
-      document.getElementById('kpiScore').textContent = dash.score100.toFixed(1);
-      document.getElementById('kpiQual').textContent = `${dash.qual.label} — ${dash.qual.msg}`;
-      document.getElementById('kpiAnswered').textContent = dash.answered;
-      document.getElementById('kpiTotal').textContent = dash.total;
-      document.getElementById('kpiCritical').textContent = dash.criticalLow.length;
-
-      document.getElementById('dashEvaluatee').textContent = currentEval?.evaluatee_full_name || '—';
-      document.getElementById('dashDate').textContent = currentEval?.evaluation_date || '—';
-      document.getElementById('dashLab').textContent = currentEval?.lab_name || '—';
-
-      // Firma
-      document.getElementById('sigName').textContent = currentEval?.evaluator_full_name || (currentUser?.email || '—');
-      document.getElementById('sigRole').textContent = currentEval?.evaluator_role || 'Evaluador';
-      document.getElementById('sigDate').textContent = `Fecha: ${currentEval?.evaluation_date || todayISO()}`;
-
-      // Secciones
-      const bars = document.getElementById('sectionBars');
-      bars.innerHTML = '';
-      for (const sec of SECTION_ORDER){
-        const avg = dash.sectionAvg[sec];
-        const w = SECTION_WEIGHTS[sec];
-        const pct = (avg === null) ? 0 : (avg/5)*100;
-        const row = document.createElement('div');
-        row.innerHTML = `
-          <div class="d-flex justify-content-between">
-            <div class="fw-semibold">${escapeHtml(sec)} <span class="badge text-bg-light pill ms-1">${w}%</span></div>
-            <div class="mono">${avg === null ? 'N/E' : avg.toFixed(2)}</div>
-          </div>
-          <div class="progress" style="height: 10px;">
-            <div class="progress-bar" role="progressbar" style="width:${pct}%;"></div>
-          </div>
-        `;
-        bars.appendChild(row);
-      }
-
-      // Observaciones
-      const obs = document.getElementById('obsList');
-      obs.innerHTML = '';
-      const items = [];
-      for (const c of dash.criticalLow){
-        items.push({ kind:'Crítica', ...c });
-      }
-      for (const e of dash.obsEvidence){
-        items.push({ kind:'Evidencia', ...e });
-      }
-
-      if (!items.length){
-        obs.innerHTML = `<div class="soft">Sin observaciones registradas.</div>`;
-      } else {
-        for (const it of items.slice(0,40)){
-          const box = document.createElement('div');
-          box.className = 'p-2 bg-white border rounded';
-          box.innerHTML = `
-            <div class="d-flex justify-content-between">
-              <div class="fw-semibold">#${it.question_id} (${escapeHtml(it.section)}) <span class="badge text-bg-light pill ms-1">${escapeHtml(it.kind)}</span></div>
-              <div class="mono">${it.score ?? '—'}</div>
+  <div class="modal fade" id="leadModal" tabindex="-1">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+      <div class="modal-content cardx">
+        <div class="modal-header">
+          <h5 class="modal-title fw-bold" id="leadModalTitle">Gestión de Lead</h5>
+          <button class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+          <input type="hidden" id="ld_id">
+          <div class="row g-3">
+            <div class="col-md-4">
+               <label class="form-label small fw-bold">Origen</label>
+               <input class="form-control" id="ld_source" placeholder="Ej: Instagram DM">
             </div>
-            <div class="small">${escapeHtml(it.text)}</div>
-            <div class="small soft mt-1"><b>Evidencia:</b> ${escapeHtml(it.evidence || '(vacía)')}</div>
-          `;
-          obs.appendChild(box);
-        }
-      }
+            <div class="col-md-4">
+              <label class="form-label small fw-bold">Campaña</label>
+              <select class="form-select" id="ld_campaign"></select>
+            </div>
+            <div class="col-md-4">
+              <label class="form-label small fw-bold">Pieza (Opcional)</label>
+              <select class="form-select" id="ld_piece"></select>
+            </div>
 
-      // habilitar PDF en dash si finalizada
-      const allowPDF = (currentEval?.status === 'submitted');
-      document.getElementById('btnPDFDash').disabled = !allowPDF;
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">Nombre Completo</label>
+              <input class="form-control" id="ld_name">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">Teléfono / Contacto</label>
+              <input class="form-control" id="ld_phone">
+            </div>
+
+            <div class="col-md-6">
+               <label class="form-label small fw-bold">Interés Principal</label>
+               <input class="form-control" id="ld_interest">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">Estado del Lead</label>
+              <select class="form-select" id="ld_status">
+                <option>Nuevo</option><option>Contactado</option><option>En seguimiento</option><option>Cerrado</option><option>Descartado</option>
+              </select>
+            </div>
+            <div class="col-12">
+              <label class="form-label small fw-bold">Notas</label>
+              <textarea class="form-control" id="ld_notes" rows="2"></textarea>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer border-0">
+          <button class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
+          <button class="btn btn-primary" id="btnSaveLead">Guardar Lead</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="loading" id="loading">
+    <div class="box">
+      <div class="spinner-border text-primary" role="status"></div>
+      <div class="fw-bold">Procesando...</div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+  <script type="module">
+    import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+    // === CONFIG APP (GitHub Pages) ===
+    const APP_URL = "https://amedelvalle.github.io/rrssccm/";
+
+    // === CONFIG SUPABASE ===
+    // Si este proyecto NO es el tuyo, reemplaza por tu URL real (Settings -> API -> Project URL)
+    const SUPABASE_URL = "https://xhhssgsrulmxwkcyncvo.supabase.co";
+    const SUPABASE_ANON_KEY = "sb_publishable_M7gyUpsbCPRopdrmDjEeLA_SHXlnP-C";
+    const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // MANTENIENDO TU LÓGICA DE MAPEO INTACTA
+    const MAP = {
+      campaigns: { table:'campaigns', id:'id', code:'code', bimester:'bimester', year:'year', name:'name', objective:'objective', start:'start_date', end:'end_date', created_at:'created_at' },
+      pieces:    { table:'pieces', id:'id', code:'code', campaign_id:'campaign_id', channel:'channel', format:'format', funnel:'funnel_stage', status:'status', hook:'hook', copy:'copy_caption', scheduled:'scheduled_at', created_at:'created_at' },
+      metrics:   { table:'piece_metrics', id:'id', piece_id:'piece_id', date:'cut_date', impressions:'impressions', reach:'reach', plays:'plays', leads:'leads', appointments:'appointments', showups:'showups' },
+      leads:     { table:'leads', id:'id', code:'code', created_at:'created_at', source:'source_channel', campaign_id:'campaign_id', piece_id:'piece_id', name:'name', phone:'phone', interest:'interest', status:'status', notes:'note' }
+    };
+
+    const el = (id) => document.getElementById(id);
+    const showLoading = (v) => el('loading').style.display = v ? 'flex' : 'none';
+    const esc = (s) => String(s ?? '').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'","&#039;");
+    const fmtDT = (v) => { if(!v) return ''; try{ const d=new Date(v); return d.toISOString().slice(0,16).replace('T',' '); }catch(_){ return String(v);} };
+
+    function getStatusBadge(status) {
+      const s = String(status || '').toLowerCase();
+      let cls = 'st-draft';
+      if(s.includes('publicado') || s.includes('contactado')) cls = 'st-published';
+      if(s.includes('programado') || s.includes('seguimiento')) cls = 'st-scheduled';
+      if(s.includes('pausado')) cls = 'st-paused';
+      if(s.includes('cerrado') || s.includes('descartado')) cls = 'st-closed';
+      return `<span class="badge-status ${cls}">${esc(status)}</span>`;
     }
 
-    // =============================
-    // SUBMIT / DRAFT
-    // =============================
-    async function setEvaluationStatus(status){
-      if (!sb) return false;
-
-      const evalId = getEvalId();
-      if (!evalId) return false;
-
-      const idCol = getEvalIdColumn();
-      const { data, error } = await sb
-        .from('evaluations')
-        .update({ status })
-        .eq(idCol, evalId)
-        .select()
-        .single();
-
-      if (error){
-        workMsg('danger','No se pudo actualizar estado: ' + error.message);
-        return false;
-      }
-      currentEval = data;
-      setStatusBadge(currentEval.status);
-      updateEvalMeta();
-      enableWorkButtons(true);
-      return true;
+    function getChannelIcon(channel) {
+      const c = String(channel || '').toLowerCase();
+      let icon = 'bi-globe', color = '#6b7280';
+      if(c.includes('insta')) { icon='bi-instagram'; color='#e1306c'; }
+      else if(c.includes('face')) { icon='bi-facebook'; color='#1877f2'; }
+      else if(c.includes('youtu')) { icon='bi-youtube'; color='#ff0000'; }
+      else if(c.includes('whats')) { icon='bi-whatsapp'; color='#25d366'; }
+      else if(c.includes('spoti')) { icon='bi-spotify'; color='#1db954'; }
+      return `<i class="bi ${icon} me-1" style="color:${color}"></i> ${esc(channel)}`;
     }
 
-    // =============================
-    // HISTORY
-    // =============================
-    async function loadHistory(){
-      if (!sb) return;
+    function showAlert(type, title, message, ttlMs = 4500){
+      const stack = el('alertStack');
+      const card = document.createElement('div');
+      card.className = `alert-card ${type || 'info'}`;
+      const icon = type === 'success' ? 'bi-check-circle-fill text-success' :
+                   type === 'warning' ? 'bi-exclamation-triangle-fill text-warning' :
+                   type === 'danger'  ? 'bi-x-circle-fill text-danger' : 'bi-info-circle-fill text-primary';
+      
+      card.innerHTML = `
+        <i class="${icon} fs-5 mt-1"></i>
+        <div class="flex-grow-1">
+          <div class="fw-bold text-dark">${esc(title || 'Aviso')}</div>
+          <div class="small text-secondary">${esc(message || '')}</div>
+        </div>
+        <button class="btn-close ms-2" aria-label="cerrar" style="font-size:0.7em"></button>
+      `;
+      stack.appendChild(card);
+      const close = () => { card.style.opacity='0'; setTimeout(()=>card.remove(),300); };
+      card.querySelector('.btn-close').addEventListener('click', close);
+      if (ttlMs) setTimeout(() => { if(card.isConnected) close(); }, ttlMs);
+    }
 
-      const list = document.getElementById('historyList');
-      list.innerHTML = '<div class="soft">Cargando…</div>';
+    function humanize(err){
+      const raw = (err?.message || err?.error_description || String(err || ''));
+      const low = raw.toLowerCase();
+      if (low.includes('invalid login credentials')) return 'Correo o contraseña incorrectos.';
+      if (low.includes('email not confirmed')) return 'Tu correo aún no está confirmado.';
+      return raw;
+    }
 
-      const { data, error } = await sb
-        .from('evaluations')
-        .select('*')
-        .eq('evaluator_user_id', currentUser.id)
-        .eq('status','submitted')
-        .order('created_at', { ascending:false })
-        .limit(50);
+    function openSetNewPasswordModal(){
+      // Asegura vista correcta
+      el('loginView').classList.add('hidden');
+      el('appView').classList.add('hidden');
+      el('whoami').textContent = 'Recuperación';
+      el('btnLogout').disabled = true;
 
-      if (error){
-        list.innerHTML = `<div class="text-danger small">Error: ${escapeHtml(error.message)}</div>`;
+      // Abre modal
+      const m = new bootstrap.Modal(el('setNewPassModal'), { backdrop: 'static', keyboard: false });
+      m.show();
+      showAlert('info','Recuperación','Define tu nueva contraseña.');
+    }
+
+    const state = { user:null, profile:null, campaigns:[], pieces:[], metrics:[], leads:[] };
+
+    function campaignLabel(c){
+      const name = c[MAP.campaigns.name] ?? '';
+      return name.trim();
+    }
+    function pieceLabel(p){
+      const code = p[MAP.pieces.code] ?? '—';
+      const hook = (p[MAP.pieces.hook] ?? '').slice(0,30);
+      return `${code} · ${hook}`.trim();
+    }
+
+    async function handleSession(session){
+      state.user = session?.user || null;
+      if (!state.user){
+        el('loginView').classList.remove('hidden');
+        el('appView').classList.add('hidden');
+        el('whoami').textContent = '...';
+        el('btnLogout').disabled = true;
         return;
       }
-
-      if (!data?.length){
-        list.innerHTML = `<div class="soft">Sin evaluaciones finalizadas.</div>`;
-        return;
-      }
-
-      list.innerHTML = '';
-      for (const e of data){
-        const row = document.createElement('div');
-        row.className = 'p-2 bg-white border rounded';
-        row.innerHTML = `
-          <div class="d-flex justify-content-between align-items-start">
-            <div>
-              <div class="fw-semibold">${escapeHtml(e.evaluatee_full_name || '—')}</div>
-              <div class="small soft">${escapeHtml(e.lab_name || '—')} • ${escapeHtml(e.evaluation_date || '—')}</div>
-            </div>
-            <span class="badge text-bg-success pill">Finalizada</span>
-          </div>
-        `;
-        list.appendChild(row);
-      }
+      try{
+        const { data: prof } = await supabase.from('profiles').select('*').eq('id', state.user.id).maybeSingle();
+        state.profile = prof || null;
+      }catch(_){ state.profile = null; }
+      
+      el('loginView').classList.add('hidden');
+      el('appView').classList.remove('hidden');
+      el('whoami').textContent = state.profile?.display_name || state.user.email || 'Usuario';
+      el('btnLogout').disabled = false;
+      
+      if(state.campaigns.length === 0) await refreshAll();
     }
 
-    // =============================
-    // PDF
-    // =============================
-    async function downloadPDF() {
-      const evalId = getEvalId();
-      if (!evalId) return workMsg('danger','No hay evaluación abierta.');
-      if (currentEval.status !== 'submitted') {
-        workMsg('warning','Para generar el PDF, primero finaliza la evaluación.');
-        return;
-      }
-      if (!lastDashboard) await renderDashboard();
-
-      const { dash, rows } = lastDashboard;
-
-      document.getElementById('pdfDate').textContent = currentEval.evaluation_date || '—';
-      document.getElementById('pdfEvaluatee').textContent = currentEval.evaluatee_full_name || '—';
-      document.getElementById('pdfLab').textContent = currentEval.lab_name || '—';
-
-      // Evaluador (snapshot desde evaluations)
-      const evName = currentEval.evaluator_full_name || (currentUser?.email || '—');
-      const evRole = currentEval.evaluator_role || 'Evaluador';
-      const evDate = currentEval.evaluation_date || todayISO();
-
-      document.getElementById('pdfSigName').textContent = evName;
-      document.getElementById('pdfSigRole').textContent = evRole;
-      document.getElementById('pdfSigDate').textContent = `Fecha: ${evDate}`;
-
-      // KPIs
-      document.getElementById('pdfScore').textContent = dash.score100.toFixed(1);
-      document.getElementById('pdfQual').textContent = dash.qual.label;
-      document.getElementById('pdfAnswered').textContent = dash.answered;
-      document.getElementById('pdfTotal').textContent = dash.total;
-      document.getElementById('pdfCritical').textContent = dash.criticalLow.length;
-
-      const pdfBars = document.getElementById('pdfSectionBars');
-      pdfBars.innerHTML = '';
-      for (const sec of SECTION_ORDER) {
-        const avg = dash.sectionAvg[sec];
-        const w = SECTION_WEIGHTS[sec];
-        const pct = (avg === null) ? 0 : (avg / 5) * 100;
-        const rowEl = document.createElement('div');
-        rowEl.innerHTML = `
-          <div class="d-flex justify-content-between">
-            <div class="fw-semibold">${escapeHtml(sec)} <span class="badge text-bg-light pill ms-1">${w}%</span></div>
-            <div class="mono">${avg === null ? 'N/E' : avg.toFixed(2)}</div>
-          </div>
-          <div class="progress" style="height: 10px;">
-            <div class="progress-bar" role="progressbar" style="width:${pct}%;"></div>
-          </div>
-        `;
-        pdfBars.appendChild(rowEl);
+    async function init(){
+      // Si vienes desde el correo de recovery (Supabase) muchas veces trae hash con type=recovery
+      const hash = window.location.hash || '';
+      if (hash.toLowerCase().includes('type=recovery')) {
+        openSetNewPasswordModal();
       }
 
-      // Observaciones: críticos <=2 + evidencias no vacías
-      const obs = document.getElementById('pdfObsList');
-      obs.innerHTML = '';
+      const { data } = await supabase.auth.getSession();
+      await handleSession(data.session);
 
-      const byQ = new Map(rows.map(r => [r.question_id, r]));
-      const obsItems = [];
-
-      for (const c of dash.criticalLow) {
-        obsItems.push({
-          kind: 'Crítica',
-          question_id: c.question_id,
-          section: c.section,
-          score: c.score,
-          text: c.text,
-          evidence: c.evidence
-        });
-      }
-      for (const e of dash.obsEvidence) {
-        const r = byQ.get(e.question_id);
-        if (!r) continue;
-        obsItems.push({
-          kind: 'Evidencia',
-          question_id: r.question_id,
-          section: r.section,
-          score: r.score ?? '—',
-          text: r.text,
-          evidence: r.evidence
-        });
-      }
-
-      if (!obsItems.length) {
-        obs.innerHTML = `<div class="soft">Sin observaciones registradas.</div>`;
-      } else {
-        for (const it of obsItems.slice(0, 40)) {
-          const box = document.createElement('div');
-          box.className = 'p-2 bg-white border rounded avoid-break';
-          box.innerHTML = `
-            <div class="d-flex justify-content-between">
-              <div class="fw-semibold">#${it.question_id} (${escapeHtml(it.section)}) <span class="badge text-bg-light pill ms-1">${escapeHtml(it.kind)}</span></div>
-              <div class="mono">${escapeHtml(String(it.score))}</div>
-            </div>
-            <div class="small">${escapeHtml(it.text)}</div>
-            <div class="small soft mt-1"><b>Evidencia:</b> ${escapeHtml(it.evidence || '(vacía)')}</div>
-          `;
-          obs.appendChild(box);
-        }
-      }
-
-      const filename = `Evaluacion_Regente_${(currentEval.evaluatee_full_name || 'Regente').replaceAll(' ', '_')}_${currentEval.evaluation_date || todayISO()}.pdf`;
-
-      const pdfEl = document.getElementById('pdfReport');
-
-      workMsg('info', 'Generando PDF...');
-
-      document.body.classList.add('is-exporting');
-      window.scrollTo(0, 0);
-
-      await new Promise(r => requestAnimationFrame(r));
-
-      const opt = {
-        margin: [10, 10, 10, 10], // mm
-        filename,
-        image: { type: 'jpeg', quality: 0.98 },
-        pagebreak: { mode: ['css', 'legacy'] },
-        html2canvas: {
-          scale: 2,
-          useCORS: true,
-          scrollY: 0,
-          scrollX: 0,
-          backgroundColor: '#ffffff'
-        },
-        jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
-      };
-
-      try {
-        await html2pdf().set(opt).from(pdfEl).save();
-        workMsg('success', 'PDF descargado.');
-      } catch(e){
-        console.error(e);
-        workMsg('danger', 'Error generando PDF: ' + (e?.message || e));
-      } finally {
-        document.body.classList.remove('is-exporting');
-      }
-    }
-
-    // =============================
-    // EVENTS
-    // =============================
-    document.getElementById('btnApplyFilters').addEventListener('click', () => renderQuestions());
-
-    document.getElementById('btnRefreshDash').addEventListener('click', async () => {
-      await renderDashboard();
-      workMsg('success','Resumen actualizado.');
-    });
-
-    document.getElementById('btnReloadHistory').addEventListener('click', async () => {
-      await loadHistory();
-    });
-
-    document.getElementById('btnDraft').addEventListener('click', async () => {
-      const ok = await setEvaluationStatus('draft');
-      if (ok) workMsg('success','Borrador guardado.');
-    });
-
-    document.getElementById('btnDraft2').addEventListener('click', async () => {
-      const ok = await setEvaluationStatus('draft');
-      if (ok) workMsg('success','Borrador guardado.');
-    });
-
-    document.getElementById('btnSubmit').addEventListener('click', async () => {
-      const ok = await setEvaluationStatus('submitted');
-      if (ok) workMsg('success','Evaluación finalizada.');
-      await renderDashboard();
-      enableWorkButtons(true);
-    });
-
-    document.getElementById('btnSubmit2').addEventListener('click', async () => {
-      const ok = await setEvaluationStatus('submitted');
-      if (ok) workMsg('success','Evaluación finalizada.');
-      await renderDashboard();
-      enableWorkButtons(true);
-    });
-
-    document.getElementById('btnPDFHere').addEventListener('click', async () => {
-      await renderDashboard();
-      await downloadPDF();
-    });
-
-    document.getElementById('btnPDF').addEventListener('click', async () => {
-      await renderDashboard();
-      switchToDashboardTab();
-      await downloadPDF();
-    });
-
-    document.getElementById('btnPDFDash').addEventListener('click', async () => {
-      await renderDashboard();
-      await downloadPDF();
-    });
-
-    document.getElementById('btnLogout').addEventListener('click', logout);
-
-    // Tabs
-    for (const btn of document.querySelectorAll('#mainTabs .nav-link')){
-      btn.addEventListener('click', async () => {
-        switchTab(btn.dataset.tab);
-        if (btn.dataset.tab === 'tabDash') await renderDashboard();
-        if (btn.dataset.tab === 'tabHistory') await loadHistory();
+      supabase.auth.onAuthStateChange(async (event, session) => {
+        if (event === 'PASSWORD_RECOVERY') openSetNewPasswordModal();
+        await handleSession(session);
       });
+
+      bindFilters();
     }
 
     // Login
-    document.getElementById('btnLogin').addEventListener('click', async () => {
-      const email = document.getElementById('loginEmail').value.trim();
-      const pass = document.getElementById('loginPass').value;
-      if (!email || !pass) return setLoginMsg('warning','Ingresa correo y contraseña.');
-
-      const u = await login(email, pass);
-      if (!u) return;
-
-      currentUser = u;
-      document.getElementById('userBadge').textContent = (u.email || 'Usuario');
-      document.getElementById('btnLogout').classList.remove('d-none');
-      document.getElementById('loginCard').classList.add('d-none');
-      document.getElementById('appRoot').classList.remove('d-none');
-      workMsg('success','Sesión iniciada.');
-
-      await loadQuestionBank();
-      await loadHistory();
-      await renderDashboard();
+    el('btnSignIn').addEventListener('click', async ()=>{
+      const email = el('loginEmail').value.trim();
+      const password = el('loginPass').value;
+      if (!email || !password) return showAlert('warning','Faltan datos','Ingresa tu correo y contraseña.');
+      showLoading(true);
+      try{
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+        showAlert('success','Bienvenido','Iniciando sesión...');
+      }catch(err){ showAlert('danger','Error', humanize(err)); }
+      finally{ showLoading(false); }
     });
 
-    // Init
-    (async () => {
-      try {
-        setEnvBadge();
-        setLoginMsg('secondary','Ingresa tus credenciales para continuar.');
-        workMsg('secondary','Listo.');
-        enableWorkButtons(false);
+    el('btnLogout').addEventListener('click', async () => {
+      showLoading(true);
+      await supabase.auth.signOut();
+      window.location.reload(); 
+    });
 
-        const ok = initSupabase();
-        if (!ok){
-          document.getElementById('btnLogin').disabled = true;
-          setLoginMsg('warning','Configura SUPABASE_URL y SUPABASE_ANON_KEY para habilitar login.');
-          workMsg('warning','Supabase no configurado (evita que el sitio se caiga).');
-          return;
-        }
+    el('btnForgotPass').addEventListener('click', () => new bootstrap.Modal(el('forgotPassModal')).show());
+    
+    el('btnSendResetEmail').addEventListener('click', async ()=>{
+      const email = el('fp_email').value.trim();
+      if (!email) return showAlert('warning','Email requerido','Ingresa tu correo.');
+      showLoading(true);
+      try{
+        // Forzar tu GitHub Pages (evita problemas si abres desde otro dominio o file://)
+        const redirectTo = APP_URL;
+        const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo });
+        if(error) throw error;
+        bootstrap.Modal.getInstance(el('forgotPassModal'))?.hide();
+        showAlert('success','Enviado','Revisa tu bandeja de entrada.');
+      }catch(err){ showAlert('danger','Error', humanize(err)); }
+      finally{ showLoading(false); }
+    });
 
-        // Sesión activa
-        const { data, error } = await sb.auth.getUser();
-        if (error) console.warn(error);
+    el('btnSetNewPass').addEventListener('click', async ()=>{
+      const p1 = el('np1').value; const p2 = el('np2').value;
+      if (!p1 || p1.length < 6) return showAlert('warning','Seguridad','Mínimo 6 caracteres.');
+      if (p1 !== p2) return showAlert('warning','Error','Las contraseñas no coinciden.');
+      showLoading(true);
+      try{
+        const { error } = await supabase.auth.updateUser({ password: p1 });
+        if (error) throw error;
+        bootstrap.Modal.getInstance(el('setNewPassModal'))?.hide();
+        showAlert('success','Listo','Contraseña actualizada. Puedes iniciar sesión.');
+        // Limpia hash para evitar reabrir modal si refrescan
+        if (window.location.hash) history.replaceState(null, '', window.location.pathname + window.location.search);
+      }catch(err){ showAlert('danger','Error', humanize(err)); }
+      finally{ showLoading(false); }
+    });
 
-        if (data?.user){
-          currentUser = data.user;
-          document.getElementById('userBadge').textContent = (currentUser.email || 'Usuario');
-          document.getElementById('btnLogout').classList.remove('d-none');
-          document.getElementById('loginCard').classList.add('d-none');
-          document.getElementById('appRoot').classList.remove('d-none');
-          enableWorkButtons(true);
-          setLoginMsg('success', 'Sesión activa: ' + (currentUser.email || 'ok'));
-          await loadQuestionBank();
-          await loadHistory();
-          await renderDashboard();
-        }
-      } catch (e){
-        console.error('Init crash:', e);
-        setLoginMsg('danger', 'Error inicializando la app (ver consola).');
-        workMsg('danger', e?.message || String(e));
+    // --- DATA ---
+    async function refreshAll(){
+      showLoading(true);
+      try{
+        await Promise.all([loadCampaigns(), loadPieces(), loadMetrics(), loadLeads()]);
+        applyPiecesFilters();
+        applyLeadsFilters();
+      }catch(err){
+        console.error(err);
+        showAlert('danger','Error de conexión','No se pudieron cargar los datos.');
+      }finally{
+        showLoading(false);
       }
-    })();
+    }
+
+    // -- CAMPAIGNS --
+    async function loadCampaigns(){
+      const { data, error } = await supabase.from(MAP.campaigns.table).select('*').order(MAP.campaigns.created_at, { ascending:false });
+      if(error){ showAlert('danger','Error', error.message); return; }
+      state.campaigns = data || [];
+      renderCampaigns(state.campaigns);
+      updateSelects();
+    }
+    
+    function renderCampaigns(rows){
+      el('tblCampaigns').querySelector('tbody').innerHTML = rows.map(r => `
+        <tr>
+          <td><span class="mono">${esc(r[MAP.campaigns.code] ?? '—')}</span></td>
+          <td><span class="badge bg-light text-dark border">B${esc(r[MAP.campaigns.bimester])}</span></td>
+          <td>${esc(r[MAP.campaigns.year])}</td>
+          <td class="fw-bold text-primary">${esc(r[MAP.campaigns.name])}</td>
+          <td class="text-muted small text-truncate" style="max-width:150px;">${esc(r[MAP.campaigns.objective])}</td>
+          <td class="small">${fmtDT(r[MAP.campaigns.start]).split(' ')[0]}</td>
+          <td class="text-end">
+             <button class="btn btn-sm btn-white border" onclick="editCamp('${r[MAP.campaigns.id]}')"><i class="bi bi-pencil-fill text-muted"></i></button>
+             <button class="btn btn-sm btn-white border ms-1" onclick="delCamp('${r[MAP.campaigns.id]}')"><i class="bi bi-trash-fill text-danger opacity-50"></i></button>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    window.editCamp = (id) => openCampaignModal(state.campaigns.find(x => String(x[MAP.campaigns.id]) === String(id)));
+    window.delCamp = async (id) => {
+      if(!confirm('¿Borrar campaña?')) return;
+      const { error } = await supabase.from(MAP.campaigns.table).delete().eq(MAP.campaigns.id, id);
+      if(error) return showAlert('danger','Error', error.message);
+      await loadCampaigns();
+      await loadPieces(); // por dependencias
+      showAlert('success','Eliminado','Campaña eliminada.');
+    };
+
+    function openCampaignModal(row=null){
+      el('c_id').value = row?.[MAP.campaigns.id] || '';
+      el('c_bim').value = row?.[MAP.campaigns.bimester] || '1';
+      el('c_year').value = row?.[MAP.campaigns.year] || '2026';
+      el('c_name').value = row?.[MAP.campaigns.name] || '';
+      el('c_code').value = row?.[MAP.campaigns.code] || '';
+      el('c_objective').value = row?.[MAP.campaigns.objective] || '';
+      el('c_start').value = row?.[MAP.campaigns.start] || '';
+      el('c_end').value = row?.[MAP.campaigns.end] || '';
+      new bootstrap.Modal(el('campaignModal')).show();
+    }
+
+    el('btnSaveCampaign').onclick = async () => {
+       const payload = {};
+       payload[MAP.campaigns.name] = el('c_name').value.trim();
+       payload[MAP.campaigns.year] = Number(el('c_year').value) || 2026;
+       payload[MAP.campaigns.bimester] = Number(el('c_bim').value) || 1;
+       payload[MAP.campaigns.objective] = el('c_objective').value.trim() || null;
+       payload[MAP.campaigns.start] = el('c_start').value || null;
+       payload[MAP.campaigns.end] = el('c_end').value || null;
+       if (el('c_code').value.trim()) payload[MAP.campaigns.code] = el('c_code').value.trim();
+       
+       const id = el('c_id').value;
+       const q = id
+         ? supabase.from(MAP.campaigns.table).update(payload).eq(MAP.campaigns.id, id)
+         : supabase.from(MAP.campaigns.table).insert(payload);
+
+       showLoading(true);
+       const { error } = await q;
+       showLoading(false);
+
+       if(error) return showAlert('danger','Error', error.message);
+
+       bootstrap.Modal.getInstance(el('campaignModal'))?.hide();
+       await loadCampaigns();
+       await loadPieces();
+       showAlert('success','Guardado','Campaña guardada.');
+    };
+
+    el('btnSeed').onclick = async () => {
+        if(!confirm('Esto creará campañas base para 2026. ¿Continuar?')) return;
+        showLoading(true);
+        for(let b=1; b<=6; b++){
+            const { error } = await supabase.from(MAP.campaigns.table).insert({
+                [MAP.campaigns.year]: 2026,
+                [MAP.campaigns.bimester]: b,
+                [MAP.campaigns.name]: `Campaña Base B${b}`
+            });
+            if(error) console.warn(error);
+        }
+        await loadCampaigns();
+        showLoading(false);
+        showAlert('success','Listo','Seed creado.');
+    };
+
+    // -- PIECES --
+    async function loadPieces(){
+      const { data, error } = await supabase.from(MAP.pieces.table).select('*').order(MAP.pieces.created_at, { ascending:false });
+      if(error){ showAlert('danger','Error', error.message); return; }
+      state.pieces = data || [];
+      applyPiecesFilters();
+      updateSelects();
+    }
+
+    function renderPieces(rows){
+       el('tblPieces').querySelector('tbody').innerHTML = rows.map(r => {
+         const camp = state.campaigns.find(c => String(c[MAP.campaigns.id]) === String(r[MAP.pieces.campaign_id]));
+         return `
+         <tr>
+           <td><span class="mono">${esc(r[MAP.pieces.code] ?? '-')}</span></td>
+           <td class="small text-muted">${esc(camp ? camp[MAP.campaigns.name] : 'Sin campaña')}</td>
+           <td>${getChannelIcon(r[MAP.pieces.channel])}</td>
+           <td><span class="badge bg-light text-dark border fw-normal">${esc(r[MAP.pieces.format])}</span></td>
+           <td class="small">${esc(r[MAP.pieces.funnel])}</td>
+           <td>${getStatusBadge(r[MAP.pieces.status])}</td>
+           <td class="truncate-2 small fw-bold" style="max-width:200px" title="${esc(r[MAP.pieces.hook])}">${esc(r[MAP.pieces.hook])}</td>
+           <td class="small text-muted">${r[MAP.pieces.scheduled] ? fmtDT(r[MAP.pieces.scheduled]) : '-'}</td>
+           <td class="text-end">
+             <button class="btn btn-sm btn-white border" onclick="editPiece('${r[MAP.pieces.id]}')"><i class="bi bi-pencil-fill text-muted"></i></button>
+             <button class="btn btn-sm btn-white border ms-1" onclick="delPiece('${r[MAP.pieces.id]}')"><i class="bi bi-trash-fill text-danger opacity-50"></i></button>
+           </td>
+         </tr>
+       `}).join('');
+    }
+
+    function resetPieceForm(){
+      el('p_id').value = '';
+      el('p_campaign').value = '';
+      el('p_channel').value = 'Instagram';
+      el('p_format').value = '';
+      el('p_funnel').value = '';
+      el('p_status').value = 'Borrador';
+      el('p_hook').value = '';
+      el('p_copy').value = '';
+      el('p_code').value = '';
+      el('p_scheduled').value = '';
+    }
+
+    window.editPiece = (id) => {
+        const row = state.pieces.find(r => String(r[MAP.pieces.id]) === String(id));
+        if(!row) return;
+        el('p_id').value = row[MAP.pieces.id];
+        el('p_campaign').value = row[MAP.pieces.campaign_id] ?? '';
+        el('p_channel').value = row[MAP.pieces.channel] ?? 'Instagram';
+        el('p_format').value = row[MAP.pieces.format] ?? '';
+        el('p_funnel').value = row[MAP.pieces.funnel] ?? '';
+        el('p_status').value = row[MAP.pieces.status] ?? 'Borrador';
+        el('p_hook').value = row[MAP.pieces.hook] ?? '';
+        el('p_copy').value = row[MAP.pieces.copy] ?? '';
+        el('p_code').value = row[MAP.pieces.code] ?? '';
+        el('p_scheduled').value = row[MAP.pieces.scheduled] ? new Date(row[MAP.pieces.scheduled]).toISOString().slice(0,16) : '';
+        new bootstrap.Modal(el('pieceModal')).show();
+    };
+
+    window.delPiece = async (id) => {
+      if(!confirm('¿Borrar pieza?')) return;
+      const { error } = await supabase.from(MAP.pieces.table).delete().eq(MAP.pieces.id, id);
+      if(error) return showAlert('danger','Error', error.message);
+      await loadPieces();
+      showAlert('success','Eliminado','Pieza eliminada.');
+    };
+
+    el('btnSavePiece').onclick = async () => {
+        const payload = {};
+        payload[MAP.pieces.campaign_id] = el('p_campaign').value || null;
+        payload[MAP.pieces.channel] = el('p_channel').value;
+        payload[MAP.pieces.format] = el('p_format').value || null;
+        payload[MAP.pieces.funnel] = el('p_funnel').value || null;
+        payload[MAP.pieces.status] = el('p_status').value;
+        payload[MAP.pieces.hook] = el('p_hook').value || null;
+        payload[MAP.pieces.copy] = el('p_copy').value || null;
+        if(el('p_code').value.trim()) payload[MAP.pieces.code] = el('p_code').value.trim();
+        payload[MAP.pieces.scheduled] = el('p_scheduled').value ? new Date(el('p_scheduled').value).toISOString() : null;
+
+        const id = el('p_id').value;
+        const q = id
+          ? supabase.from(MAP.pieces.table).update(payload).eq(MAP.pieces.id, id)
+          : supabase.from(MAP.pieces.table).insert(payload);
+
+        showLoading(true);
+        const { error } = await q;
+        showLoading(false);
+
+        if(error) return showAlert('danger','Error', error.message);
+
+        bootstrap.Modal.getInstance(el('pieceModal'))?.hide();
+        await loadPieces();
+        showAlert('success','Guardado','Pieza guardada.');
+    };
+
+    // -- METRICS --
+    async function loadMetrics(){
+        const { data, error } = await supabase.from(MAP.metrics.table).select('*').order(MAP.metrics.date, {ascending:false});
+        if(error){ showAlert('danger','Error', error.message); return; }
+        state.metrics = data || [];
+        renderMetrics(state.metrics);
+        updateSelects();
+    }
+    
+    function renderMetrics(rows){
+        el('tblMetrics').querySelector('tbody').innerHTML = rows.map(r => {
+            const p = state.pieces.find(x => String(x[MAP.pieces.id]) === String(r[MAP.metrics.piece_id]));
+            return `
+            <tr>
+              <td class="text-start">
+                  <div class="small fw-bold">${esc(p ? p[MAP.pieces.code] : '-')}</div>
+                  <div class="mini text-muted truncate-2">${esc(p ? p[MAP.pieces.hook] : '')}</div>
+              </td>
+              <td class="mono small">${esc(r[MAP.metrics.date])}</td>
+              <td>${esc(r[MAP.metrics.impressions] ?? 0)}</td>
+              <td>${esc(r[MAP.metrics.reach] ?? 0)}</td>
+              <td>${esc(r[MAP.metrics.plays] ?? 0)}</td>
+              <td class="fw-bold text-primary bg-primary bg-opacity-10">${esc(r[MAP.metrics.leads] ?? 0)}</td>
+              <td>${esc(r[MAP.metrics.appointments] ?? 0)}</td>
+              <td class="fw-bold text-success">${esc(r[MAP.metrics.showups] ?? 0)}</td>
+              <td class="text-end">
+                 <button class="btn btn-sm btn-white border" onclick="editMetric('${r[MAP.metrics.id]}')"><i class="bi bi-pencil-fill text-muted"></i></button>
+              </td>
+            </tr>
+            `;
+        }).join('');
+    }
+
+    function resetMetricForm(){
+      el('mx_id').value = '';
+      el('mx_piece').value = '';
+      el('mx_date').value = '';
+      el('mx_impressions').value = 0;
+      el('mx_reach').value = 0;
+      el('mx_plays').value = 0;
+      el('mx_leads').value = 0;
+      el('mx_appointments').value = 0;
+      el('mx_showups').value = 0;
+    }
+
+    window.editMetric = (id) => {
+        const r = state.metrics.find(x => String(x[MAP.metrics.id]) === String(id));
+        if(!r) return;
+        el('mx_id').value = r[MAP.metrics.id];
+        el('mx_piece').value = r[MAP.metrics.piece_id];
+        el('mx_date').value = r[MAP.metrics.date];
+        el('mx_impressions').value = r[MAP.metrics.impressions] ?? 0;
+        el('mx_reach').value = r[MAP.metrics.reach] ?? 0;
+        el('mx_plays').value = r[MAP.metrics.plays] ?? 0;
+        el('mx_leads').value = r[MAP.metrics.leads] ?? 0;
+        el('mx_appointments').value = r[MAP.metrics.appointments] ?? 0;
+        el('mx_showups').value = r[MAP.metrics.showups] ?? 0;
+        new bootstrap.Modal(el('metricModal')).show();
+    };
+
+    el('btnSaveMetric').onclick = async () => {
+        const payload = {};
+        payload[MAP.metrics.piece_id] = el('mx_piece').value;
+        payload[MAP.metrics.date] = el('mx_date').value;
+        payload[MAP.metrics.impressions] = Number(el('mx_impressions').value || 0);
+        payload[MAP.metrics.reach] = Number(el('mx_reach').value || 0);
+        payload[MAP.metrics.plays] = Number(el('mx_plays').value || 0);
+        payload[MAP.metrics.leads] = Number(el('mx_leads').value || 0);
+        payload[MAP.metrics.appointments] = Number(el('mx_appointments').value || 0);
+        payload[MAP.metrics.showups] = Number(el('mx_showups').value || 0);
+
+        const id = el('mx_id').value;
+
+        let q;
+        if(id) {
+          q = supabase.from(MAP.metrics.table).update(payload).eq(MAP.metrics.id, id);
+        } else {
+          q = supabase.from(MAP.metrics.table).upsert(payload, { onConflict: `${MAP.metrics.piece_id},${MAP.metrics.date}` });
+        }
+
+        showLoading(true);
+        const { error } = await q;
+        showLoading(false);
+
+        if(error) return showAlert('danger','Error', error.message);
+
+        bootstrap.Modal.getInstance(el('metricModal'))?.hide();
+        await loadMetrics();
+        showAlert('success','Guardado','Métrica guardada.');
+    };
+
+    // -- LEADS --
+    async function loadLeads(){
+        const { data, error } = await supabase.from(MAP.leads.table).select('*').order(MAP.leads.created_at, {ascending:false});
+        if(error){ showAlert('danger','Error', error.message); return; }
+        state.leads = data || [];
+        applyLeadsFilters();
+    }
+
+    function renderLeads(rows){
+        el('tblLeads').querySelector('tbody').innerHTML = rows.map(r => {
+             const c = state.campaigns.find(x=> String(x[MAP.campaigns.id]) === String(r[MAP.leads.campaign_id]));
+             const p = state.pieces.find(x=> String(x[MAP.pieces.id]) === String(r[MAP.leads.piece_id]));
+             return `
+             <tr>
+                <td><span class="mono">${esc(r[MAP.leads.code] ?? '—')}</span></td>
+                <td class="small text-muted">${fmtDT(r[MAP.leads.created_at])}</td>
+                <td><span class="badge bg-light text-dark border">${esc(r[MAP.leads.source] ?? '')}</span></td>
+                <td>
+                    <div class="mini text-truncate" style="max-width:120px">${esc(c?.[MAP.campaigns.name] || '')}</div>
+                    <div class="mini text-muted">${esc(p?.[MAP.pieces.code] || '')}</div>
+                </td>
+                <td class="fw-bold text-primary">${esc(r[MAP.leads.name] ?? '')}</td>
+                <td>${esc(r[MAP.leads.phone] ?? '')}</td>
+                <td>${getStatusBadge(r[MAP.leads.status] ?? '')}</td>
+                <td class="text-end">
+                    <button class="btn btn-sm btn-white border" onclick="editLead('${r[MAP.leads.id]}')"><i class="bi bi-pencil-fill text-muted"></i></button>
+                    <button class="btn btn-sm btn-white border ms-1" onclick="delLead('${r[MAP.leads.id]}')"><i class="bi bi-trash-fill text-danger opacity-50"></i></button>
+                </td>
+             </tr>
+             `;
+        }).join('');
+    }
+
+    function resetLeadForm(){
+      el('ld_id').value = '';
+      el('ld_source').value = '';
+      el('ld_campaign').value = '';
+      el('ld_piece').value = '';
+      el('ld_name').value = '';
+      el('ld_phone').value = '';
+      el('ld_interest').value = '';
+      el('ld_status').value = 'Nuevo';
+      el('ld_notes').value = '';
+    }
+
+    window.editLead = (id) => {
+        const r = state.leads.find(x => String(x[MAP.leads.id]) === String(id));
+        if(!r) return;
+        el('ld_id').value = r[MAP.leads.id];
+        el('ld_source').value = r[MAP.leads.source] ?? '';
+        el('ld_campaign').value = r[MAP.leads.campaign_id] ?? '';
+        el('ld_piece').value = r[MAP.leads.piece_id] ?? '';
+        el('ld_name').value = r[MAP.leads.name] ?? '';
+        el('ld_phone').value = r[MAP.leads.phone] ?? '';
+        el('ld_interest').value = r[MAP.leads.interest] ?? '';
+        el('ld_status').value = r[MAP.leads.status] ?? 'Nuevo';
+        el('ld_notes').value = r[MAP.leads.notes] ?? '';
+        new bootstrap.Modal(el('leadModal')).show();
+    };
+
+    window.delLead = async (id) => {
+      if(!confirm('¿Borrar?')) return;
+      const { error } = await supabase.from(MAP.leads.table).delete().eq(MAP.leads.id, id);
+      if(error) return showAlert('danger','Error', error.message);
+      await loadLeads();
+      showAlert('success','Eliminado','Lead eliminado.');
+    };
+
+    el('btnSaveLead').onclick = async () => {
+         const payload = {};
+         payload[MAP.leads.source] = el('ld_source').value || null;
+         payload[MAP.leads.campaign_id] = el('ld_campaign').value || null;
+         payload[MAP.leads.piece_id] = el('ld_piece').value || null;
+         payload[MAP.leads.name] = el('ld_name').value || null;
+         payload[MAP.leads.phone] = el('ld_phone').value || null;
+         payload[MAP.leads.interest] = el('ld_interest').value || null;
+         payload[MAP.leads.status] = el('ld_status').value || 'Nuevo';
+         payload[MAP.leads.notes] = el('ld_notes').value || null;
+
+         const id = el('ld_id').value;
+         const q = id
+           ? supabase.from(MAP.leads.table).update(payload).eq(MAP.leads.id, id)
+           : supabase.from(MAP.leads.table).insert(payload);
+
+         showLoading(true);
+         const { error } = await q;
+         showLoading(false);
+
+         if(error) return showAlert('danger','Error', error.message);
+
+         bootstrap.Modal.getInstance(el('leadModal'))?.hide();
+         await loadLeads();
+         showAlert('success','Guardado','Lead guardado.');
+    };
+
+    // --- FILTERS / SELECTS ---
+    function updateSelects(){
+        const campOpts = '<option value="">(Seleccionar)</option>' + state.campaigns.map(c=>`<option value="${c[MAP.campaigns.id]}">${esc(campaignLabel(c))}</option>`).join('');
+        el('fCamp').innerHTML = '<option value="">Todas</option>' + state.campaigns.map(c=>`<option value="${c[MAP.campaigns.id]}">${esc(campaignLabel(c))}</option>`).join('');
+        el('p_campaign').innerHTML = campOpts;
+        el('ld_campaign').innerHTML = campOpts;
+        el('lCamp').innerHTML = el('fCamp').innerHTML;
+
+        const pieceOpts = '<option value="">(Seleccionar)</option>' + state.pieces.map(p=>`<option value="${p[MAP.pieces.id]}">${esc(pieceLabel(p))}</option>`).join('');
+        el('mPiece').innerHTML = pieceOpts;
+        el('ld_piece').innerHTML = pieceOpts;
+        el('mx_piece').innerHTML = pieceOpts;
+        el('lPiece').innerHTML = pieceOpts;
+    }
+
+    function applyPiecesFilters(){
+        const bim = el('fBim').value;           // NUEVO: se usa
+        const camp = el('fCamp').value;
+        const chan = el('fChannel').value;
+        const stat = el('fStatus').value;
+        const q = (el('fQ').value || '').toLowerCase();
+
+        const filtered = state.pieces.filter(r => {
+            const campaign = state.campaigns.find(c => String(c[MAP.campaigns.id]) === String(r[MAP.pieces.campaign_id]));
+            if (bim && String(campaign?.[MAP.campaigns.bimester] ?? '') !== String(bim)) return false;
+            if (camp && String(r[MAP.pieces.campaign_id] ?? '') !== String(camp)) return false;
+            if (chan && String(r[MAP.pieces.channel] ?? '') !== String(chan)) return false;
+            if (stat && String(r[MAP.pieces.status] ?? '') !== String(stat)) return false;
+            if (q && !JSON.stringify(r).toLowerCase().includes(q)) return false;
+            return true;
+        });
+
+        renderPieces(filtered);
+        updateSelects();
+    }
+
+    function applyLeadsFilters(){
+      const camp = el('lCamp').value;
+      const piece = el('lPiece').value;
+      const q = (el('lQ').value || '').toLowerCase();
+
+      const filtered = state.leads.filter(r => {
+        if (camp && String(r[MAP.leads.campaign_id] ?? '') !== String(camp)) return false;
+        if (piece && String(r[MAP.leads.piece_id] ?? '') !== String(piece)) return false;
+        if (q && !JSON.stringify(r).toLowerCase().includes(q)) return false;
+        return true;
+      });
+
+      renderLeads(filtered);
+    }
+
+    function bindFilters(){
+        el('btnNewCampaign').onclick = () => openCampaignModal();
+
+        el('btnNewPiece').onclick = () => { resetPieceForm(); new bootstrap.Modal(el('pieceModal')).show(); };
+        el('btnNewMetric').onclick = () => { resetMetricForm(); new bootstrap.Modal(el('metricModal')).show(); };
+        el('btnNewLead').onclick = () => { resetLeadForm(); new bootstrap.Modal(el('leadModal')).show(); };
+        
+        ['fCamp','fChannel','fStatus','fBim'].forEach(id => el(id)?.addEventListener('change', applyPiecesFilters));
+        el('fQ')?.addEventListener('keyup', applyPiecesFilters);
+
+        ['lCamp','lPiece'].forEach(id => el(id)?.addEventListener('change', applyLeadsFilters));
+        el('lQ')?.addEventListener('keyup', applyLeadsFilters);
+        
+        el('btnReloadCampaigns').onclick = loadCampaigns;
+        el('btnReloadPieces').onclick = loadPieces;
+        el('btnReloadMetrics').onclick = loadMetrics;
+        el('btnReloadLeads').onclick = loadLeads;
+    }
+
+    // Start
+    init();
   </script>
 </body>
 </html>
-
-
