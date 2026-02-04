@@ -21,7 +21,6 @@
       --text-main: #1f2937;
       --text-muted: #6b7280;
       --border-color: #e5e7eb;
-
       --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
       --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
       --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
@@ -47,6 +46,7 @@
     .brand-icon { width: 32px; height: 32px; background: #eff6ff; border-radius: 8px; display: flex; align-items: center; justify-content: center; color: var(--primary); }
 
     .app-shell{ max-width: 1400px; }
+
     .cardx {
       background: var(--bg-card);
       border: 1px solid var(--border-color);
@@ -104,7 +104,6 @@
     .alert-card { background: white; border: 1px solid var(--border-color); border-left: 4px solid var(--primary); border-radius: 8px; box-shadow: var(--shadow-md); padding: 12px 16px; display: flex; gap: 12px; align-items: start; animation: slideIn 0.3s ease; }
     .alert-card.success { border-left-color: #059669; }
     .alert-card.danger { border-left-color: #dc2626; }
-    .alert-card.warning { border-left-color: #d97706; }
 
     @keyframes slideIn { from { transform: translateX(100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
     .hidden { display: none !important; }
@@ -134,12 +133,11 @@
 
   <div class="container-fluid app-shell my-5 px-4">
 
-    <!-- LOGIN -->
     <div id="loginView" class="cardx p-5 mx-auto" style="max-width: 480px;">
       <div class="text-center mb-4">
         <div class="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-circle mb-3" style="width: 48px; height: 48px;"><i class="bi bi-shield-lock-fill fs-5"></i></div>
         <h4 class="fw-bold">Iniciar Sesión</h4>
-        <p class="text-muted small">Accede al panel de Marketing</p>
+        <p class="text-muted small">Accede al panel de control de Marketing</p>
       </div>
 
       <div class="mb-3">
@@ -156,16 +154,15 @@
         <button class="btn btn-link px-0 small text-decoration-none" id="btnForgotPass" type="button">¿Olvidaste tu clave?</button>
       </div>
 
-      <button class="btn btn-primary w-100 py-2" id="btnSignIn">Ingresar</button>
+      <button class="btn btn-primary w-100 py-2" id="btnSignIn">Ingresar al Sistema</button>
       <div class="text-center mt-3 small text-muted">Powered by Supabase</div>
     </div>
 
-    <!-- APP -->
     <div id="appView" class="hidden">
       <div class="d-flex flex-wrap gap-3 align-items-center justify-content-between mb-4">
         <div>
           <h3 class="fw-bold mb-1">Panel de Control</h3>
-          <div class="mini">Campañas, piezas, métricas y leads.</div>
+          <div class="mini">Gestión de campañas, piezas, métricas y leads (esquema real Supabase).</div>
         </div>
 
         <div class="d-flex flex-wrap gap-2">
@@ -189,7 +186,7 @@
         </li>
         <li class="nav-item" role="presentation">
           <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabMetrics" type="button" role="tab">
-            <i class="bi bi-bar-chart me-2"></i>Métricas
+            <i class="bi bi-bar-chart me-2"></i>Métricas (volume / interactions / spend)
           </button>
         </li>
         <li class="nav-item" role="presentation">
@@ -206,17 +203,20 @@
           <div class="cardx">
             <div class="p-3 border-bottom d-flex align-items-center justify-content-between bg-light bg-opacity-50">
               <span class="fw-bold small text-uppercase text-muted">Listado de Campañas</span>
-              <button class="btn btn-sm btn-white border" id="btnReloadCampaigns"><i class="bi bi-arrow-clockwise"></i></button>
+              <div class="d-flex gap-2">
+                <button class="btn btn-sm btn-white border" id="btnReloadCampaigns"><i class="bi bi-arrow-clockwise"></i></button>
+              </div>
             </div>
             <div class="table-responsive">
               <table class="table table-hover mb-0 align-middle" id="tblCampaigns">
                 <thead>
                   <tr>
-                    <th>Nombre</th>
+                    <th>ID</th>
                     <th>Bimestre</th>
-                    <th>Inicio</th>
-                    <th>Fin</th>
-                    <th>Estado</th>
+                    <th>Nombre</th>
+                    <th>Objetivo</th>
+                    <th>Vigencia</th>
+                    <th>Status</th>
                     <th class="text-end">Acciones</th>
                   </tr>
                 </thead>
@@ -231,27 +231,33 @@
           <div class="cardx">
             <div class="p-4 border-bottom">
               <div class="row g-3">
-                <div class="col-12 col-md-4">
+                <div class="col-6 col-md-3">
                   <label class="form-label mini fw-bold">Campaña</label>
                   <select class="form-select" id="fCamp"></select>
                 </div>
 
-                <div class="col-12 col-md-3">
-                  <label class="form-label mini fw-bold">Estado</label>
-                  <input class="form-control" id="fPieceStatus" placeholder="idea, borrador, publicado...">
+                <div class="col-6 col-md-3">
+                  <label class="form-label mini fw-bold">Canal</label>
+                  <select class="form-select" id="fChannel"></select>
                 </div>
 
-                <div class="col-12 col-md-5">
+                <div class="col-6 col-md-3">
+                  <label class="form-label mini fw-bold">Status</label>
+                  <select class="form-select" id="fStatus">
+                    <option value="">Todos</option>
+                    <option value="idea">idea</option>
+                    <option value="borrador">borrador</option>
+                    <option value="programado">programado</option>
+                    <option value="publicado">publicado</option>
+                    <option value="pausado">pausado</option>
+                  </select>
+                </div>
+
+                <div class="col-12 col-md-3">
                   <label class="form-label mini fw-bold">Buscar</label>
                   <div class="input-group">
                     <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-muted"></i></span>
-                    <input class="form-control border-start-0 ps-0" id="fQ" placeholder="Nombre, hook, ad_id...">
-                  </div>
-                </div>
-
-                <div class="col-12">
-                  <div class="small text-muted">
-                    Nota: <b>format</b> y <b>bimester</b> son enums en Supabase; si tu valor no coincide con el enum, Supabase rechazará el insert/update.
+                    <input class="form-control border-start-0 ps-0" id="fQ" placeholder="nombre / hook / ad_id ...">
                   </div>
                 </div>
               </div>
@@ -261,13 +267,13 @@
               <table class="table table-hover mb-0 align-middle" id="tblPieces">
                 <thead>
                   <tr>
-                    <th>Nombre</th>
+                    <th>ID</th>
                     <th>Campaña</th>
                     <th>Canal</th>
+                    <th>Nombre</th>
                     <th>Formato</th>
-                    <th>Estado</th>
-                    <th>Hook</th>
-                    <th>CTA</th>
+                    <th>Pilar</th>
+                    <th>Status</th>
                     <th class="text-end">Acciones</th>
                   </tr>
                 </thead>
@@ -292,17 +298,17 @@
                   <label class="form-label mini fw-bold">Pieza</label>
                   <select class="form-select" id="mPiece"></select>
                 </div>
-                <div class="col-6 col-md-3">
+                <div class="col-6 col-md-2">
                   <label class="form-label mini fw-bold">Desde</label>
                   <input type="date" class="form-control" id="mFrom">
                 </div>
-                <div class="col-6 col-md-3">
+                <div class="col-6 col-md-2">
                   <label class="form-label mini fw-bold">Hasta</label>
                   <input type="date" class="form-control" id="mTo">
                 </div>
-              </div>
-              <div class="d-flex justify-content-end mt-3">
-                <button class="btn btn-light" id="btnReloadMetrics"><i class="bi bi-arrow-clockwise me-1"></i>Filtrar</button>
+                <div class="col-12 col-md-2 d-flex align-items-end">
+                  <button class="btn btn-light w-100" id="btnReloadMetrics"><i class="bi bi-arrow-clockwise"></i></button>
+                </div>
               </div>
             </div>
 
@@ -312,9 +318,9 @@
                   <tr>
                     <th class="text-start">Pieza</th>
                     <th>Fecha</th>
-                    <th>Volumen</th>
-                    <th>Interacciones</th>
-                    <th>Gasto</th>
+                    <th>Volume</th>
+                    <th>Interactions</th>
+                    <th>Spend</th>
                     <th class="text-end">Acciones</th>
                   </tr>
                 </thead>
@@ -339,11 +345,8 @@
                 </div>
                 <div class="col-12 col-md-4">
                   <label class="form-label mini fw-bold">Buscar</label>
-                  <input class="form-control" id="lQ" placeholder="Nombre, teléfono, email...">
+                  <input class="form-control" id="lQ" placeholder="nombre, teléfono, email...">
                 </div>
-              </div>
-              <div class="small text-muted mt-3">
-                Nota: <b>triage_status</b> y <b>clinical_outcome</b> son enums.
               </div>
             </div>
 
@@ -352,12 +355,12 @@
                 <thead>
                   <tr>
                     <th>Fecha</th>
+                    <th>Origen</th>
                     <th>Nombre</th>
                     <th>Teléfono</th>
                     <th>Email</th>
-                    <th>Origen</th>
                     <th>Triage</th>
-                    <th>Cita</th>
+                    <th>Outcome</th>
                     <th class="text-end">Acciones</th>
                   </tr>
                 </thead>
@@ -366,7 +369,9 @@
             </div>
 
             <div class="p-2 border-top bg-light text-end">
-              <button class="btn btn-sm btn-link text-decoration-none text-muted" id="btnReloadLeads"><i class="bi bi-arrow-clockwise me-1"></i>Actualizar tabla</button>
+              <button class="btn btn-sm btn-link text-decoration-none text-muted" id="btnReloadLeads">
+                <i class="bi bi-arrow-clockwise me-1"></i>Actualizar tabla
+              </button>
             </div>
           </div>
         </div>
@@ -375,7 +380,7 @@
     </div>
   </div>
 
-  <!-- Forgot Password -->
+  <!-- Forgot Pass -->
   <div class="modal fade" id="forgotPassModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content cardx">
@@ -384,7 +389,7 @@
           <button class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
-          <p class="text-muted small">Ingresa tu correo y te enviaremos un enlace.</p>
+          <p class="text-muted small">Ingresa tu correo y te enviaremos un enlace de recuperación.</p>
           <input type="email" class="form-control mb-3" id="fp_email" placeholder="tu@correo.com">
           <div class="d-flex justify-content-end gap-2">
             <button class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
@@ -395,8 +400,8 @@
     </div>
   </div>
 
-  <!-- Set New Password -->
-  <div class="modal fade" id="setNewPassModal" tabindex="-1" aria-hidden="true">
+  <!-- Set New Pass -->
+  <div class="modal fade" id="setNewPassModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content cardx">
         <div class="modal-header border-0 pb-0">
@@ -412,6 +417,7 @@
              <input type="password" class="form-control" id="np2">
           </div>
           <button class="btn btn-primary w-100" id="btnSetNewPass">Actualizar Password</button>
+          <div class="small text-muted mt-2">Al finalizar te regresará al login automáticamente.</div>
         </div>
       </div>
     </div>
@@ -427,60 +433,53 @@
         </div>
         <div class="modal-body">
           <input type="hidden" id="c_id">
-
           <div class="row g-3">
-            <div class="col-12">
-              <label class="form-label small fw-bold">Nombre *</label>
-              <input class="form-control" id="c_name" placeholder="Ej: Diabetes Control" required>
-            </div>
-
             <div class="col-6">
-              <label class="form-label small fw-bold">Bimestre * (campaign_bimester)</label>
+              <label class="form-label small fw-bold">Bimestre (NOT NULL)</label>
               <select class="form-select" id="c_bim">
+                <option value="">Seleccionar...</option>
                 <option value="B1">B1</option><option value="B2">B2</option><option value="B3">B3</option>
                 <option value="B4">B4</option><option value="B5">B5</option><option value="B6">B6</option>
               </select>
-            </div>
-
-            <div class="col-6">
-              <label class="form-label small fw-bold">Estado</label>
-              <input class="form-control" id="c_status" placeholder="planificada, activa...">
-            </div>
-
-            <div class="col-6">
-              <label class="form-label small fw-bold">Inicio *</label>
-              <input type="date" class="form-control" id="c_start" required>
+              <div class="mini mt-1">Tu tipo es <span class="mono">campaign_bimester</span>; esto asume valores B1..B6.</div>
             </div>
             <div class="col-6">
-              <label class="form-label small fw-bold">Fin *</label>
-              <input type="date" class="form-control" id="c_end" required>
+              <label class="form-label small fw-bold">Status</label>
+              <input class="form-control" id="c_status" placeholder="planificada / activa / ...">
             </div>
-
+            <div class="col-12">
+              <label class="form-label small fw-bold">Nombre (NOT NULL)</label>
+              <input class="form-control" id="c_name" placeholder="Ej: Diabetes Control">
+            </div>
             <div class="col-12">
               <label class="form-label small fw-bold">Objetivo</label>
-              <input class="form-control" id="c_objective" placeholder="Ej: Generar leads cualificados">
+              <input class="form-control" id="c_objective" placeholder="Ej: Generar 50 leads cualificados">
             </div>
 
-            <div class="col-12">
-              <label class="form-label small fw-bold">Evento ancla</label>
-              <input class="form-control" id="c_anchor_event" placeholder="(Opcional)">
+            <div class="col-6">
+              <label class="form-label small fw-bold">Inicio (NOT NULL)</label>
+              <input type="date" class="form-control" id="c_start">
+            </div>
+            <div class="col-6">
+              <label class="form-label small fw-bold">Fin (NOT NULL)</label>
+              <input type="date" class="form-control" id="c_end">
+            </div>
+
+            <div class="col-6">
+              <label class="form-label small fw-bold">Budget Planned</label>
+              <input type="number" class="form-control" id="c_budget" min="0" step="0.01">
+            </div>
+
+            <div class="col-6">
+              <label class="form-label small fw-bold">Anchor Event</label>
+              <input class="form-control" id="c_anchor">
             </div>
 
             <div class="col-12">
               <label class="form-label small fw-bold">Lead Magnet</label>
-              <input class="form-control" id="c_lead_magnet" placeholder="(Opcional)">
-            </div>
-
-            <div class="col-12">
-              <label class="form-label small fw-bold">Presupuesto planificado</label>
-              <input class="form-control" id="c_budget" type="number" step="0.01" min="0">
+              <input class="form-control" id="c_magnet">
             </div>
           </div>
-
-          <div class="small text-muted mt-3">
-            Campos con * son requeridos (en tu tabla <b>start_date/end_date</b> son NOT NULL).
-          </div>
-
         </div>
         <div class="modal-footer border-0">
           <button class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
@@ -500,7 +499,6 @@
         </div>
         <div class="modal-body">
           <input type="hidden" id="p_id">
-
           <div class="row g-3">
             <div class="col-md-6">
               <label class="form-label small fw-bold">Campaña</label>
@@ -510,64 +508,48 @@
             <div class="col-md-6">
               <label class="form-label small fw-bold">Canal (channel_id)</label>
               <select class="form-select" id="p_channel_id"></select>
-              <div class="mini mt-1">Si no carga canales, quedará en “Sin canal” (NULL).</div>
             </div>
 
             <div class="col-12">
-              <label class="form-label small fw-bold">Nombre *</label>
-              <input class="form-control" id="p_name" placeholder="Ej: Reel educación paciente" required>
+              <label class="form-label small fw-bold">Nombre (NOT NULL)</label>
+              <input class="form-control" id="p_name" placeholder="Ej: Reel - Beneficios control glucosa">
             </div>
 
-            <div class="col-md-6">
-              <label class="form-label small fw-bold">Formato * (piece_format)</label>
-              <input class="form-control" id="p_format" list="dl_piece_format" placeholder="Debe coincidir con enum (ej: reel)">
-              <datalist id="dl_piece_format">
-                <option value="reel"></option>
-                <option value="post"></option>
-                <option value="story"></option>
-                <option value="video"></option>
-                <option value="blog"></option>
-                <option value="email"></option>
-                <option value="whatsapp"></option>
-                <option value="banner"></option>
-              </datalist>
+            <div class="col-md-4">
+              <label class="form-label small fw-bold">Formato (NOT NULL)</label>
+              <input class="form-control" id="p_format" placeholder="(enum piece_format)">
             </div>
 
-            <div class="col-md-6">
-              <label class="form-label small fw-bold">Estado</label>
-              <input class="form-control" id="p_status" placeholder="idea, borrador, publicado...">
+            <div class="col-md-4">
+              <label class="form-label small fw-bold">Pillar</label>
+              <input class="form-control" id="p_pillar" placeholder="educación / conversión / ...">
             </div>
 
-            <div class="col-md-6">
-              <label class="form-label small fw-bold">Pilar</label>
-              <input class="form-control" id="p_pillar" placeholder="(Opcional)">
-            </div>
-
-            <div class="col-md-6">
-              <label class="form-label small fw-bold">Estilo visual</label>
-              <input class="form-control" id="p_visual_style" placeholder="(Opcional)">
+            <div class="col-md-4">
+              <label class="form-label small fw-bold">Status</label>
+              <input class="form-control" id="p_status" placeholder="idea / publicado / ...">
             </div>
 
             <div class="col-12">
-              <label class="form-label small fw-bold">Hook / Copy (hook_copy)</label>
+              <label class="form-label small fw-bold">Hook Copy (hook_copy)</label>
               <textarea class="form-control" id="p_hook_copy" rows="2"></textarea>
             </div>
 
             <div class="col-md-6">
-              <label class="form-label small fw-bold">CTA destino</label>
-              <input class="form-control" id="p_cta" placeholder="(URL / WhatsApp / Landing)">
+              <label class="form-label small fw-bold">Visual Style</label>
+              <input class="form-control" id="p_visual_style">
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">CTA Destination</label>
+              <input class="form-control" id="p_cta_destination">
             </div>
 
             <div class="col-md-6">
               <label class="form-label small fw-bold">Ad ID</label>
-              <input class="form-control" id="p_ad_id" placeholder="(Opcional)">
+              <input class="form-control" id="p_ad_id" placeholder="ID anuncio (Meta/Google)">
             </div>
           </div>
-
-          <div class="small text-muted mt-3">
-            Nota: <b>format</b> es NOT NULL y es enum. Si no coincide, Supabase rechazará.
-          </div>
-
         </div>
         <div class="modal-footer border-0">
           <button class="btn btn-light" data-bs-dismiss="modal">Cerrar</button>
@@ -588,35 +570,40 @@
         <div class="modal-body">
           <input type="hidden" id="mx_id">
           <div class="row g-3 align-items-end">
-            <div class="col-md-8">
+            <div class="col-md-6">
               <label class="form-label small fw-bold">Pieza</label>
               <select class="form-select" id="mx_piece"></select>
             </div>
-            <div class="col-md-4">
+            <div class="col-md-3">
               <label class="form-label small fw-bold">Fecha (date)</label>
               <input type="date" class="form-control" id="mx_date">
             </div>
 
+            <div class="col-md-3 d-flex align-items-end">
+              <button class="btn btn-light w-100" id="btnPrefillMetricToday" type="button">
+                <i class="bi bi-calendar2-check me-1"></i>Hoy
+              </button>
+            </div>
+
             <div class="col-12"><hr class="text-muted"></div>
 
-            <div class="col-12 col-md-4 text-center">
-              <label class="form-label small text-muted">Volumen</label>
+            <div class="col-4 text-center">
+              <label class="form-label small text-muted">Volume</label>
               <input class="form-control text-center fw-bold" id="mx_volume" type="number" min="0">
             </div>
-            <div class="col-12 col-md-4 text-center">
-              <label class="form-label small text-muted">Interacciones</label>
+            <div class="col-4 text-center">
+              <label class="form-label small text-muted">Interactions</label>
               <input class="form-control text-center fw-bold" id="mx_interactions" type="number" min="0">
             </div>
-            <div class="col-12 col-md-4 text-center">
-              <label class="form-label small text-muted">Gasto</label>
-              <input class="form-control text-center fw-bold" id="mx_spend" type="number" step="0.01" min="0">
+            <div class="col-4 text-center">
+              <label class="form-label small text-primary fw-bold">Spend</label>
+              <input class="form-control text-center fw-bold border-primary" id="mx_spend" type="number" min="0" step="0.01">
+            </div>
+
+            <div class="col-12">
+              <div class="mini">En tu tabla <span class="mono">piece_metrics</span> la UNIQUE es <span class="mono">(piece_id, date)</span>; al guardar se hace <span class="mono">upsert</span> por esa combinación.</div>
             </div>
           </div>
-
-          <div class="small text-muted mt-3">
-            Tu tabla <b>piece_metrics</b> es por pieza + fecha (UNIQUE <span class="mono">piece_id,date</span>).
-          </div>
-
         </div>
         <div class="modal-footer border-0">
           <button class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
@@ -636,11 +623,10 @@
         </div>
         <div class="modal-body">
           <input type="hidden" id="ld_id">
-
           <div class="row g-3">
             <div class="col-md-6">
-              <label class="form-label small fw-bold">Nombre completo *</label>
-              <input class="form-control" id="ld_full_name" required>
+              <label class="form-label small fw-bold">Nombre (full_name) (NOT NULL)</label>
+              <input class="form-control" id="ld_full_name">
             </div>
             <div class="col-md-3">
               <label class="form-label small fw-bold">Teléfono</label>
@@ -648,71 +634,51 @@
             </div>
             <div class="col-md-3">
               <label class="form-label small fw-bold">Email</label>
-              <input class="form-control" id="ld_email" type="email">
+              <input class="form-control" id="ld_email">
             </div>
 
-            <div class="col-md-6">
+            <div class="col-md-4">
               <label class="form-label small fw-bold">Origen (source_detail)</label>
-              <input class="form-control" id="ld_source_detail" placeholder="Ej: Instagram DM / Landing / Referido">
+              <input class="form-control" id="ld_source_detail" placeholder="Ej: Instagram DM / Form / WhatsApp">
             </div>
-
-            <div class="col-md-3">
+            <div class="col-md-4">
               <label class="form-label small fw-bold">Campaña</label>
               <select class="form-select" id="ld_campaign"></select>
             </div>
-            <div class="col-md-3">
-              <label class="form-label small fw-bold">Pieza</label>
+            <div class="col-md-4">
+              <label class="form-label small fw-bold">Pieza (Opcional)</label>
               <select class="form-select" id="ld_piece"></select>
             </div>
 
-            <div class="col-md-3">
-              <label class="form-label small fw-bold">Triage (triage_status)</label>
-              <input class="form-control" id="ld_triage_status" list="dl_triage_status" placeholder="nuevo">
-              <datalist id="dl_triage_status">
-                <option value="nuevo"></option>
-                <option value="contactado"></option>
-                <option value="en_seguimiento"></option>
-                <option value="cerrado"></option>
-                <option value="descartado"></option>
-              </datalist>
+            <div class="col-md-4">
+              <label class="form-label small fw-bold">Triage Status</label>
+              <input class="form-control" id="ld_triage_status" placeholder="nuevo / contactado / ... (enum)">
             </div>
-
-            <div class="col-md-3">
-              <label class="form-label small fw-bold">Resultado (clinical_outcome)</label>
-              <input class="form-control" id="ld_clinical_outcome" list="dl_clinical_outcome" placeholder="pendiente">
-              <datalist id="dl_clinical_outcome">
-                <option value="pendiente"></option>
-                <option value="cita_agendada"></option>
-                <option value="atendido"></option>
-                <option value="no_contesta"></option>
-                <option value="no_interes"></option>
-              </datalist>
+            <div class="col-md-4">
+              <label class="form-label small fw-bold">Clinical Outcome</label>
+              <input class="form-control" id="ld_clinical_outcome" placeholder="pendiente / ... (enum)">
             </div>
-
-            <div class="col-md-6">
-              <label class="form-label small fw-bold">Notas (triage_notes)</label>
-              <textarea class="form-control" id="ld_triage_notes" rows="2"></textarea>
+            <div class="col-md-4">
+              <label class="form-label small fw-bold">Appointment Date</label>
+              <input type="datetime-local" class="form-control" id="ld_appointment_date">
             </div>
 
             <div class="col-md-4">
-              <label class="form-label small fw-bold">Fecha/hora cita (appointment_date)</label>
-              <input class="form-control" id="ld_appointment_date" type="datetime-local">
+              <label class="form-label small fw-bold">Ticket Value</label>
+              <input type="number" class="form-control" id="ld_ticket_value" min="0" step="0.01">
             </div>
-
-            <div class="col-md-4">
-              <label class="form-label small fw-bold">Ticket (ticket_value)</label>
-              <input class="form-control" id="ld_ticket_value" type="number" step="0.01" min="0">
-            </div>
-
             <div class="col-md-4 d-flex align-items-end">
-              <div class="form-check">
+              <div class="form-check form-switch">
                 <input class="form-check-input" type="checkbox" id="ld_is_retained">
-                <label class="form-check-label small fw-bold" for="ld_is_retained">Retenido (is_retained)</label>
+                <label class="form-check-label small fw-bold" for="ld_is_retained">Retained</label>
               </div>
             </div>
 
+            <div class="col-12">
+              <label class="form-label small fw-bold">Triage Notes</label>
+              <textarea class="form-control" id="ld_triage_notes" rows="2"></textarea>
+            </div>
           </div>
-
         </div>
         <div class="modal-footer border-0">
           <button class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
@@ -722,12 +688,11 @@
     </div>
   </div>
 
-  <!-- LOADING -->
   <div class="loading" id="loading">
     <div class="box">
       <div class="spinner-border text-primary" role="status"></div>
       <div class="fw-bold">Procesando...</div>
-      <div class="small text-muted">Si tarda demasiado, revisa red/RLS.</div>
+      <div class="small text-muted" id="loadingMsg">...</div>
     </div>
   </div>
 
@@ -736,53 +701,96 @@
   <script type="module">
     import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-    // === SUPABASE (tu proyecto) ===
+    // === TU PROYECTO REAL ===
     const SUPABASE_URL = "https://rofwgcrsfrovspiholbo.supabase.co";
     const SUPABASE_ANON_KEY = "sb_publishable_M7gyUpsbCPRopdrmDjEeLA_SHXlnP-C";
     const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // === MAP REAL (alineado a tu BD) ===
+    // === MAPEOS 100% A TU ESQUEMA (según los JSON que pegaste) ===
     const MAP = {
-      campaigns: { table:'campaigns', id:'id', name:'name', bimester:'bimester', start:'start_date', end:'end_date', objective:'objective', status:'status', anchor_event:'anchor_event', lead_magnet:'lead_magnet', budget_planned:'budget_planned', created_at:'created_at' },
-      pieces:    { table:'pieces', id:'id', campaign_id:'campaign_id', channel_id:'channel_id', name:'name', format:'format', pillar:'pillar', hook_copy:'hook_copy', visual_style:'visual_style', cta_destination:'cta_destination', ad_id:'ad_id', status:'status', created_at:'created_at' },
-      metrics:   { table:'piece_metrics', id:'id', piece_id:'piece_id', date:'date', volume:'volume', interactions:'interactions', spend:'spend', created_at:'created_at' },
-      leads:     { table:'leads', id:'id', created_at:'created_at', full_name:'full_name', phone:'phone', email:'email', source_detail:'source_detail', campaign_id:'campaign_id', piece_id:'piece_id', triage_status:'triage_status', triage_notes:'triage_notes', clinical_outcome:'clinical_outcome', appointment_date:'appointment_date', ticket_value:'ticket_value', is_retained:'is_retained', updated_at:'updated_at' },
-      profiles:  { table:'profiles', id:'id', full_name:'full_name', role:'role' },
-      channels:  { table:'channels', id:'id', name:'name' } // asumimos columns id + name (si no, hacemos fallback)
+      campaigns: {
+        table:'campaigns',
+        id:'id',
+        name:'name',
+        bimester:'bimester',
+        start:'start_date',
+        end:'end_date',
+        objective:'objective',
+        anchor:'anchor_event',
+        magnet:'lead_magnet',
+        budget:'budget_planned',
+        status:'status',
+        created_at:'created_at',
+        updated_at:'updated_at'
+      },
+      pieces: {
+        table:'pieces',
+        id:'id',
+        campaign_id:'campaign_id',
+        channel_id:'channel_id',
+        name:'name',
+        format:'format',
+        pillar:'pillar',
+        hook_copy:'hook_copy',
+        visual_style:'visual_style',
+        cta:'cta_destination',
+        ad_id:'ad_id',
+        status:'status',
+        created_at:'created_at',
+        updated_at:'updated_at'
+      },
+      metrics: {
+        table:'piece_metrics',
+        id:'id',
+        piece_id:'piece_id',
+        date:'date',
+        volume:'volume',
+        interactions:'interactions',
+        spend:'spend',
+        created_at:'created_at'
+      },
+      leads: {
+        table:'leads',
+        id:'id',
+        created_at:'created_at',
+        full_name:'full_name',
+        phone:'phone',
+        email:'email',
+        source_detail:'source_detail',
+        campaign_id:'campaign_id',
+        piece_id:'piece_id',
+        triage_status:'triage_status',
+        triage_notes:'triage_notes',
+        clinical_outcome:'clinical_outcome',
+        appointment_date:'appointment_date',
+        ticket_value:'ticket_value',
+        is_retained:'is_retained',
+        updated_at:'updated_at'
+      }
     };
 
     const el = (id) => document.getElementById(id);
-    const showLoading = (v) => el('loading').style.display = v ? 'flex' : 'none';
-    const esc = (s) => String(s ?? '').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'","&#039;");
-    const asNumber = (v) => { const n = Number(v); return Number.isFinite(n) ? n : 0; };
-    const fmtDate = (v) => v ? String(v).slice(0,10) : '';
-    const fmtDTLocal = (v) => {
-      if (!v) return '';
-      try {
-        const d = new Date(v);
-        // datetime-local expects: YYYY-MM-DDTHH:mm
-        const pad = (x)=> String(x).padStart(2,'0');
-        return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
-      } catch(_) { return ''; }
+
+    const showLoading = (v, msg='') => {
+      el('loading').style.display = v ? 'flex' : 'none';
+      el('loadingMsg').textContent = msg || '';
     };
+
+    const esc = (s) => String(s ?? '')
+      .replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;')
+      .replaceAll('"','&quot;').replaceAll("'","&#039;");
+
+    const shortId = (uuid) => {
+      const s = String(uuid ?? '');
+      return s.length > 8 ? s.slice(0,8) : s;
+    };
+
+    const fmtDate = (v) => v ? String(v).slice(0,10) : '';
     const fmtMoney = (v) => {
-      const n = Number(v);
-      if (!Number.isFinite(n)) return '0.00';
+      const n = Number(v ?? 0);
+      if (!Number.isFinite(n)) return '0';
       return n.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
     };
-
-    // hard stop to avoid "pegado"
-    const withTimeout = (p, ms = 15000) =>
-      Promise.race([
-        p,
-        new Promise((_, rej) => setTimeout(() => rej(new Error('Timeout de red (15s). Reintenta.')), ms))
-      ]);
-
-    async function runWithLoading(fn){
-      showLoading(true);
-      try { return await fn(); }
-      finally { showLoading(false); }
-    }
 
     function showAlert(type, title, message, ttlMs = 4500){
       const stack = el('alertStack');
@@ -791,7 +799,6 @@
       const icon = type === 'success' ? 'bi-check-circle-fill text-success' :
                    type === 'warning' ? 'bi-exclamation-triangle-fill text-warning' :
                    type === 'danger'  ? 'bi-x-circle-fill text-danger' : 'bi-info-circle-fill text-primary';
-
       card.innerHTML = `
         <i class="${icon} fs-5 mt-1"></i>
         <div class="flex-grow-1">
@@ -811,53 +818,34 @@
       const low = raw.toLowerCase();
       if (low.includes('invalid login credentials')) return 'Correo o contraseña incorrectos.';
       if (low.includes('email not confirmed')) return 'Tu correo aún no está confirmado.';
-      if (low.includes('permission denied') || low.includes('row level security') || low.includes('rls')) return 'Permiso denegado (RLS). Revisa policies o rol del usuario.';
+      if (low.includes('permission denied')) return 'Permisos insuficientes (RLS).';
       return raw;
     }
 
-    // Status badge is "cosmetic"
     function getStatusBadge(status) {
       const s = String(status || '').toLowerCase();
       let cls = 'st-draft';
-      if (s.includes('public') || s.includes('activo')) cls = 'st-published';
-      if (s.includes('plan') || s.includes('prog')) cls = 'st-scheduled';
-      if (s.includes('paus')) cls = 'st-paused';
-      if (s.includes('cerr') || s.includes('desc')) cls = 'st-closed';
-      return `<span class="badge-status ${cls}">${esc(status || '—')}</span>`;
+      if(s.includes('public')) cls = 'st-published';
+      if(s.includes('program') || s.includes('activo')) cls = 'st-scheduled';
+      if(s.includes('paus')) cls = 'st-paused';
+      if(s.includes('cerr') || s.includes('desc')) cls = 'st-closed';
+      return `<span class="badge-status ${cls}">${esc(status || '-')}</span>`;
     }
 
-    // --- STATE ---
     const state = {
-      user: null,
-      profile: null,
-      campaigns: [],
-      pieces: [],
-      metrics: [],
-      leads: [],
-      channels: [],
-      bound: false
+      user:null,
+      profile:null,
+      channels:[],
+      campaigns:[],
+      pieces:[],
+      metrics:[],
+      leads:[]
     };
 
-    // --- RECOVERY FLOW (PKCE ?code=) ---
-    async function bootstrapRecoverySessionIfNeeded(){
-      const url = new URL(window.location.href);
-      const code = url.searchParams.get('code');
-      if(!code) return;
-
-      await runWithLoading(async () => {
-        try{
-          const { error } = await supabase.auth.exchangeCodeForSession(code);
-          if(error) throw error;
-
-          url.searchParams.delete('code');
-          history.replaceState(null, '', url.toString());
-
-          showAlert('success','Recovery listo','Ahora puedes cambiar tu contraseña.');
-          new bootstrap.Modal(el('setNewPassModal')).show();
-        }catch(err){
-          showAlert('danger','Error recovery', humanize(err));
-        }
-      });
+    // ========= AUTH / SESSION =========
+    function openSetNewPasswordModal(){
+      const m = new bootstrap.Modal(el('setNewPassModal'));
+      m.show();
     }
 
     async function handleSession(session){
@@ -871,66 +859,53 @@
         return;
       }
 
-      // profile (full_name)
       try{
-        const { data: prof, error } = await withTimeout(
-          supabase.from(MAP.profiles.table).select('*').eq(MAP.profiles.id, state.user.id).maybeSingle(),
-          15000
-        );
-        if (error) throw error;
+        const { data: prof } = await supabase.from('profiles').select('*').eq('id', state.user.id).maybeSingle();
         state.profile = prof || null;
-      }catch(_){
-        state.profile = null;
-      }
+      }catch(_){ state.profile = null; }
 
       el('loginView').classList.add('hidden');
       el('appView').classList.remove('hidden');
-      el('whoami').textContent = state.profile?.[MAP.profiles.full_name] || state.user.email || 'Usuario';
+      el('whoami').textContent = state.profile?.full_name || state.user.email || 'Usuario';
       el('btnLogout').disabled = false;
 
-      if(!state.bound) bindUIOnce();
-
-      // load initial
-      if(state.campaigns.length === 0) await refreshAll();
+      await refreshAll();
     }
 
-    // --- LOGIN ---
     async function init(){
-      await bootstrapRecoverySessionIfNeeded();
-
       const { data } = await supabase.auth.getSession();
       await handleSession(data.session);
 
       supabase.auth.onAuthStateChange(async (event, session) => {
-        if (event === 'PASSWORD_RECOVERY') new bootstrap.Modal(el('setNewPassModal')).show();
+        if (event === 'PASSWORD_RECOVERY') openSetNewPasswordModal();
         await handleSession(session);
       });
-
-      // Escape: close loading overlay in dev
-      document.addEventListener('keydown', (e) => { if (e.key === 'Escape') showLoading(false); });
     }
 
     el('btnSignIn').addEventListener('click', async ()=>{
       const email = el('loginEmail').value.trim();
       const password = el('loginPass').value;
       if (!email || !password) return showAlert('warning','Faltan datos','Ingresa tu correo y contraseña.');
-
-      await runWithLoading(async () => {
-        try{
-          const { error } = await withTimeout(supabase.auth.signInWithPassword({ email, password }), 15000);
-          if (error) throw error;
-          showAlert('success','Bienvenido','Iniciando sesión...');
-        }catch(err){
-          showAlert('danger','Error', humanize(err));
-        }
-      });
+      showLoading(true, 'Iniciando sesión...');
+      try{
+        const { error } = await supabase.auth.signInWithPassword({ email, password });
+        if (error) throw error;
+        showAlert('success','Bienvenido','Sesión iniciada.');
+      }catch(err){
+        showAlert('danger','Error', humanize(err));
+      }finally{
+        showLoading(false);
+      }
     });
 
     el('btnLogout').addEventListener('click', async () => {
-      await runWithLoading(async () => {
+      showLoading(true, 'Cerrando sesión...');
+      try{
         await supabase.auth.signOut();
-      });
-      window.location.reload();
+        window.location.href = window.location.origin + window.location.pathname; // limpia hash
+      }finally{
+        showLoading(false);
+      }
     });
 
     el('btnForgotPass').addEventListener('click', () => new bootstrap.Modal(el('forgotPassModal')).show());
@@ -938,19 +913,18 @@
     el('btnSendResetEmail').addEventListener('click', async ()=>{
       const email = el('fp_email').value.trim();
       if (!email) return showAlert('warning','Email requerido','Ingresa tu correo.');
-
-      await runWithLoading(async () => {
-        try{
-          // GitHub Pages: redirect to same page
-          const redirectTo = window.location.origin + window.location.pathname;
-          const { error } = await withTimeout(supabase.auth.resetPasswordForEmail(email, { redirectTo }), 15000);
-          if(error) throw error;
-          bootstrap.Modal.getInstance(el('forgotPassModal'))?.hide();
-          showAlert('success','Enviado','Revisa tu bandeja de entrada.');
-        }catch(err){
-          showAlert('danger','Error', humanize(err));
-        }
-      });
+      showLoading(true, 'Enviando enlace...');
+      try{
+        const redirectTo = window.location.origin + window.location.pathname;
+        const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo });
+        if(error) throw error;
+        bootstrap.Modal.getInstance(el('forgotPassModal'))?.hide();
+        showAlert('success','Enviado','Revisa tu bandeja de entrada.');
+      }catch(err){
+        showAlert('danger','Error', humanize(err));
+      }finally{
+        showLoading(false);
+      }
     });
 
     el('btnSetNewPass').addEventListener('click', async ()=>{
@@ -959,53 +933,89 @@
       if (!p1 || p1.length < 6) return showAlert('warning','Seguridad','Mínimo 6 caracteres.');
       if (p1 !== p2) return showAlert('warning','Error','Las contraseñas no coinciden.');
 
-      await runWithLoading(async () => {
-        try{
-          const { error } = await withTimeout(supabase.auth.updateUser({ password: p1 }), 15000);
-          if (error) throw error;
-          bootstrap.Modal.getInstance(el('setNewPassModal'))?.hide();
-          showAlert('success','Listo','Contraseña actualizada.');
-        }catch(err){
-          showAlert('danger','Error', humanize(err));
-        }
-      });
+      showLoading(true, 'Actualizando password...');
+      try{
+        const { error } = await supabase.auth.updateUser({ password: p1 });
+        if (error) throw error;
+
+        bootstrap.Modal.getInstance(el('setNewPassModal'))?.hide();
+        showAlert('success','Listo','Contraseña actualizada. Volviendo al login...');
+
+        // Importante: limpiar URL/hash del recovery para no quedar "pegado"
+        setTimeout(() => {
+          window.location.href = window.location.origin + window.location.pathname;
+        }, 700);
+
+      }catch(err){
+        showAlert('danger','Error', humanize(err));
+      }finally{
+        showLoading(false);
+      }
     });
 
-    // --- LOADERS ---
+    // ========= DATA LOAD =========
     async function refreshAll(){
-      await runWithLoading(async () => {
-        try{
-          await Promise.all([loadCampaigns(), loadChannels()]);
-          await Promise.all([loadPieces(), loadMetrics(), loadLeads()]);
-          updateSelects();
-          applyPiecesFilters();
-          applyLeadsFilters();
-          showAlert('success','OK','Datos cargados.');
-        }catch(err){
-          console.error(err);
-          showAlert('danger','Error de conexión', humanize(err));
-        }
-      });
+      showLoading(true, 'Cargando datos...');
+      try{
+        await loadChannels();
+        await Promise.all([loadCampaigns(), loadPieces(), loadMetrics(), loadLeads()]);
+        bindFilters();
+        applyPiecesFilters();
+        applyLeadsFilters();
+        applyMetricsFilters();
+      }catch(err){
+        console.error(err);
+        showAlert('danger','Error de conexión', humanize(err));
+      }finally{
+        showLoading(false);
+      }
     }
 
-    // --- CAMPAIGNS ---
+    // CHANNELS (por FK en pieces.channel_id)
+    async function loadChannels(){
+      // Intento estándar: channels(id,name). Si no existe name, igual renderiza id.
+      const { data, error } = await supabase.from('channels').select('*').order('id', { ascending:true });
+      if (error){
+        state.channels = [];
+        // No bloquea la app: solo deja selects “sin catálogo”.
+        console.warn('channels load error:', error.message);
+        return;
+      }
+      state.channels = data || [];
+      updateChannelSelects();
+    }
+
+    function channelLabel(ch){
+      return ch?.name ?? ch?.title ?? ch?.channel ?? ch?.label ?? String(ch?.id ?? '');
+    }
+
+    function updateChannelSelects(){
+      const all = ['<option value="">Todos</option>']
+        .concat(state.channels.map(ch => `<option value="${esc(ch.id)}">${esc(channelLabel(ch))}</option>`));
+      el('fChannel').innerHTML = all.join('');
+
+      const pick = ['<option value="">(Sin canal)</option>']
+        .concat(state.channels.map(ch => `<option value="${esc(ch.id)}">${esc(channelLabel(ch))}</option>`));
+      el('p_channel_id').innerHTML = pick.join('');
+    }
+
+    // CAMPAIGNS
     async function loadCampaigns(){
-      const { data, error } = await withTimeout(
-        supabase.from(MAP.campaigns.table).select('*').order(MAP.campaigns.created_at, { ascending:false }),
-        15000
-      );
-      if(error) throw error;
+      const { data, error } = await supabase.from(MAP.campaigns.table).select('*').order(MAP.campaigns.created_at, { ascending:false });
+      if (error) throw error;
       state.campaigns = data || [];
       renderCampaigns(state.campaigns);
+      updateCampaignSelects();
     }
 
     function renderCampaigns(rows){
       el('tblCampaigns').querySelector('tbody').innerHTML = rows.map(r => `
         <tr>
+          <td><span class="mono">${esc(shortId(r[MAP.campaigns.id]))}</span></td>
+          <td><span class="badge bg-light text-dark border"> ${esc(r[MAP.campaigns.bimester] ?? '-')} </span></td>
           <td class="fw-bold text-primary">${esc(r[MAP.campaigns.name])}</td>
-          <td><span class="badge bg-light text-dark border"> ${esc(r[MAP.campaigns.bimester])}</span></td>
-          <td class="small">${esc(fmtDate(r[MAP.campaigns.start]))}</td>
-          <td class="small">${esc(fmtDate(r[MAP.campaigns.end]))}</td>
+          <td class="text-muted small text-truncate" style="max-width:220px;">${esc(r[MAP.campaigns.objective] ?? '')}</td>
+          <td class="small">${esc(fmtDate(r[MAP.campaigns.start]))} → ${esc(fmtDate(r[MAP.campaigns.end]))}</td>
           <td>${getStatusBadge(r[MAP.campaigns.status])}</td>
           <td class="text-end">
              <button class="btn btn-sm btn-white border" onclick="editCamp('${r[MAP.campaigns.id]}')"><i class="bi bi-pencil-fill text-muted"></i></button>
@@ -1017,446 +1027,438 @@
 
     window.editCamp = (id) => openCampaignModal(state.campaigns.find(x => String(x[MAP.campaigns.id]) === String(id)));
     window.delCamp = async (id) => {
-      if(!confirm('¿Borrar campaña? (Esto borrará piezas por ON DELETE CASCADE)')) return;
-      await runWithLoading(async () => {
-        try{
-          const { error } = await withTimeout(
-            supabase.from(MAP.campaigns.table).delete().eq(MAP.campaigns.id, id),
-            15000
-          );
-          if(error) throw error;
-          await loadCampaigns();
-          await loadPieces();
-          updateSelects();
-          showAlert('success','Eliminado','Campaña borrada.');
-        }catch(err){
-          showAlert('danger','Error', humanize(err));
-        }
-      });
+      if(!confirm('¿Borrar campaña? (Esto borrará piezas si tu FK es ON DELETE CASCADE)')) return;
+      showLoading(true, 'Borrando campaña...');
+      try{
+        const { error } = await supabase.from(MAP.campaigns.table).delete().eq(MAP.campaigns.id, id);
+        if (error) throw error;
+        showAlert('success','Eliminado','Campaña eliminada.');
+        await loadCampaigns();
+        await loadPieces();
+      }catch(err){
+        showAlert('danger','Error', humanize(err));
+      }finally{
+        showLoading(false);
+      }
     };
 
     function openCampaignModal(row=null){
       el('c_id').value = row?.[MAP.campaigns.id] || '';
       el('c_name').value = row?.[MAP.campaigns.name] || '';
-      el('c_bim').value = row?.[MAP.campaigns.bimester] || 'B1';
-      el('c_status').value = row?.[MAP.campaigns.status] || '';
-      el('c_start').value = fmtDate(row?.[MAP.campaigns.start]) || '';
-      el('c_end').value = fmtDate(row?.[MAP.campaigns.end]) || '';
+      el('c_bim').value = row?.[MAP.campaigns.bimester] || '';
+      el('c_start').value = row?.[MAP.campaigns.start] ? fmtDate(row[MAP.campaigns.start]) : '';
+      el('c_end').value = row?.[MAP.campaigns.end] ? fmtDate(row[MAP.campaigns.end]) : '';
       el('c_objective').value = row?.[MAP.campaigns.objective] || '';
-      el('c_anchor_event').value = row?.[MAP.campaigns.anchor_event] || '';
-      el('c_lead_magnet').value = row?.[MAP.campaigns.lead_magnet] || '';
-      el('c_budget').value = row?.[MAP.campaigns.budget_planned] ?? 0;
+      el('c_anchor').value = row?.[MAP.campaigns.anchor] || '';
+      el('c_magnet').value = row?.[MAP.campaigns.magnet] || '';
+      el('c_budget').value = row?.[MAP.campaigns.budget] ?? 0;
+      el('c_status').value = row?.[MAP.campaigns.status] || '';
+
       new bootstrap.Modal(el('campaignModal')).show();
     }
 
     el('btnSaveCampaign').onclick = async () => {
       const name = el('c_name').value.trim();
+      const bim = el('c_bim').value.trim();
       const start = el('c_start').value;
       const end = el('c_end').value;
-      if(!name) return showAlert('warning','Validación','Nombre es obligatorio.');
-      if(!start || !end) return showAlert('warning','Validación','Inicio y fin son obligatorios.');
 
-      await runWithLoading(async () => {
-        try{
-          const payload = {};
-          payload[MAP.campaigns.name] = name;
-          payload[MAP.campaigns.bimester] = el('c_bim').value;
-          payload[MAP.campaigns.start] = start;
-          payload[MAP.campaigns.end] = end;
-          payload[MAP.campaigns.objective] = el('c_objective').value.trim() || null;
-          payload[MAP.campaigns.status] = el('c_status').value.trim() || null;
-          payload[MAP.campaigns.anchor_event] = el('c_anchor_event').value.trim() || null;
-          payload[MAP.campaigns.lead_magnet] = el('c_lead_magnet').value.trim() || null;
-          payload[MAP.campaigns.budget_planned] = asNumber(el('c_budget').value);
+      // NOT NULL en tu tabla
+      if(!name) return showAlert('warning','Validación','Nombre requerido.');
+      if(!bim) return showAlert('warning','Validación','Bimestre requerido.');
+      if(!start) return showAlert('warning','Validación','Fecha inicio requerida.');
+      if(!end) return showAlert('warning','Validación','Fecha fin requerida.');
 
-          const id = el('c_id').value;
-          const q = id
-            ? supabase.from(MAP.campaigns.table).update(payload).eq(MAP.campaigns.id, id)
-            : supabase.from(MAP.campaigns.table).insert(payload);
+      const payload = {
+        [MAP.campaigns.name]: name,
+        [MAP.campaigns.bimester]: bim,
+        [MAP.campaigns.start]: start,
+        [MAP.campaigns.end]: end,
+        [MAP.campaigns.objective]: el('c_objective').value || null,
+        [MAP.campaigns.anchor]: el('c_anchor').value || null,
+        [MAP.campaigns.magnet]: el('c_magnet').value || null,
+        [MAP.campaigns.budget]: Number(el('c_budget').value || 0),
+        [MAP.campaigns.status]: el('c_status').value || null
+      };
 
-          const { error } = await withTimeout(q, 15000);
-          if(error) throw error;
+      const id = el('c_id').value;
+      showLoading(true, 'Guardando campaña...');
+      try{
+        const q = id
+          ? supabase.from(MAP.campaigns.table).update(payload).eq(MAP.campaigns.id, id)
+          : supabase.from(MAP.campaigns.table).insert(payload);
+        const { error } = await q;
+        if (error) throw error;
 
-          bootstrap.Modal.getInstance(el('campaignModal'))?.hide();
-          await loadCampaigns();
-          updateSelects();
-          showAlert('success','Guardado','Campaña actualizada.');
-        }catch(err){
-          showAlert('danger','Error', humanize(err));
-        }
-      });
+        bootstrap.Modal.getInstance(el('campaignModal'))?.hide();
+        showAlert('success','Guardado','Campaña guardada.');
+        await loadCampaigns();
+        await loadPieces(); // por filtros/labels
+      }catch(err){
+        showAlert('danger','Error', humanize(err));
+      }finally{
+        showLoading(false);
+      }
     };
 
-    // --- CHANNELS (best-effort) ---
-    async function loadChannels(){
-      // If your channels table isn't compatible with select('id,name'), we'll fallback.
-      try{
-        const { data, error } = await withTimeout(
-          supabase.from(MAP.channels.table).select(`${MAP.channels.id},${MAP.channels.name}`).order(MAP.channels.id, { ascending:true }),
-          15000
-        );
-        if(error) throw error;
-        state.channels = data || [];
-      }catch(_){
-        state.channels = []; // fallback
-      }
-    }
-
-    function channelNameById(id){
-      if(!id) return '—';
-      const row = state.channels.find(c => String(c[MAP.channels.id]) === String(id));
-      return row ? (row[MAP.channels.name] ?? String(id)) : String(id);
-    }
-
-    // --- PIECES ---
+    // PIECES
     async function loadPieces(){
-      const { data, error } = await withTimeout(
-        supabase.from(MAP.pieces.table).select('*').order(MAP.pieces.created_at, { ascending:false }),
-        15000
-      );
-      if(error) throw error;
+      const { data, error } = await supabase.from(MAP.pieces.table).select('*').order(MAP.pieces.created_at, { ascending:false });
+      if (error) throw error;
       state.pieces = data || [];
       renderPieces(state.pieces);
+      updatePieceSelects();
+    }
+
+    function campaignNameById(id){
+      const c = state.campaigns.find(x => String(x[MAP.campaigns.id]) === String(id));
+      return c ? c[MAP.campaigns.name] : 'Sin campaña';
+    }
+    function channelNameById(id){
+      const c = state.channels.find(x => String(x.id) === String(id));
+      return c ? channelLabel(c) : (id ? `#${id}` : 'Sin canal');
     }
 
     function renderPieces(rows){
-      el('tblPieces').querySelector('tbody').innerHTML = rows.map(r => {
-        const camp = state.campaigns.find(c => c[MAP.campaigns.id] == r[MAP.pieces.campaign_id]);
-        return `
-          <tr>
-            <td class="fw-bold">${esc(r[MAP.pieces.name])}</td>
-            <td class="small text-muted">${esc(camp ? camp[MAP.campaigns.name] : 'Sin campaña')}</td>
-            <td class="small">${esc(channelNameById(r[MAP.pieces.channel_id]))}</td>
-            <td><span class="badge bg-light text-dark border fw-normal">${esc(r[MAP.pieces.format])}</span></td>
-            <td>${getStatusBadge(r[MAP.pieces.status])}</td>
-            <td class="truncate-2 small" style="max-width:220px" title="${esc(r[MAP.pieces.hook_copy])}">${esc(r[MAP.pieces.hook_copy])}</td>
-            <td class="truncate-2 small" style="max-width:180px" title="${esc(r[MAP.pieces.cta_destination])}">${esc(r[MAP.pieces.cta_destination])}</td>
-            <td class="text-end">
-              <button class="btn btn-sm btn-white border" onclick="editPiece('${r[MAP.pieces.id]}')"><i class="bi bi-pencil-fill text-muted"></i></button>
-              <button class="btn btn-sm btn-white border ms-1" onclick="delPiece('${r[MAP.pieces.id]}')"><i class="bi bi-trash-fill text-danger opacity-50"></i></button>
-            </td>
-          </tr>
-        `;
-      }).join('');
+      el('tblPieces').querySelector('tbody').innerHTML = rows.map(r => `
+        <tr>
+          <td><span class="mono">${esc(shortId(r[MAP.pieces.id]))}</span></td>
+          <td class="small text-muted">${esc(campaignNameById(r[MAP.pieces.campaign_id]))}</td>
+          <td class="small">${esc(channelNameById(r[MAP.pieces.channel_id]))}</td>
+          <td class="fw-bold text-primary">${esc(r[MAP.pieces.name])}</td>
+          <td><span class="badge bg-light text-dark border fw-normal">${esc(r[MAP.pieces.format] ?? '')}</span></td>
+          <td class="small text-muted">${esc(r[MAP.pieces.pillar] ?? '')}</td>
+          <td>${getStatusBadge(r[MAP.pieces.status])}</td>
+          <td class="text-end">
+            <button class="btn btn-sm btn-white border" onclick="editPiece('${r[MAP.pieces.id]}')"><i class="bi bi-pencil-fill text-muted"></i></button>
+            <button class="btn btn-sm btn-white border ms-1" onclick="delPiece('${r[MAP.pieces.id]}')"><i class="bi bi-trash-fill text-danger opacity-50"></i></button>
+          </td>
+        </tr>
+      `).join('');
     }
 
     window.editPiece = (id) => {
       const row = state.pieces.find(r => String(r[MAP.pieces.id]) === String(id));
-      el('p_id').value = row?.[MAP.pieces.id] || '';
-      el('p_campaign').value = row?.[MAP.pieces.campaign_id] || '';
-      el('p_channel_id').value = row?.[MAP.pieces.channel_id] ?? '';
-      el('p_name').value = row?.[MAP.pieces.name] || '';
-      el('p_format').value = row?.[MAP.pieces.format] || '';
-      el('p_status').value = row?.[MAP.pieces.status] || '';
-      el('p_pillar').value = row?.[MAP.pieces.pillar] || '';
-      el('p_visual_style').value = row?.[MAP.pieces.visual_style] || '';
-      el('p_hook_copy').value = row?.[MAP.pieces.hook_copy] || '';
-      el('p_cta').value = row?.[MAP.pieces.cta_destination] || '';
-      el('p_ad_id').value = row?.[MAP.pieces.ad_id] || '';
+      if(!row) return;
+
+      el('p_id').value = row[MAP.pieces.id] || '';
+      el('p_campaign').value = row[MAP.pieces.campaign_id] || '';
+      el('p_channel_id').value = row[MAP.pieces.channel_id] || '';
+      el('p_name').value = row[MAP.pieces.name] || '';
+      el('p_format').value = row[MAP.pieces.format] || '';
+      el('p_pillar').value = row[MAP.pieces.pillar] || '';
+      el('p_hook_copy').value = row[MAP.pieces.hook_copy] || '';
+      el('p_visual_style').value = row[MAP.pieces.visual_style] || '';
+      el('p_cta_destination').value = row[MAP.pieces.cta] || '';
+      el('p_ad_id').value = row[MAP.pieces.ad_id] || '';
+      el('p_status').value = row[MAP.pieces.status] || '';
+
       new bootstrap.Modal(el('pieceModal')).show();
     };
 
     window.delPiece = async (id) => {
-      if(!confirm('¿Borrar pieza? (Esto borrará métricas por ON DELETE CASCADE)')) return;
-      await runWithLoading(async () => {
-        try{
-          const { error } = await withTimeout(
-            supabase.from(MAP.pieces.table).delete().eq(MAP.pieces.id, id),
-            15000
-          );
-          if(error) throw error;
-          await loadPieces();
-          await loadMetrics();
-          updateSelects();
-          showAlert('success','Eliminado','Pieza borrada.');
-        }catch(err){
-          showAlert('danger','Error', humanize(err));
-        }
-      });
+      if(!confirm('¿Borrar pieza?')) return;
+      showLoading(true, 'Borrando pieza...');
+      try{
+        const { error } = await supabase.from(MAP.pieces.table).delete().eq(MAP.pieces.id, id);
+        if (error) throw error;
+        showAlert('success','Eliminado','Pieza eliminada.');
+        await loadPieces();
+        await loadMetrics(); // por FK cascade en metrics
+      }catch(err){
+        showAlert('danger','Error', humanize(err));
+      }finally{
+        showLoading(false);
+      }
     };
 
     el('btnSavePiece').onclick = async () => {
       const name = el('p_name').value.trim();
       const format = el('p_format').value.trim();
-      if(!name) return showAlert('warning','Validación','Nombre es obligatorio.');
-      if(!format) return showAlert('warning','Validación','Formato es obligatorio (enum piece_format).');
 
-      await runWithLoading(async () => {
-        try{
-          const payload = {};
-          payload[MAP.pieces.campaign_id] = el('p_campaign').value || null;
-          payload[MAP.pieces.channel_id] = el('p_channel_id').value ? Number(el('p_channel_id').value) : null;
-          payload[MAP.pieces.name] = name;
-          payload[MAP.pieces.format] = format;
-          payload[MAP.pieces.status] = el('p_status').value.trim() || null;
-          payload[MAP.pieces.pillar] = el('p_pillar').value.trim() || null;
-          payload[MAP.pieces.visual_style] = el('p_visual_style').value.trim() || null;
-          payload[MAP.pieces.hook_copy] = el('p_hook_copy').value.trim() || null;
-          payload[MAP.pieces.cta_destination] = el('p_cta').value.trim() || null;
-          payload[MAP.pieces.ad_id] = el('p_ad_id').value.trim() || null;
+      if(!name) return showAlert('warning','Validación','Nombre requerido (pieces.name).');
+      if(!format) return showAlert('warning','Validación','Formato requerido (pieces.format).');
 
-          const id = el('p_id').value;
-          const q = id
-            ? supabase.from(MAP.pieces.table).update(payload).eq(MAP.pieces.id, id)
-            : supabase.from(MAP.pieces.table).insert(payload);
+      const payload = {
+        [MAP.pieces.campaign_id]: el('p_campaign').value || null,
+        [MAP.pieces.channel_id]: el('p_channel_id').value ? Number(el('p_channel_id').value) : null,
+        [MAP.pieces.name]: name,
+        [MAP.pieces.format]: format,
+        [MAP.pieces.pillar]: el('p_pillar').value || null,
+        [MAP.pieces.hook_copy]: el('p_hook_copy').value || null,
+        [MAP.pieces.visual_style]: el('p_visual_style').value || null,
+        [MAP.pieces.cta]: el('p_cta_destination').value || null,
+        [MAP.pieces.ad_id]: el('p_ad_id').value || null,
+        [MAP.pieces.status]: el('p_status').value || null
+      };
 
-          const { error } = await withTimeout(q, 15000);
-          if(error) throw error;
+      const id = el('p_id').value;
+      showLoading(true, 'Guardando pieza...');
+      try{
+        const q = id
+          ? supabase.from(MAP.pieces.table).update(payload).eq(MAP.pieces.id, id)
+          : supabase.from(MAP.pieces.table).insert(payload);
 
-          bootstrap.Modal.getInstance(el('pieceModal'))?.hide();
-          await loadPieces();
-          updateSelects();
-          showAlert('success','Guardado','Pieza guardada.');
-        }catch(err){
-          showAlert('danger','Error', humanize(err));
-        }
-      });
+        const { error } = await q;
+        if (error) throw error;
+
+        bootstrap.Modal.getInstance(el('pieceModal'))?.hide();
+        showAlert('success','Guardado','Pieza guardada.');
+        await loadPieces();
+      }catch(err){
+        showAlert('danger','Error', humanize(err));
+      }finally{
+        showLoading(false);
+      }
     };
 
-    function applyPiecesFilters(){
-      const camp = el('fCamp').value;
-      const status = el('fPieceStatus').value.trim().toLowerCase();
-      const q = el('fQ').value.trim().toLowerCase();
-
-      const filtered = state.pieces.filter(r => {
-        if(camp && String(r[MAP.pieces.campaign_id] || '') !== String(camp)) return false;
-        if(status && String(r[MAP.pieces.status] || '').toLowerCase() !== status) return false;
-        if(q){
-          const blob = JSON.stringify({
-            name: r[MAP.pieces.name],
-            hook: r[MAP.pieces.hook_copy],
-            ad_id: r[MAP.pieces.ad_id],
-            cta: r[MAP.pieces.cta_destination],
-            pillar: r[MAP.pieces.pillar]
-          }).toLowerCase();
-          if(!blob.includes(q)) return false;
-        }
-        return true;
-      });
-
-      renderPieces(filtered);
-      updateSelects();
-    }
-
-    // --- METRICS ---
+    // METRICS
     async function loadMetrics(){
-      // filters
-      const pieceId = el('mPiece').value || null;
-      const from = el('mFrom').value || null;
-      const to = el('mTo').value || null;
-
-      let q = supabase.from(MAP.metrics.table).select('*').order(MAP.metrics.date, { ascending:false });
-
-      if(pieceId) q = q.eq(MAP.metrics.piece_id, pieceId);
-      if(from) q = q.gte(MAP.metrics.date, from);
-      if(to) q = q.lte(MAP.metrics.date, to);
-
-      const { data, error } = await withTimeout(q, 15000);
-      if(error) throw error;
+      const { data, error } = await supabase.from(MAP.metrics.table).select('*').order(MAP.metrics.date, { ascending:false });
+      if (error) throw error;
       state.metrics = data || [];
       renderMetrics(state.metrics);
     }
 
+    function pieceLabelById(id){
+      const p = state.pieces.find(x => String(x[MAP.pieces.id]) === String(id));
+      if(!p) return '-';
+      return `${p[MAP.pieces.name]}`.trim();
+    }
+
     function renderMetrics(rows){
-      el('tblMetrics').querySelector('tbody').innerHTML = rows.map(r => {
-        const p = state.pieces.find(x => x[MAP.pieces.id] == r[MAP.metrics.piece_id]);
-        return `
-          <tr>
-            <td class="text-start">
-              <div class="small fw-bold">${esc(p ? p[MAP.pieces.name] : '—')}</div>
-              <div class="mini text-muted truncate-2">${esc(p ? p[MAP.pieces.hook_copy] : '')}</div>
-            </td>
-            <td class="mono small">${esc(r[MAP.metrics.date])}</td>
-            <td>${esc(r[MAP.metrics.volume] ?? 0)}</td>
-            <td>${esc(r[MAP.metrics.interactions] ?? 0)}</td>
-            <td>${esc(fmtMoney(r[MAP.metrics.spend] ?? 0))}</td>
-            <td class="text-end">
-              <button class="btn btn-sm btn-white border" onclick="editMetric('${r[MAP.metrics.id]}')"><i class="bi bi-pencil-fill text-muted"></i></button>
-            </td>
-          </tr>
-        `;
-      }).join('');
+      el('tblMetrics').querySelector('tbody').innerHTML = rows.map(r => `
+        <tr>
+          <td class="text-start">
+            <div class="small fw-bold">${esc(pieceLabelById(r[MAP.metrics.piece_id]))}</div>
+            <div class="mini text-muted">${esc(shortId(r[MAP.metrics.piece_id]))}</div>
+          </td>
+          <td class="mono small">${esc(fmtDate(r[MAP.metrics.date]))}</td>
+          <td>${esc(r[MAP.metrics.volume] ?? 0)}</td>
+          <td>${esc(r[MAP.metrics.interactions] ?? 0)}</td>
+          <td class="fw-bold text-primary">${esc(fmtMoney(r[MAP.metrics.spend] ?? 0))}</td>
+          <td class="text-end">
+            <button class="btn btn-sm btn-white border" onclick="editMetric('${r[MAP.metrics.id]}')"><i class="bi bi-pencil-fill text-muted"></i></button>
+          </td>
+        </tr>
+      `).join('');
     }
 
     window.editMetric = (id) => {
       const r = state.metrics.find(x => String(x[MAP.metrics.id]) === String(id));
-      el('mx_id').value = r?.[MAP.metrics.id] || '';
-      el('mx_piece').value = r?.[MAP.metrics.piece_id] || '';
-      el('mx_date').value = r?.[MAP.metrics.date] || '';
-      el('mx_volume').value = r?.[MAP.metrics.volume] ?? 0;
-      el('mx_interactions').value = r?.[MAP.metrics.interactions] ?? 0;
-      el('mx_spend').value = r?.[MAP.metrics.spend] ?? 0;
+      if(!r) return;
+
+      el('mx_id').value = r[MAP.metrics.id] || '';
+      el('mx_piece').value = r[MAP.metrics.piece_id] || '';
+      el('mx_date').value = fmtDate(r[MAP.metrics.date]) || '';
+      el('mx_volume').value = r[MAP.metrics.volume] ?? 0;
+      el('mx_interactions').value = r[MAP.metrics.interactions] ?? 0;
+      el('mx_spend').value = r[MAP.metrics.spend] ?? 0;
+
       new bootstrap.Modal(el('metricModal')).show();
+    };
+
+    el('btnPrefillMetricToday').onclick = () => {
+      el('mx_date').value = new Date().toISOString().slice(0,10);
     };
 
     el('btnSaveMetric').onclick = async () => {
       const pieceId = el('mx_piece').value;
       const date = el('mx_date').value;
+
       if(!pieceId) return showAlert('warning','Validación','Selecciona una pieza.');
-      if(!date) return showAlert('warning','Validación','Fecha es obligatoria.');
+      if(!date) return showAlert('warning','Validación','Fecha requerida.');
 
-      await runWithLoading(async () => {
-        try{
-          const payload = {};
-          payload[MAP.metrics.piece_id] = pieceId;
-          payload[MAP.metrics.date] = date;
-          payload[MAP.metrics.volume] = asNumber(el('mx_volume').value);
-          payload[MAP.metrics.interactions] = asNumber(el('mx_interactions').value);
-          payload[MAP.metrics.spend] = asNumber(el('mx_spend').value);
+      const payload = {
+        [MAP.metrics.piece_id]: pieceId,
+        [MAP.metrics.date]: date,
+        [MAP.metrics.volume]: Number(el('mx_volume').value || 0),
+        [MAP.metrics.interactions]: Number(el('mx_interactions').value || 0),
+        [MAP.metrics.spend]: Number(el('mx_spend').value || 0)
+      };
 
-          const id = el('mx_id').value;
-
-          // If editing an existing row: update by id.
-          // If new: upsert by unique (piece_id, date).
-          const q = id
-            ? supabase.from(MAP.metrics.table).update(payload).eq(MAP.metrics.id, id)
-            : supabase.from(MAP.metrics.table).upsert(payload, { onConflict: `${MAP.metrics.piece_id},${MAP.metrics.date}` });
-
-          const { error } = await withTimeout(q, 15000);
-          if(error) throw error;
-
-          bootstrap.Modal.getInstance(el('metricModal'))?.hide();
-          await loadMetrics();
-          showAlert('success','Guardado','Métrica guardada.');
-        }catch(err){
-          showAlert('danger','Error', humanize(err));
+      const id = el('mx_id').value;
+      showLoading(true, 'Guardando métrica...');
+      try{
+        let q;
+        if(id){
+          q = supabase.from(MAP.metrics.table).update(payload).eq(MAP.metrics.id, id);
+        }else{
+          // UNIQUE (piece_id, date)
+          q = supabase.from(MAP.metrics.table).upsert(payload, { onConflict: `${MAP.metrics.piece_id},${MAP.metrics.date}` });
         }
-      });
+
+        const { error } = await q;
+        if (error) throw error;
+
+        bootstrap.Modal.getInstance(el('metricModal'))?.hide();
+        showAlert('success','Guardado','Métrica guardada.');
+        await loadMetrics();
+      }catch(err){
+        showAlert('danger','Error', humanize(err));
+      }finally{
+        showLoading(false);
+      }
     };
 
-    // --- LEADS ---
+    // LEADS
     async function loadLeads(){
-      const { data, error } = await withTimeout(
-        supabase.from(MAP.leads.table).select('*').order(MAP.leads.created_at, {ascending:false}),
-        15000
-      );
-      if(error) throw error;
+      const { data, error } = await supabase.from(MAP.leads.table).select('*').order(MAP.leads.created_at, { ascending:false });
+      if (error) throw error;
       state.leads = data || [];
       renderLeads(state.leads);
     }
 
     function renderLeads(rows){
-      el('tblLeads').querySelector('tbody').innerHTML = rows.map(r => {
-        const c = state.campaigns.find(x=>x[MAP.campaigns.id] == r[MAP.leads.campaign_id]);
-        const p = state.pieces.find(x=>x[MAP.pieces.id] == r[MAP.leads.piece_id]);
-
-        const tri = r[MAP.leads.triage_status] ?? '—';
-        const appt = r[MAP.leads.appointment_date] ? fmtDTLocal(r[MAP.leads.appointment_date]).replace('T',' ') : '—';
-
-        const origin = [
-          r[MAP.leads.source_detail] || '',
-          c ? c[MAP.campaigns.name] : '',
-          p ? p[MAP.pieces.name] : ''
-        ].filter(Boolean).join(' · ');
-
-        return `
-          <tr>
-            <td class="small text-muted">${esc(String(r[MAP.leads.created_at] || '').slice(0,19).replace('T',' '))}</td>
-            <td class="fw-bold text-primary">${esc(r[MAP.leads.full_name])}</td>
-            <td>${esc(r[MAP.leads.phone] || '')}</td>
-            <td class="small">${esc(r[MAP.leads.email] || '')}</td>
-            <td class="truncate-2 small text-muted" style="max-width:220px" title="${esc(origin)}">${esc(origin)}</td>
-            <td>${getStatusBadge(tri)}</td>
-            <td class="small">${esc(appt)}</td>
-            <td class="text-end">
-              <button class="btn btn-sm btn-white border" onclick="editLead('${r[MAP.leads.id]}')"><i class="bi bi-pencil-fill text-muted"></i></button>
-              <button class="btn btn-sm btn-white border ms-1" onclick="delLead('${r[MAP.leads.id]}')"><i class="bi bi-trash-fill text-danger opacity-50"></i></button>
-            </td>
-          </tr>
-        `;
-      }).join('');
+      el('tblLeads').querySelector('tbody').innerHTML = rows.map(r => `
+        <tr>
+          <td class="small text-muted">${esc(String(r[MAP.leads.created_at] ?? '').slice(0,19).replace('T',' '))}</td>
+          <td><span class="badge bg-light text-dark border">${esc(r[MAP.leads.source_detail] ?? '')}</span></td>
+          <td class="fw-bold text-primary">${esc(r[MAP.leads.full_name] ?? '')}</td>
+          <td>${esc(r[MAP.leads.phone] ?? '')}</td>
+          <td class="small">${esc(r[MAP.leads.email] ?? '')}</td>
+          <td>${getStatusBadge(r[MAP.leads.triage_status])}</td>
+          <td class="small text-muted">${esc(r[MAP.leads.clinical_outcome] ?? '')}</td>
+          <td class="text-end">
+            <button class="btn btn-sm btn-white border" onclick="editLead('${r[MAP.leads.id]}')"><i class="bi bi-pencil-fill text-muted"></i></button>
+            <button class="btn btn-sm btn-white border ms-1" onclick="delLead('${r[MAP.leads.id]}')"><i class="bi bi-trash-fill text-danger opacity-50"></i></button>
+          </td>
+        </tr>
+      `).join('');
     }
 
     window.editLead = (id) => {
       const r = state.leads.find(x => String(x[MAP.leads.id]) === String(id));
+      if(!r) return;
 
-      el('ld_id').value = r?.[MAP.leads.id] || '';
-      el('ld_full_name').value = r?.[MAP.leads.full_name] || '';
-      el('ld_phone').value = r?.[MAP.leads.phone] || '';
-      el('ld_email').value = r?.[MAP.leads.email] || '';
-      el('ld_source_detail').value = r?.[MAP.leads.source_detail] || '';
-      el('ld_campaign').value = r?.[MAP.leads.campaign_id] || '';
-      el('ld_piece').value = r?.[MAP.leads.piece_id] || '';
-      el('ld_triage_status').value = r?.[MAP.leads.triage_status] || 'nuevo';
-      el('ld_triage_notes').value = r?.[MAP.leads.triage_notes] || '';
-      el('ld_clinical_outcome').value = r?.[MAP.leads.clinical_outcome] || 'pendiente';
-      el('ld_appointment_date').value = r?.[MAP.leads.appointment_date] ? fmtDTLocal(r[MAP.leads.appointment_date]) : '';
-      el('ld_ticket_value').value = r?.[MAP.leads.ticket_value] ?? 0;
-      el('ld_is_retained').checked = !!r?.[MAP.leads.is_retained];
+      el('ld_id').value = r[MAP.leads.id] || '';
+      el('ld_full_name').value = r[MAP.leads.full_name] || '';
+      el('ld_phone').value = r[MAP.leads.phone] || '';
+      el('ld_email').value = r[MAP.leads.email] || '';
+      el('ld_source_detail').value = r[MAP.leads.source_detail] || '';
+      el('ld_campaign').value = r[MAP.leads.campaign_id] || '';
+      el('ld_piece').value = r[MAP.leads.piece_id] || '';
+      el('ld_triage_status').value = r[MAP.leads.triage_status] || '';
+      el('ld_triage_notes').value = r[MAP.leads.triage_notes] || '';
+      el('ld_clinical_outcome').value = r[MAP.leads.clinical_outcome] || '';
+      el('ld_ticket_value').value = r[MAP.leads.ticket_value] ?? 0;
+      el('ld_is_retained').checked = Boolean(r[MAP.leads.is_retained]);
+
+      const ad = r[MAP.leads.appointment_date];
+      el('ld_appointment_date').value = ad ? new Date(ad).toISOString().slice(0,16) : '';
 
       new bootstrap.Modal(el('leadModal')).show();
     };
 
     window.delLead = async (id) => {
       if(!confirm('¿Borrar lead?')) return;
-      await runWithLoading(async () => {
-        try{
-          const { error } = await withTimeout(
-            supabase.from(MAP.leads.table).delete().eq(MAP.leads.id, id),
-            15000
-          );
-          if(error) throw error;
-          await loadLeads();
-          showAlert('success','Eliminado','Lead borrado.');
-        }catch(err){
-          showAlert('danger','Error', humanize(err));
-        }
-      });
+      showLoading(true, 'Borrando lead...');
+      try{
+        const { error } = await supabase.from(MAP.leads.table).delete().eq(MAP.leads.id, id);
+        if (error) throw error;
+        showAlert('success','Eliminado','Lead eliminado.');
+        await loadLeads();
+      }catch(err){
+        showAlert('danger','Error', humanize(err));
+      }finally{
+        showLoading(false);
+      }
     };
 
     el('btnSaveLead').onclick = async () => {
       const fullName = el('ld_full_name').value.trim();
-      if(!fullName) return showAlert('warning','Validación','Nombre completo es obligatorio.');
+      if(!fullName) return showAlert('warning','Validación','Nombre requerido (leads.full_name).');
 
-      await runWithLoading(async () => {
-        try{
-          const payload = {};
-          payload[MAP.leads.full_name] = fullName;
-          payload[MAP.leads.phone] = el('ld_phone').value.trim() || null;
-          payload[MAP.leads.email] = el('ld_email').value.trim() || null;
-          payload[MAP.leads.source_detail] = el('ld_source_detail').value.trim() || null;
-          payload[MAP.leads.campaign_id] = el('ld_campaign').value || null;
-          payload[MAP.leads.piece_id] = el('ld_piece').value || null;
-          payload[MAP.leads.triage_status] = el('ld_triage_status').value.trim() || null;
-          payload[MAP.leads.triage_notes] = el('ld_triage_notes').value.trim() || null;
-          payload[MAP.leads.clinical_outcome] = el('ld_clinical_outcome').value.trim() || null;
-          payload[MAP.leads.appointment_date] = el('ld_appointment_date').value ? new Date(el('ld_appointment_date').value).toISOString() : null;
-          payload[MAP.leads.ticket_value] = asNumber(el('ld_ticket_value').value);
-          payload[MAP.leads.is_retained] = !!el('ld_is_retained').checked;
+      const payload = {
+        [MAP.leads.full_name]: fullName,
+        [MAP.leads.phone]: el('ld_phone').value || null,
+        [MAP.leads.email]: el('ld_email').value || null,
+        [MAP.leads.source_detail]: el('ld_source_detail').value || null,
+        [MAP.leads.campaign_id]: el('ld_campaign').value || null,
+        [MAP.leads.piece_id]: el('ld_piece').value || null,
+        [MAP.leads.triage_status]: el('ld_triage_status').value || null,
+        [MAP.leads.triage_notes]: el('ld_triage_notes').value || null,
+        [MAP.leads.clinical_outcome]: el('ld_clinical_outcome').value || null,
+        [MAP.leads.ticket_value]: Number(el('ld_ticket_value').value || 0),
+        [MAP.leads.is_retained]: Boolean(el('ld_is_retained').checked)
+      };
 
-          const id = el('ld_id').value;
-          const q = id
-            ? supabase.from(MAP.leads.table).update(payload).eq(MAP.leads.id, id)
-            : supabase.from(MAP.leads.table).insert(payload);
+      const appt = el('ld_appointment_date').value;
+      payload[MAP.leads.appointment_date] = appt ? new Date(appt).toISOString() : null;
 
-          const { error } = await withTimeout(q, 15000);
-          if(error) throw error;
+      const id = el('ld_id').value;
+      showLoading(true, 'Guardando lead...');
+      try{
+        const q = id
+          ? supabase.from(MAP.leads.table).update(payload).eq(MAP.leads.id, id)
+          : supabase.from(MAP.leads.table).insert(payload);
 
-          bootstrap.Modal.getInstance(el('leadModal'))?.hide();
-          await loadLeads();
-          showAlert('success','Guardado','Lead guardado.');
-        }catch(err){
-          showAlert('danger','Error', humanize(err));
-        }
-      });
+        const { error } = await q;
+        if (error) throw error;
+
+        bootstrap.Modal.getInstance(el('leadModal'))?.hide();
+        showAlert('success','Guardado','Lead guardado.');
+        await loadLeads();
+      }catch(err){
+        showAlert('danger','Error', humanize(err));
+      }finally{
+        showLoading(false);
+      }
     };
+
+    // ========= SELECTS / FILTERS =========
+    function updateCampaignSelects(){
+      const campOpts = ['<option value="">(Sin campaña)</option>']
+        .concat(state.campaigns.map(c => `<option value="${esc(c[MAP.campaigns.id])}">${esc(c[MAP.campaigns.name])}</option>`));
+      el('p_campaign').innerHTML = campOpts.join('');
+      el('ld_campaign').innerHTML = campOpts.join('');
+
+      const filterCamp = ['<option value="">Todas</option>']
+        .concat(state.campaigns.map(c => `<option value="${esc(c[MAP.campaigns.id])}">${esc(c[MAP.campaigns.name])}</option>`));
+      el('fCamp').innerHTML = filterCamp.join('');
+      el('lCamp').innerHTML = filterCamp.join('');
+    }
+
+    function updatePieceSelects(){
+      const pieceOpts = ['<option value="">(Sin pieza)</option>']
+        .concat(state.pieces.map(p => `<option value="${esc(p[MAP.pieces.id])}">${esc(p[MAP.pieces.name])}</option>`));
+      el('mPiece').innerHTML = ['<option value="">(Todas)</option>'].concat(state.pieces.map(p => `<option value="${esc(p[MAP.pieces.id])}">${esc(p[MAP.pieces.name])}</option>`)).join('');
+      el('mx_piece').innerHTML = pieceOpts.join('');
+      el('ld_piece').innerHTML = pieceOpts.join('');
+      el('lPiece').innerHTML = ['<option value="">Todas</option>'].concat(state.pieces.map(p => `<option value="${esc(p[MAP.pieces.id])}">${esc(p[MAP.pieces.name])}</option>`)).join('');
+    }
+
+    function applyPiecesFilters(){
+      const camp = el('fCamp').value;
+      const chan = el('fChannel').value;
+      const stat = el('fStatus').value;
+      const q = el('fQ').value.toLowerCase();
+
+      const filtered = state.pieces.filter(r => {
+        if(camp && String(r[MAP.pieces.campaign_id] ?? '') !== String(camp)) return false;
+        if(chan && String(r[MAP.pieces.channel_id] ?? '') !== String(chan)) return false;
+        if(stat && String(r[MAP.pieces.status] ?? '') !== String(stat)) return false;
+        if(q){
+          const blob = JSON.stringify(r).toLowerCase();
+          if(!blob.includes(q)) return false;
+        }
+        return true;
+      });
+
+      renderPieces(filtered);
+    }
 
     function applyLeadsFilters(){
       const camp = el('lCamp').value;
       const piece = el('lPiece').value;
-      const q = el('lQ').value.trim().toLowerCase();
+      const q = el('lQ').value.toLowerCase();
 
       const filtered = state.leads.filter(r => {
-        if(camp && String(r[MAP.leads.campaign_id] || '') !== String(camp)) return false;
-        if(piece && String(r[MAP.leads.piece_id] || '') !== String(piece)) return false;
+        if(camp && String(r[MAP.leads.campaign_id] ?? '') !== String(camp)) return false;
+        if(piece && String(r[MAP.leads.piece_id] ?? '') !== String(piece)) return false;
+
         if(q){
-          const blob = JSON.stringify({
-            full_name: r[MAP.leads.full_name],
-            phone: r[MAP.leads.phone],
-            email: r[MAP.leads.email],
-            source: r[MAP.leads.source_detail],
-            triage: r[MAP.leads.triage_status]
-          }).toLowerCase();
+          const blob = JSON.stringify(r).toLowerCase();
           if(!blob.includes(q)) return false;
         }
         return true;
@@ -1465,131 +1467,43 @@
       renderLeads(filtered);
     }
 
-    // --- SELECTS & UI ---
-    function campaignLabel(c){
-      const b = c[MAP.campaigns.bimester] ?? '';
-      const s = fmtDate(c[MAP.campaigns.start]);
-      const e = fmtDate(c[MAP.campaigns.end]);
-      return `${c[MAP.campaigns.name]} · ${b} · ${s}→${e}`.trim();
+    function applyMetricsFilters(){
+      const pieceId = el('mPiece').value;
+      const from = el('mFrom').value;
+      const to = el('mTo').value;
+
+      const filtered = state.metrics.filter(r => {
+        if(pieceId && String(r[MAP.metrics.piece_id]) !== String(pieceId)) return false;
+        const d = fmtDate(r[MAP.metrics.date]);
+        if(from && d < from) return false;
+        if(to && d > to) return false;
+        return true;
+      });
+
+      renderMetrics(filtered);
     }
 
-    function pieceLabel(p){
-      const n = p[MAP.pieces.name] ?? '';
-      const fmt = p[MAP.pieces.format] ?? '';
-      return `${n} · ${fmt}`.trim();
+    function bindFilters(){
+      el('btnNewCampaign').onclick = () => openCampaignModal();
+      el('btnNewPiece').onclick = () => { el('p_id').value=''; new bootstrap.Modal(el('pieceModal')).show(); };
+      el('btnNewMetric').onclick = () => { el('mx_id').value=''; new bootstrap.Modal(el('metricModal')).show(); };
+      el('btnNewLead').onclick = () => { el('ld_id').value=''; new bootstrap.Modal(el('leadModal')).show(); };
+
+      el('btnReloadCampaigns').onclick = loadCampaigns;
+      el('btnReloadPieces').onclick = loadPieces;
+      el('btnReloadMetrics').onclick = async () => { await loadMetrics(); applyMetricsFilters(); };
+      el('btnReloadLeads').onclick = async () => { await loadLeads(); applyLeadsFilters(); };
+
+      ['fCamp','fChannel','fStatus'].forEach(id => el(id)?.addEventListener('change', applyPiecesFilters));
+      el('fQ')?.addEventListener('keyup', applyPiecesFilters);
+
+      ['lCamp','lPiece'].forEach(id => el(id)?.addEventListener('change', applyLeadsFilters));
+      el('lQ')?.addEventListener('keyup', applyLeadsFilters);
+
+      ['mPiece','mFrom','mTo'].forEach(id => el(id)?.addEventListener('change', applyMetricsFilters));
     }
 
-    function updateSelects(){
-      // campaigns
-      const campOptionsAll = '<option value="">Todas</option>' + state.campaigns.map(c => `<option value="${c[MAP.campaigns.id]}">${esc(campaignLabel(c))}</option>`).join('');
-      const campOptionsPick = '<option value="">(Sin campaña)</option>' + state.campaigns.map(c => `<option value="${c[MAP.campaigns.id]}">${esc(campaignLabel(c))}</option>`).join('');
-
-      el('fCamp').innerHTML = campOptionsAll;
-      el('p_campaign').innerHTML = campOptionsPick;
-      el('ld_campaign').innerHTML = campOptionsPick;
-      el('lCamp').innerHTML = campOptionsAll;
-
-      // pieces
-      const pieceOptionsPick = '<option value="">(Sin pieza)</option>' + state.pieces.map(p => `<option value="${p[MAP.pieces.id]}">${esc(pieceLabel(p))}</option>`).join('');
-      const pieceOptionsAll = '<option value="">Todas</option>' + state.pieces.map(p => `<option value="${p[MAP.pieces.id]}">${esc(pieceLabel(p))}</option>`).join('');
-
-      el('mx_piece').innerHTML = '<option value="">(Seleccionar)</option>' + state.pieces.map(p => `<option value="${p[MAP.pieces.id]}">${esc(pieceLabel(p))}</option>`).join('');
-      el('mPiece').innerHTML = pieceOptionsAll;
-      el('ld_piece').innerHTML = pieceOptionsPick;
-      el('lPiece').innerHTML = pieceOptionsAll;
-
-      // channels (nullable)
-      const chBase = '<option value="">(Sin canal)</option>';
-      const chOpts = state.channels.length
-        ? chBase + state.channels.map(ch => `<option value="${ch[MAP.channels.id]}">${esc(ch[MAP.channels.name] ?? ch[MAP.channels.id])}</option>`).join('')
-        : chBase + `<option value="" disabled>(No se pudo cargar tabla channels)</option>`;
-      el('p_channel_id').innerHTML = chOpts;
-    }
-
-    function clearCampaignForm(){
-      el('c_id').value = '';
-      el('c_name').value = '';
-      el('c_bim').value = 'B1';
-      el('c_status').value = '';
-      el('c_start').value = '';
-      el('c_end').value = '';
-      el('c_objective').value = '';
-      el('c_anchor_event').value = '';
-      el('c_lead_magnet').value = '';
-      el('c_budget').value = 0;
-    }
-
-    function clearPieceForm(){
-      el('p_id').value = '';
-      el('p_campaign').value = '';
-      el('p_channel_id').value = '';
-      el('p_name').value = '';
-      el('p_format').value = '';
-      el('p_status').value = '';
-      el('p_pillar').value = '';
-      el('p_visual_style').value = '';
-      el('p_hook_copy').value = '';
-      el('p_cta').value = '';
-      el('p_ad_id').value = '';
-    }
-
-    function clearMetricForm(){
-      el('mx_id').value = '';
-      el('mx_piece').value = '';
-      el('mx_date').value = '';
-      el('mx_volume').value = 0;
-      el('mx_interactions').value = 0;
-      el('mx_spend').value = 0;
-    }
-
-    function clearLeadForm(){
-      el('ld_id').value = '';
-      el('ld_full_name').value = '';
-      el('ld_phone').value = '';
-      el('ld_email').value = '';
-      el('ld_source_detail').value = '';
-      el('ld_campaign').value = '';
-      el('ld_piece').value = '';
-      el('ld_triage_status').value = 'nuevo';
-      el('ld_triage_notes').value = '';
-      el('ld_clinical_outcome').value = 'pendiente';
-      el('ld_appointment_date').value = '';
-      el('ld_ticket_value').value = 0;
-      el('ld_is_retained').checked = false;
-    }
-
-    function bindUIOnce(){
-      state.bound = true;
-
-      // top buttons
-      el('btnNewCampaign').onclick = () => { clearCampaignForm(); openCampaignModal(null); };
-      el('btnNewPiece').onclick = () => { clearPieceForm(); new bootstrap.Modal(el('pieceModal')).show(); };
-      el('btnNewMetric').onclick = () => { clearMetricForm(); new bootstrap.Modal(el('metricModal')).show(); };
-      el('btnNewLead').onclick = () => { clearLeadForm(); new bootstrap.Modal(el('leadModal')).show(); };
-
-      // reload buttons
-      el('btnReloadCampaigns').onclick = async () => { await runWithLoading(loadCampaigns); updateSelects(); };
-      el('btnReloadPieces').onclick = async () => { await runWithLoading(loadPieces); updateSelects(); applyPiecesFilters(); };
-      el('btnReloadMetrics').onclick = async () => { await runWithLoading(loadMetrics); };
-      el('btnReloadLeads').onclick = async () => { await runWithLoading(loadLeads); applyLeadsFilters(); };
-
-      // filters
-      el('fCamp').addEventListener('change', applyPiecesFilters);
-      el('fPieceStatus').addEventListener('keyup', applyPiecesFilters);
-      el('fQ').addEventListener('keyup', applyPiecesFilters);
-
-      el('lCamp').addEventListener('change', applyLeadsFilters);
-      el('lPiece').addEventListener('change', applyLeadsFilters);
-      el('lQ').addEventListener('keyup', applyLeadsFilters);
-
-      // metrics filter
-      el('btnReloadMetrics').onclick = async () => { await runWithLoading(loadMetrics); };
-
-      // If we change campaign/pieces, keep selects consistent
-      el('p_campaign').addEventListener('change', () => {});
-      el('ld_campaign').addEventListener('change', () => {});
-    }
-
+    // Boot
     init();
   </script>
 </body>
