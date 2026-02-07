@@ -17,67 +17,70 @@
       --primary:#2563eb; --primary-hover:#1d4ed8;
       --bg-body:#f3f4f6; --bg-card:#fff;
       --text-main:#1f2937; --text-muted:#6b7280;
-      --border:#e5e7eb;
+      --border-color:#e5e7eb;
       --shadow-sm:0 1px 2px rgba(0,0,0,.05);
-      --shadow-md:0 8px 16px rgba(0,0,0,.08);
+      --shadow-md:0 4px 6px -1px rgba(0,0,0,.1),0 2px 4px -1px rgba(0,0,0,.06);
+      --shadow-lg:0 10px 15px -3px rgba(0,0,0,.1),0 4px 6px -2px rgba(0,0,0,.05);
       --r:12px;
     }
-    body{ background:var(--bg-body); font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,sans-serif; color:var(--text-main); }
-    .app-shell{ max-width:1400px; }
-    .cardx{ background:var(--bg-card); border:1px solid var(--border); border-radius:var(--r); box-shadow:var(--shadow-sm); overflow:hidden; }
-    .cardx:hover{ box-shadow:var(--shadow-md); }
-    .navbar-ccm{ background:rgba(255,255,255,.9); backdrop-filter:blur(10px); border-bottom:1px solid var(--border); box-shadow:var(--shadow-sm); padding:.75rem 0; }
+    body{ background:var(--bg-body); font-family:'Inter',sans-serif; color:var(--text-main); -webkit-font-smoothing:antialiased; }
+    .navbar-ccm{ background:rgba(255,255,255,.9); backdrop-filter:blur(8px); border-bottom:1px solid var(--border-color); box-shadow:var(--shadow-sm); padding:.75rem 0; }
+    .brand-title{ font-weight:700; font-size:1rem; color:#111827; letter-spacing:-.025em; }
+    .brand-sub{ font-size:.75rem; font-weight:500; color:var(--text-muted); text-transform:uppercase; letter-spacing:.05em; }
     .brand-icon{ width:32px; height:32px; background:#eff6ff; border-radius:8px; display:flex; align-items:center; justify-content:center; color:var(--primary); }
-    .brand-title{ font-weight:800; letter-spacing:-.02em; }
-    .brand-sub{ font-size:.75rem; font-weight:600; color:var(--text-muted); text-transform:uppercase; letter-spacing:.06em; }
+
+    .app-shell{ max-width:1400px; }
+    .cardx{ background:var(--bg-card); border:1px solid var(--border-color); border-radius:var(--r); box-shadow:var(--shadow-sm); overflow:hidden; transition:box-shadow .2s; }
+    .cardx:hover{ box-shadow:var(--shadow-md); }
+
+    .section-title{ font-weight:700; color:#111827; letter-spacing:-.025em; font-size:1.25rem; }
     .mini{ color:var(--text-muted); font-size:.875rem; }
-    .mono{ font-family:ui-monospace,SFMono-Regular,Menlo,Consolas,monospace; font-size:.85em; color:var(--primary); background:#eff6ff; padding:2px 6px; border-radius:6px; }
-    .btn{ border-radius:10px; font-weight:600; }
-    .btn-primary{ background:var(--primary); border-color:var(--primary); }
-    .btn-primary:hover{ background:var(--primary-hover); border-color:var(--primary-hover); }
-    .btn-light{ background:#fff; border-color:var(--border); color:#374151; }
-    .btn-light:hover{ background:#f9fafb; }
-    .nav-tabs{ border-bottom:1px solid var(--border); gap:1rem; }
-    .nav-tabs .nav-link{ border:none; color:var(--text-muted); font-weight:700; padding:.75rem .25rem; }
+    .mono{ font-family:ui-monospace,SFMono-Regular,Consolas,'Liberation Mono',Menlo,monospace; font-size:.85em; color:var(--primary); background:#eff6ff; padding:2px 6px; border-radius:4px; }
+    .btn{ padding:.5rem 1rem; border-radius:8px; font-weight:500; font-size:.875rem; border:1px solid transparent; transition:all .2s; }
+    .btn-primary{ background:var(--primary); border-color:var(--primary); box-shadow:0 1px 2px rgba(0,0,0,.05); }
+    .btn-primary:hover{ background:var(--primary-hover); border-color:var(--primary-hover); transform:translateY(-1px); }
+    .btn-light{ background:#fff; border-color:var(--border-color); color:#374151; }
+    .btn-light:hover{ background:#f9fafb; border-color:#d1d5db; color:#111827; }
+
+    .nav-tabs{ border-bottom:1px solid var(--border-color); gap:1rem; }
+    .nav-tabs .nav-link{ border:none; color:var(--text-muted); font-weight:500; padding:.75rem .25rem; background:transparent; transition:color .2s; }
     .nav-tabs .nav-link:hover{ color:var(--primary); }
     .nav-tabs .nav-link.active{ color:var(--primary); border-bottom:2px solid var(--primary); background:transparent; }
-    .form-control,.form-select{ border-radius:10px; border-color:var(--border); padding:.6rem .75rem; }
-    .form-control:focus,.form-select:focus{ border-color:var(--primary); box-shadow:0 0 0 3px rgba(37,99,235,.12); }
 
     .table thead th{
-      background:#f9fafb; color:#6b7280; font-size:.75rem;
-      font-weight:800; text-transform:uppercase; letter-spacing:.06em;
-      border-bottom:1px solid var(--border); padding:.75rem 1rem;
+      background:#f9fafb; color:#6b7280; font-size:.75rem; font-weight:600;
+      text-transform:uppercase; letter-spacing:.05em; border-bottom:1px solid var(--border-color);
+      padding:.75rem 1rem;
     }
-    .table tbody td{ padding:.9rem 1rem; border-bottom:1px solid var(--border); vertical-align:middle; font-size:.9rem; }
+    .table tbody td{ padding:.875rem 1rem; border-bottom:1px solid var(--border-color); vertical-align:middle; font-size:.875rem; }
     .table-hover tbody tr:hover{ background:#f9fafb; }
 
-    .badge-status{ padding:4px 10px; border-radius:999px; font-size:.75rem; font-weight:800; display:inline-flex; align-items:center; gap:6px; }
+    .badge-status{ padding:4px 10px; border-radius:99px; font-size:.75rem; font-weight:600; display:inline-flex; align-items:center; gap:6px; }
     .badge-status::before{ content:''; width:6px; height:6px; border-radius:50%; background:currentColor; }
-    .st-gray{ background:#f3f4f6; color:#4b5563; }
-    .st-blue{ background:#eff6ff; color:#2563eb; }
-    .st-green{ background:#ecfdf5; color:#059669; }
-    .st-amber{ background:#fffbeb; color:#d97706; }
-    .st-red{ background:#fef2f2; color:#dc2626; }
+    .st-ok{ background:#ecfdf5; color:#059669; }
+    .st-warn{ background:#fffbeb; color:#d97706; }
+    .st-bad{ background:#fef2f2; color:#dc2626; }
+    .st-neutral{ background:#f3f4f6; color:#4b5563; }
 
-    .loading{ position:fixed; inset:0; background:rgba(255,255,255,.75); backdrop-filter:blur(2px); display:none; align-items:center; justify-content:center; z-index:3000; }
-    .loading .box{ background:#fff; padding:18px 26px; border-radius:14px; border:1px solid var(--border); box-shadow:var(--shadow-md); display:flex; flex-direction:column; align-items:center; gap:10px; }
+    .form-control, .form-select{ border-radius:8px; border-color:var(--border-color); padding:.6rem .75rem; font-size:.875rem; }
+    .form-control:focus, .form-select:focus{ border-color:var(--primary); box-shadow:0 0 0 3px rgba(37,99,235,.1); }
 
-    .alert-stack{ position:fixed; top:84px; right:18px; z-index:2500; display:flex; flex-direction:column; gap:10px; width:min(420px, calc(100vw - 24px)); }
-    .alert-card{ background:#fff; border:1px solid var(--border); border-left:4px solid var(--primary); border-radius:12px; box-shadow:var(--shadow-md); padding:12px 14px; display:flex; gap:12px; align-items:flex-start; animation:slideIn .18s ease; }
+    .loading{ position:fixed; inset:0; background:rgba(255,255,255,.8); backdrop-filter:blur(2px); display:none; align-items:center; justify-content:center; z-index:3000; }
+    .loading .box{ background:#fff; padding:20px 40px; border-radius:12px; box-shadow:var(--shadow-lg); border:1px solid var(--border-color); display:flex; flex-direction:column; align-items:center; gap:10px; }
+
+    .alert-stack{ position:fixed; top:80px; right:20px; z-index:2500; display:flex; flex-direction:column; gap:10px; width:380px; }
+    .alert-card{ background:#fff; border:1px solid var(--border-color); border-left:4px solid var(--primary); border-radius:8px; box-shadow:var(--shadow-md); padding:12px 16px; display:flex; gap:12px; align-items:start; animation:slideIn .3s ease; }
     .alert-card.success{ border-left-color:#059669; }
-    .alert-card.warning{ border-left-color:#d97706; }
     .alert-card.danger{ border-left-color:#dc2626; }
-    @keyframes slideIn{ from{ transform:translateX(12px); opacity:0; } to{ transform:translateX(0); opacity:1; } }
-
+    .alert-card.warning{ border-left-color:#d97706; }
+    @keyframes slideIn{ from{ transform:translateX(100%); opacity:0; } to{ transform:translateX(0); opacity:1; } }
     .hidden{ display:none !important; }
     .truncate-2{ display:-webkit-box; -webkit-line-clamp:2; -webkit-box-orient:vertical; overflow:hidden; }
-    .icon-btn{ width:36px; height:36px; display:inline-flex; align-items:center; justify-content:center; border-radius:10px; }
   </style>
 </head>
 
 <body>
-  <div class="alert-stack" id="alertStack" aria-live="polite" aria-atomic="true"></div>
+  <div class="alert-stack" id="alertStack"></div>
 
   <nav class="navbar navbar-ccm sticky-top">
     <div class="container-fluid app-shell px-4">
@@ -90,10 +93,8 @@
       </div>
 
       <div class="ms-auto d-flex align-items-center gap-2">
-        <span class="badge bg-light text-dark border fw-semibold py-2 px-3 rounded-pill" id="whoami">Cargando...</span>
-        <button class="btn btn-light btn-sm" id="btnLogout" disabled title="Cerrar sesión">
-          <i class="bi bi-box-arrow-right me-1"></i>Salir
-        </button>
+        <span class="badge bg-light text-dark border fw-normal py-2 px-3 rounded-pill" id="whoami">Cargando...</span>
+        <button class="btn btn-light btn-sm" id="btnLogout" disabled><i class="bi bi-box-arrow-right me-1"></i>Salir</button>
       </div>
     </div>
   </nav>
@@ -101,50 +102,43 @@
   <div class="container-fluid app-shell my-5 px-4">
 
     <!-- LOGIN -->
-    <div id="loginView" class="cardx p-5 mx-auto" style="max-width:480px;">
+    <div id="loginView" class="cardx p-5 mx-auto" style="max-width: 480px;">
       <div class="text-center mb-4">
         <div class="d-inline-flex align-items-center justify-content-center bg-primary text-white rounded-circle mb-3" style="width:48px;height:48px;">
           <i class="bi bi-shield-lock-fill fs-5"></i>
         </div>
-        <h4 class="fw-bold mb-1">Iniciar sesión</h4>
-        <p class="text-muted small mb-0">Accede al panel de Marketing</p>
+        <h4 class="fw-bold">Iniciar Sesión</h4>
+        <p class="text-muted small">Accede al panel de control de Marketing</p>
       </div>
 
       <div class="mb-3">
-        <label class="form-label fw-bold small">Correo electrónico</label>
-        <input type="email" class="form-control" id="loginEmail" placeholder="admin@grupo-ccm.com" autocomplete="username" aria-label="Correo electrónico">
+        <label class="form-label fw-semibold small">Correo electrónico</label>
+        <input type="email" class="form-control" id="loginEmail" placeholder="nombre@grupoccm.com" autocomplete="username">
       </div>
 
       <div class="mb-3">
-        <label class="form-label fw-bold small">Contraseña</label>
-        <input type="password" class="form-control" id="loginPass" placeholder="••••••••" autocomplete="current-password" aria-label="Contraseña">
+        <label class="form-label fw-semibold small">Contraseña</label>
+        <input type="password" class="form-control" id="loginPass" placeholder="••••••••" autocomplete="current-password">
       </div>
 
       <div class="d-flex justify-content-between align-items-center mb-4">
         <button class="btn btn-link px-0 small text-decoration-none" id="btnForgotPass" type="button">¿Olvidaste tu clave?</button>
       </div>
 
-      <button class="btn btn-primary w-100 py-2" id="btnSignIn">Ingresar</button>
+      <button class="btn btn-primary w-100 py-2" id="btnSignIn">Ingresar al Sistema</button>
       <div class="text-center mt-3 small text-muted">Powered by Supabase</div>
-
-      <div class="mt-3 small text-muted">
-        <div class="fw-bold mb-1">Nota</div>
-        <div>Si no puedes crear/editar campañas y piezas, probablemente tu usuario está en rol <span class="mono">staff</span>. Debe ser <span class="mono">admin</span> o <span class="mono">editor</span> según tus políticas RLS.</div>
-      </div>
     </div>
 
     <!-- APP -->
     <div id="appView" class="hidden">
       <div class="d-flex flex-wrap gap-3 align-items-center justify-content-between mb-4">
         <div>
-          <h3 class="fw-bold mb-1">Panel de control</h3>
-          <div class="mini">Campañas · Piezas · Métricas · Leads</div>
+          <h3 class="fw-bold mb-1">Panel de Control</h3>
+          <div class="mini">Campañas · Contenido · Métricas · Leads</div>
         </div>
 
         <div class="d-flex flex-wrap gap-2">
-          <button class="btn btn-light bg-white" id="btnSeed" title="Crear campañas base si no existen">
-            <i class="bi bi-database-add me-2 text-muted"></i>Seed (Bimestres)
-          </button>
+          <button class="btn btn-light bg-white" id="btnSeed"><i class="bi bi-database-add me-2 text-muted"></i>Seed Inicial</button>
           <div class="vr mx-2 text-muted"></div>
           <button class="btn btn-primary" id="btnNewCampaign"><i class="bi bi-plus-lg me-1"></i>Campaña</button>
           <button class="btn btn-primary" id="btnNewPiece"><i class="bi bi-plus-lg me-1"></i>Pieza</button>
@@ -161,7 +155,7 @@
         </li>
         <li class="nav-item" role="presentation">
           <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabPieces" type="button" role="tab">
-            <i class="bi bi-grid me-2"></i>Piezas
+            <i class="bi bi-grid me-2"></i>Contenido (Piezas)
           </button>
         </li>
         <li class="nav-item" role="presentation">
@@ -171,33 +165,29 @@
         </li>
         <li class="nav-item" role="presentation">
           <button class="nav-link" data-bs-toggle="tab" data-bs-target="#tabLeads" type="button" role="tab">
-            <i class="bi bi-people me-2"></i>Leads
+            <i class="bi bi-people me-2"></i>Leads & CRM
           </button>
         </li>
       </ul>
 
       <div class="tab-content">
-
         <!-- CAMPAIGNS -->
         <div class="tab-pane fade show active" id="tabCampaigns" role="tabpanel">
           <div class="cardx">
             <div class="p-3 border-bottom d-flex align-items-center justify-content-between bg-light bg-opacity-50">
-              <span class="fw-bold small text-uppercase text-muted">Listado</span>
-              <button class="btn btn-light icon-btn" id="btnReloadCampaigns" title="Actualizar campañas" aria-label="Actualizar campañas">
-                <i class="bi bi-arrow-clockwise"></i>
-              </button>
+              <span class="fw-bold small text-uppercase text-muted">Listado de Campañas</span>
+              <button class="btn btn-sm btn-white border" id="btnReloadCampaigns" title="Actualizar"><i class="bi bi-arrow-clockwise"></i></button>
             </div>
             <div class="table-responsive">
               <table class="table table-hover mb-0 align-middle" id="tblCampaigns" role="grid">
                 <thead>
                   <tr>
-                    <th scope="col">Bimestre</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Objetivo</th>
-                    <th scope="col">Inicio</th>
-                    <th scope="col">Fin</th>
-                    <th scope="col">Status</th>
-                    <th scope="col" class="text-end">Acciones</th>
+                    <th>Nombre</th>
+                    <th>Bimestre</th>
+                    <th>Vigencia</th>
+                    <th>Objetivo</th>
+                    <th>Estado</th>
+                    <th class="text-end">Acciones</th>
                   </tr>
                 </thead>
                 <tbody></tbody>
@@ -213,21 +203,21 @@
               <div class="row g-3">
                 <div class="col-12 col-md-4">
                   <label class="form-label mini fw-bold">Campaña</label>
-                  <select class="form-select" id="fCamp" aria-label="Filtrar por campaña"></select>
+                  <select class="form-select" id="fCamp"></select>
                 </div>
                 <div class="col-6 col-md-3">
                   <label class="form-label mini fw-bold">Canal</label>
-                  <select class="form-select" id="fChannel" aria-label="Filtrar por canal"></select>
+                  <select class="form-select" id="fChannel"></select>
                 </div>
                 <div class="col-6 col-md-2">
-                  <label class="form-label mini fw-bold">Estado</label>
-                  <input class="form-control" id="fPieceStatus" placeholder="idea, borrador..." aria-label="Filtrar por estado">
+                  <label class="form-label mini fw-bold">Formato</label>
+                  <select class="form-select" id="fFormat"></select>
                 </div>
                 <div class="col-12 col-md-3">
                   <label class="form-label mini fw-bold">Buscar</label>
                   <div class="input-group">
                     <span class="input-group-text bg-white border-end-0"><i class="bi bi-search text-muted"></i></span>
-                    <input class="form-control border-start-0 ps-0" id="fQ" placeholder="Nombre, hook, ad_id..." aria-label="Buscar piezas">
+                    <input class="form-control border-start-0 ps-0" id="fQ" placeholder="Nombre / hook / pilar...">
                   </div>
                 </div>
               </div>
@@ -237,23 +227,19 @@
               <table class="table table-hover mb-0 align-middle" id="tblPieces" role="grid">
                 <thead>
                   <tr>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Campaña</th>
-                    <th scope="col">Canal</th>
-                    <th scope="col">Formato</th>
-                    <th scope="col">Status</th>
-                    <th scope="col">Hook</th>
-                    <th scope="col" class="text-end">Acciones</th>
+                    <th>Nombre</th>
+                    <th>Campaña</th>
+                    <th>Canal</th>
+                    <th>Formato</th>
+                    <th>Status</th>
+                    <th class="text-end">Acciones</th>
                   </tr>
                 </thead>
                 <tbody></tbody>
               </table>
             </div>
-
             <div class="p-2 border-top bg-light text-end">
-              <button class="btn btn-sm btn-link text-decoration-none text-muted" id="btnReloadPieces" title="Actualizar piezas">
-                <i class="bi bi-arrow-clockwise me-1"></i>Actualizar
-              </button>
+              <button class="btn btn-sm btn-link text-decoration-none text-muted" id="btnReloadPieces"><i class="bi bi-arrow-clockwise me-1"></i>Actualizar tabla</button>
             </div>
           </div>
         </div>
@@ -263,36 +249,35 @@
           <div class="cardx">
             <div class="p-4 border-bottom">
               <div class="row g-3">
-                <div class="col-12 col-md-6">
+                <div class="col-12 col-md-5">
                   <label class="form-label mini fw-bold">Pieza</label>
-                  <select class="form-select" id="mPiece" aria-label="Seleccionar pieza"></select>
+                  <select class="form-select" id="mPiece"></select>
                 </div>
-                <div class="col-6 col-md-2">
+                <div class="col-6 col-md-3">
                   <label class="form-label mini fw-bold">Desde</label>
-                  <input type="date" class="form-control" id="mFrom" aria-label="Desde">
+                  <input type="date" class="form-control" id="mFrom">
                 </div>
-                <div class="col-6 col-md-2">
+                <div class="col-6 col-md-3">
                   <label class="form-label mini fw-bold">Hasta</label>
-                  <input type="date" class="form-control" id="mTo" aria-label="Hasta">
+                  <input type="date" class="form-control" id="mTo">
                 </div>
-                <div class="col-12 col-md-2 d-flex align-items-end">
-                  <button class="btn btn-light w-100" id="btnReloadMetrics" title="Actualizar métricas" aria-label="Actualizar métricas">
-                    <i class="bi bi-arrow-clockwise"></i>
-                  </button>
+                <div class="col-12 col-md-1 d-flex align-items-end">
+                  <button class="btn btn-light w-100" id="btnReloadMetrics" title="Actualizar"><i class="bi bi-arrow-clockwise"></i></button>
                 </div>
               </div>
+              <div class="mini mt-2">Métricas: <span class="mono" id="metricLabel1">Volumen</span> y <span class="mono" id="metricLabel2">Interacciones</span> + <span class="mono">Spend</span></div>
             </div>
 
             <div class="table-responsive">
               <table class="table table-hover mb-0 align-middle" id="tblMetrics" role="grid">
                 <thead class="text-center">
                   <tr>
-                    <th scope="col" class="text-start">Pieza</th>
-                    <th scope="col">Fecha</th>
-                    <th scope="col" id="thM1">Volumen</th>
-                    <th scope="col" id="thM2">Interacciones</th>
-                    <th scope="col">Gasto</th>
-                    <th scope="col" class="text-end">Acciones</th>
+                    <th class="text-start">Pieza</th>
+                    <th>Fecha</th>
+                    <th id="thM1">Volumen</th>
+                    <th id="thM2">Interacciones</th>
+                    <th>Spend</th>
+                    <th class="text-end">Acciones</th>
                   </tr>
                 </thead>
                 <tbody class="text-center"></tbody>
@@ -308,15 +293,15 @@
               <div class="row g-3">
                 <div class="col-12 col-md-4">
                   <label class="form-label mini fw-bold">Campaña</label>
-                  <select class="form-select" id="lCamp" aria-label="Filtrar leads por campaña"></select>
+                  <select class="form-select" id="lCamp"></select>
                 </div>
                 <div class="col-12 col-md-4">
                   <label class="form-label mini fw-bold">Pieza</label>
-                  <select class="form-select" id="lPiece" aria-label="Filtrar leads por pieza"></select>
+                  <select class="form-select" id="lPiece"></select>
                 </div>
                 <div class="col-12 col-md-4">
                   <label class="form-label mini fw-bold">Buscar</label>
-                  <input class="form-control" id="lQ" placeholder="Nombre, teléfono, email..." aria-label="Buscar leads">
+                  <input class="form-control" id="lQ" placeholder="Nombre, teléfono, email...">
                 </div>
               </div>
             </div>
@@ -325,24 +310,20 @@
               <table class="table table-hover mb-0 align-middle" id="tblLeads" role="grid">
                 <thead>
                   <tr>
-                    <th scope="col">Fecha</th>
-                    <th scope="col">Nombre</th>
-                    <th scope="col">Teléfono</th>
-                    <th scope="col">Email</th>
-                    <th scope="col">Origen</th>
-                    <th scope="col">Triage</th>
-                    <th scope="col">Outcome</th>
-                    <th scope="col" class="text-end">Acciones</th>
+                    <th>Fecha</th>
+                    <th>Nombre</th>
+                    <th>Contacto</th>
+                    <th>Origen</th>
+                    <th>Triage</th>
+                    <th>Outcome</th>
+                    <th class="text-end">Acciones</th>
                   </tr>
                 </thead>
                 <tbody></tbody>
               </table>
             </div>
-
             <div class="p-2 border-top bg-light text-end">
-              <button class="btn btn-sm btn-link text-decoration-none text-muted" id="btnReloadLeads" title="Actualizar leads">
-                <i class="bi bi-arrow-clockwise me-1"></i>Actualizar
-              </button>
+              <button class="btn btn-sm btn-link text-decoration-none text-muted" id="btnReloadLeads"><i class="bi bi-arrow-clockwise me-1"></i>Actualizar tabla</button>
             </div>
           </div>
         </div>
@@ -356,53 +337,49 @@
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content cardx">
         <div class="modal-header border-0 pb-0">
-          <h5 class="modal-title fw-bold">Recuperar acceso</h5>
-          <button class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          <h5 class="modal-title fw-bold">Recuperar Acceso</h5>
+          <button class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
-          <p class="text-muted small">Ingresa tu correo y te enviaremos un enlace para restablecer tu contraseña.</p>
-          <input type="email" class="form-control mb-3" id="fp_email" placeholder="tu@correo.com" aria-label="Correo para recuperación">
+          <p class="text-muted small">Ingresa tu correo y te enviaremos un enlace.</p>
+          <input type="email" class="form-control mb-3" id="fp_email" placeholder="tu@correo.com">
           <div class="d-flex justify-content-end gap-2">
             <button class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
             <button class="btn btn-primary" id="btnSendResetEmail">Enviar</button>
           </div>
-          <div class="small text-muted mt-3">
-            Importante: en Supabase Auth, configura la URL de redirección permitida para GitHub Pages si aplica.
-          </div>
         </div>
       </div>
     </div>
   </div>
 
-  <div class="modal fade" id="setNewPassModal" tabindex="-1" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+  <div class="modal fade" id="setNewPassModal" tabindex="-1" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content cardx">
         <div class="modal-header border-0 pb-0">
-          <h5 class="modal-title fw-bold">Nueva contraseña</h5>
+          <h5 class="modal-title fw-bold">Nueva Contraseña</h5>
         </div>
         <div class="modal-body">
           <div class="mb-3">
             <label class="form-label small fw-bold">Contraseña nueva</label>
-            <input type="password" class="form-control" id="np1" aria-label="Contraseña nueva">
+            <input type="password" class="form-control" id="np1">
           </div>
           <div class="mb-4">
             <label class="form-label small fw-bold">Confirmar</label>
-            <input type="password" class="form-control" id="np2" aria-label="Confirmar contraseña nueva">
+            <input type="password" class="form-control" id="np2">
           </div>
-          <button class="btn btn-primary w-100" id="btnSetNewPass">Actualizar</button>
-          <button class="btn btn-light w-100 mt-2" id="btnCancelRecovery">Salir de recuperación</button>
+          <button class="btn btn-primary w-100" id="btnSetNewPass">Actualizar Password</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Campaign -->
-  <div class="modal fade" id="campaignModal" tabindex="-1" aria-hidden="true">
+  <!-- Campaign Modal -->
+  <div class="modal fade" id="campaignModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
       <div class="modal-content cardx">
         <div class="modal-header">
           <h5 class="modal-title fw-bold" id="campaignModalTitle">Campaña</h5>
-          <button class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          <button class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
           <input type="hidden" id="c_id">
@@ -411,121 +388,117 @@
               <label class="form-label small fw-bold">Nombre</label>
               <input class="form-control" id="c_name" placeholder="Ej: Diabetes Control">
             </div>
+
             <div class="col-6">
-              <label class="form-label small fw-bold">Bimestre (ENUM)</label>
-              <input class="form-control" id="c_bim" placeholder="Ej: B1 (debe coincidir con tu ENUM)">
-              <div class="small text-muted mt-1">Debe coincidir con tu enum <span class="mono">campaign_bimester</span>.</div>
+              <label class="form-label small fw-bold">Bimestre</label>
+              <select class="form-select" id="c_bim"></select>
+              <div class="mini mt-1">Debe coincidir con tu ENUM <span class="mono">campaign_bimester</span>.</div>
+            </div>
+
+            <div class="col-6">
+              <label class="form-label small fw-bold">Estado</label>
+              <input class="form-control" id="c_status" placeholder="planificada / activa / cerrada">
+            </div>
+
+            <div class="col-6">
+              <label class="form-label small fw-bold">Inicio (obligatorio)</label>
+              <input type="date" class="form-control" id="c_start" required>
             </div>
             <div class="col-6">
-              <label class="form-label small fw-bold">Status</label>
-              <input class="form-control" id="c_status" placeholder="planificada, activa...">
+              <label class="form-label small fw-bold">Fin (obligatorio)</label>
+              <input type="date" class="form-control" id="c_end" required>
             </div>
-            <div class="col-6">
-              <label class="form-label small fw-bold">Inicio</label>
-              <input type="date" class="form-control" id="c_start">
-            </div>
-            <div class="col-6">
-              <label class="form-label small fw-bold">Fin</label>
-              <input type="date" class="form-control" id="c_end">
-            </div>
+
             <div class="col-12">
               <label class="form-label small fw-bold">Objetivo</label>
-              <textarea class="form-control" id="c_objective" rows="2" placeholder="Ej: Generar 50 leads cualificados"></textarea>
-            </div>
-            <div class="col-12">
-              <label class="form-label small fw-bold">Evento ancla</label>
-              <input class="form-control" id="c_anchor_event" placeholder="Ej: Jornada de diabetes">
-            </div>
-            <div class="col-12">
-              <label class="form-label small fw-bold">Lead magnet</label>
-              <input class="form-control" id="c_lead_magnet" placeholder="Ej: Checklist, ebook, cupón...">
-            </div>
-            <div class="col-12">
-              <label class="form-label small fw-bold">Presupuesto planificado</label>
-              <input type="number" min="0" step="0.01" class="form-control" id="c_budget" placeholder="0.00">
+              <input class="form-control" id="c_objective" placeholder="Ej: Generar 50 leads cualificados">
             </div>
           </div>
         </div>
         <div class="modal-footer border-0">
           <button class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
-          <button class="btn btn-primary" id="btnSaveCampaign">Guardar</button>
+          <button class="btn btn-primary" id="btnSaveCampaign">Guardar Cambios</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Piece -->
-  <div class="modal fade" id="pieceModal" tabindex="-1" aria-hidden="true">
+  <!-- Piece Modal -->
+  <div class="modal fade" id="pieceModal" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content cardx">
         <div class="modal-header">
-          <h5 class="modal-title fw-bold" id="pieceModalTitle">Pieza</h5>
-          <button class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          <h5 class="modal-title fw-bold" id="pieceModalTitle">Pieza de Contenido</h5>
+          <button class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
           <input type="hidden" id="p_id">
           <div class="row g-3">
             <div class="col-md-6">
-              <label class="form-label small fw-bold">Campaña (opcional)</label>
+              <label class="form-label small fw-bold">Campaña Asociada</label>
               <select class="form-select" id="p_campaign"></select>
             </div>
             <div class="col-md-6">
               <label class="form-label small fw-bold">Canal</label>
-              <select class="form-select" id="p_channel"></select>
-            </div>
-            <div class="col-md-8">
-              <label class="form-label small fw-bold">Nombre</label>
-              <input class="form-control" id="p_name" placeholder="Ej: Reel - CTA WhatsApp">
-            </div>
-            <div class="col-md-4">
-              <label class="form-label small fw-bold">Formato (ENUM)</label>
-              <input class="form-control" id="p_format" placeholder="Ej: reel (según enum piece_format)">
+              <select class="form-select" id="p_channel_id"></select>
             </div>
 
-            <div class="col-md-6">
-              <label class="form-label small fw-bold">Pillar</label>
-              <input class="form-control" id="p_pillar" placeholder="Educación, Testimonio...">
+            <div class="col-12">
+              <label class="form-label small fw-bold">Nombre (obligatorio)</label>
+              <input class="form-control fw-semibold" id="p_name" placeholder="Ej: Reel 1 - Hook principal">
             </div>
-            <div class="col-md-6">
+
+            <div class="col-md-4">
+              <label class="form-label small fw-bold">Formato (ENUM)</label>
+              <select class="form-select" id="p_format"></select>
+            </div>
+
+            <div class="col-md-4">
+              <label class="form-label small fw-bold">Pilar</label>
+              <input class="form-control" id="p_pillar" placeholder="Educación / Conversión / Testimonio...">
+            </div>
+
+            <div class="col-md-4">
               <label class="form-label small fw-bold">Status</label>
-              <input class="form-control" id="p_status" placeholder="idea, borrador, publicado...">
+              <input class="form-control" id="p_status" placeholder="idea / en_produccion / publicado">
             </div>
 
             <div class="col-12">
               <label class="form-label small fw-bold">Hook / Copy</label>
-              <textarea class="form-control" id="p_hook_copy" rows="2" placeholder="Gancho principal..."></textarea>
+              <textarea class="form-control" id="p_hook_copy" rows="2"></textarea>
             </div>
 
             <div class="col-md-6">
-              <label class="form-label small fw-bold">Estilo visual</label>
-              <input class="form-control" id="p_visual" placeholder="Minimal, clínico, etc.">
-            </div>
-            <div class="col-md-6">
-              <label class="form-label small fw-bold">CTA destino</label>
-              <input class="form-control" id="p_cta" placeholder="WhatsApp, landing, llamada...">
+              <label class="form-label small fw-bold">Visual Style</label>
+              <input class="form-control" id="p_visual_style" placeholder="Minimal / Médico / Lifestyle...">
             </div>
 
             <div class="col-md-6">
-              <label class="form-label small fw-bold">Ad ID</label>
-              <input class="form-control" id="p_ad_id" placeholder="ID anuncio (si aplica)">
+              <label class="form-label small fw-bold">CTA / Destino</label>
+              <input class="form-control" id="p_cta_destination" placeholder="WhatsApp / Landing / Form...">
+            </div>
+
+            <div class="col-12">
+              <label class="form-label small fw-bold">Ad ID (opcional)</label>
+              <input class="form-control font-monospace" id="p_ad_id" placeholder="ID del anuncio si aplica">
             </div>
           </div>
         </div>
         <div class="modal-footer border-0">
           <button class="btn btn-light" data-bs-dismiss="modal">Cerrar</button>
-          <button class="btn btn-primary" id="btnSavePiece">Guardar</button>
+          <button class="btn btn-primary" id="btnSavePiece">Guardar Pieza</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Metric -->
-  <div class="modal fade" id="metricModal" tabindex="-1" aria-hidden="true">
+  <!-- Metric Modal -->
+  <div class="modal fade" id="metricModal" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content cardx">
         <div class="modal-header">
-          <h5 class="modal-title fw-bold" id="metricModalTitle">Registro de métricas</h5>
-          <button class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          <h5 class="modal-title fw-bold" id="metricModalTitle">Registro de Métricas</h5>
+          <button class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
           <input type="hidden" id="mx_id">
@@ -535,7 +508,7 @@
               <select class="form-select" id="mx_piece"></select>
             </div>
             <div class="col-md-4">
-              <label class="form-label small fw-bold">Fecha</label>
+              <label class="form-label small fw-bold">Fecha (date)</label>
               <input type="date" class="form-control" id="mx_date">
             </div>
 
@@ -543,56 +516,57 @@
 
             <div class="col-6 col-md-4 text-center">
               <label class="form-label small text-muted" id="lblM1">Volumen</label>
-              <input class="form-control text-center fw-bold" id="mx_volume" type="number" min="0">
+              <input class="form-control text-center fw-bold" id="mx_volume" type="number" min="0" value="0">
             </div>
             <div class="col-6 col-md-4 text-center">
               <label class="form-label small text-muted" id="lblM2">Interacciones</label>
-              <input class="form-control text-center fw-bold" id="mx_interactions" type="number" min="0">
+              <input class="form-control text-center fw-bold" id="mx_interactions" type="number" min="0" value="0">
             </div>
             <div class="col-12 col-md-4 text-center">
-              <label class="form-label small text-muted">Gasto</label>
-              <input class="form-control text-center fw-bold" id="mx_spend" type="number" min="0" step="0.01">
+              <label class="form-label small text-muted">Spend</label>
+              <input class="form-control text-center fw-bold" id="mx_spend" type="number" min="0" step="0.01" value="0">
             </div>
           </div>
         </div>
         <div class="modal-footer border-0">
           <button class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
-          <button class="btn btn-primary" id="btnSaveMetric">Guardar</button>
+          <button class="btn btn-primary" id="btnSaveMetric">Guardar Métrica</button>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- Lead -->
-  <div class="modal fade" id="leadModal" tabindex="-1" aria-hidden="true">
+  <!-- Lead Modal -->
+  <div class="modal fade" id="leadModal" tabindex="-1">
     <div class="modal-dialog modal-lg modal-dialog-centered">
       <div class="modal-content cardx">
         <div class="modal-header">
-          <h5 class="modal-title fw-bold" id="leadModalTitle">Lead</h5>
-          <button class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+          <h5 class="modal-title fw-bold" id="leadModalTitle">Gestión de Lead</h5>
+          <button class="btn-close" data-bs-dismiss="modal"></button>
         </div>
         <div class="modal-body">
           <input type="hidden" id="ld_id">
           <div class="row g-3">
             <div class="col-md-6">
-              <label class="form-label small fw-bold">Nombre completo *</label>
-              <input class="form-control" id="ld_full_name" placeholder="Nombre y apellido">
+              <label class="form-label small fw-bold">Nombre completo (obligatorio)</label>
+              <input class="form-control" id="ld_full_name">
             </div>
             <div class="col-md-6">
               <label class="form-label small fw-bold">Teléfono</label>
-              <input class="form-control" id="ld_phone" placeholder="+503 ...">
-            </div>
-            <div class="col-md-6">
-              <label class="form-label small fw-bold">Email</label>
-              <input type="email" class="form-control" id="ld_email" placeholder="correo@dominio.com">
-            </div>
-            <div class="col-md-6">
-              <label class="form-label small fw-bold">Origen (detalle)</label>
-              <input class="form-control" id="ld_source_detail" placeholder="Ej: Instagram DM / Lobby / WhatsApp">
+              <input class="form-control" id="ld_phone">
             </div>
 
             <div class="col-md-6">
-              <label class="form-label small fw-bold">Campaña (opcional)</label>
+              <label class="form-label small fw-bold">Email</label>
+              <input class="form-control" id="ld_email" type="email" placeholder="nombre@correo.com">
+            </div>
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">Origen / detalle</label>
+              <input class="form-control" id="ld_source_detail" placeholder="Ej: Instagram DM">
+            </div>
+
+            <div class="col-md-6">
+              <label class="form-label small fw-bold">Campaña</label>
               <select class="form-select" id="ld_campaign"></select>
             </div>
             <div class="col-md-6">
@@ -602,11 +576,11 @@
 
             <div class="col-md-6">
               <label class="form-label small fw-bold">Triage status (ENUM)</label>
-              <input class="form-control" id="ld_triage_status" placeholder="nuevo, contactado... (según enum triage_status)">
+              <select class="form-select" id="ld_triage_status"></select>
             </div>
             <div class="col-md-6">
-              <label class="form-label small fw-bold">Outcome clínico (ENUM)</label>
-              <input class="form-control" id="ld_clinical_outcome" placeholder="pendiente, cita... (según enum clinical_outcome)">
+              <label class="form-label small fw-bold">Clinical outcome (ENUM)</label>
+              <select class="form-select" id="ld_clinical_outcome"></select>
             </div>
 
             <div class="col-12">
@@ -615,16 +589,15 @@
             </div>
 
             <div class="col-md-6">
-              <label class="form-label small fw-bold">Fecha/hora de cita (opcional)</label>
-              <input type="datetime-local" class="form-control" id="ld_appointment_local">
-              <div class="small text-muted mt-1">Se guardará como <span class="mono">timestamptz</span> (hora local convertida).</div>
+              <label class="form-label small fw-bold">Fecha cita (opcional)</label>
+              <input class="form-control" id="ld_appointment_date" type="datetime-local">
             </div>
             <div class="col-md-3">
               <label class="form-label small fw-bold">Ticket value</label>
-              <input type="number" min="0" step="0.01" class="form-control" id="ld_ticket_value" placeholder="0.00">
+              <input class="form-control" id="ld_ticket_value" type="number" step="0.01" value="0">
             </div>
             <div class="col-md-3 d-flex align-items-end">
-              <div class="form-check mt-2">
+              <div class="form-check">
                 <input class="form-check-input" type="checkbox" id="ld_is_retained">
                 <label class="form-check-label small fw-bold" for="ld_is_retained">Retenido</label>
               </div>
@@ -633,7 +606,7 @@
         </div>
         <div class="modal-footer border-0">
           <button class="btn btn-light" data-bs-dismiss="modal">Cancelar</button>
-          <button class="btn btn-primary" id="btnSaveLead">Guardar</button>
+          <button class="btn btn-primary" id="btnSaveLead">Guardar Lead</button>
         </div>
       </div>
     </div>
@@ -641,8 +614,8 @@
 
   <div class="loading" id="loading">
     <div class="box">
-      <div class="spinner-border text-primary" role="status" aria-label="Cargando"></div>
-      <div class="fw-bold">Procesando…</div>
+      <div class="spinner-border text-primary" role="status"></div>
+      <div class="fw-bold">Procesando...</div>
     </div>
   </div>
 
@@ -651,673 +624,537 @@
   <script type="module">
     import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-    // ✅ TU PROYECTO (URL confirmada por ti)
+    // === CONFIG SUPABASE (TU PROYECTO) ===
     const SUPABASE_URL = "https://rofwgcrsfrovspiholbo.supabase.co";
-    // ✅ TU KEY (la que me diste)
     const SUPABASE_ANON_KEY = "sb_publishable_M7gyUpsbCPRopdrmDjEeLA_SHXlnP-C";
-
     const supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // ✅ MAP 100% alineado a tu esquema real (según lo que pegaste)
+    // === MAP alineado a tu esquema real ===
     const MAP = {
-      campaigns: {
-        table: "campaigns",
-        id: "id",
-        name: "name",
-        bimester: "bimester",
-        start: "start_date",
-        end: "end_date",
-        objective: "objective",
-        anchor_event: "anchor_event",
-        lead_magnet: "lead_magnet",
-        budget_planned: "budget_planned",
-        status: "status",
-        created_at: "created_at",
-        updated_at: "updated_at"
-      },
-      channels: {
-        table: "channels",
-        id: "id",
-        name: "name",
-        metric1: "metric_label_1",
-        metric2: "metric_label_2",
-        created_at: "created_at"
-      },
-      pieces: {
-        table: "pieces",
-        id: "id",
-        campaign_id: "campaign_id",
-        channel_id: "channel_id",
-        name: "name",
-        format: "format",
-        pillar: "pillar",
-        hook_copy: "hook_copy",
-        visual_style: "visual_style",
-        cta_destination: "cta_destination",
-        ad_id: "ad_id",
-        status: "status",
-        created_at: "created_at",
-        updated_at: "updated_at"
-      },
-      metrics: {
-        table: "piece_metrics",
-        id: "id",
-        piece_id: "piece_id",
-        date: "date",
-        volume: "volume",
-        interactions: "interactions",
-        spend: "spend",
-        created_at: "created_at"
-      },
-      leads: {
-        table: "leads",
-        id: "id",
-        created_at: "created_at",
-        full_name: "full_name",
-        phone: "phone",
-        email: "email",
-        source_detail: "source_detail",
-        campaign_id: "campaign_id",
-        piece_id: "piece_id",
-        triage_status: "triage_status",
-        triage_notes: "triage_notes",
-        clinical_outcome: "clinical_outcome",
-        appointment_date: "appointment_date",
-        ticket_value: "ticket_value",
-        is_retained: "is_retained",
-        updated_at: "updated_at"
-      }
+      campaigns: { table:'campaigns', id:'id', name:'name', bimester:'bimester', start:'start_date', end:'end_date', objective:'objective', status:'status', created_at:'created_at', updated_at:'updated_at' },
+      channels:  { table:'channels', id:'id', name:'name', metric1:'metric_label_1', metric2:'metric_label_2' },
+      pieces:    { table:'pieces', id:'id', campaign_id:'campaign_id', channel_id:'channel_id', name:'name', format:'format', pillar:'pillar', hook_copy:'hook_copy', visual_style:'visual_style', cta_destination:'cta_destination', ad_id:'ad_id', status:'status', created_at:'created_at', updated_at:'updated_at' },
+      metrics:   { table:'piece_metrics', id:'id', piece_id:'piece_id', date:'date', volume:'volume', interactions:'interactions', spend:'spend', created_at:'created_at' },
+      leads:     { table:'leads', id:'id', created_at:'created_at', full_name:'full_name', phone:'phone', email:'email', source_detail:'source_detail', campaign_id:'campaign_id', piece_id:'piece_id', triage_status:'triage_status', triage_notes:'triage_notes', clinical_outcome:'clinical_outcome', appointment_date:'appointment_date', ticket_value:'ticket_value', is_retained:'is_retained', updated_at:'updated_at' },
+      profiles:  { table:'profiles', id:'id', email:'email', role:'role', full_name:'full_name' }
     };
 
+    // === UI helpers ===
     const el = (id) => document.getElementById(id);
-    const showLoading = (v) => el("loading").style.display = v ? "flex" : "none";
-    const esc = (s) => String(s ?? "").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
+    const showLoading = (v) => el('loading').style.display = v ? 'flex' : 'none';
+    const esc = (s) => String(s ?? '').replaceAll('&','&amp;').replaceAll('<','&lt;').replaceAll('>','&gt;').replaceAll('"','&quot;').replaceAll("'","&#039;");
+    const fmtDate = (v) => v ? String(v).slice(0,10) : '';
+    const fmtDT = (v) => { if(!v) return ''; try{ const d=new Date(v); return d.toISOString().slice(0,16).replace('T',' '); }catch(_){ return String(v);} };
+    const isAdmin = () => String(state.profile?.[MAP.profiles.role] || '').toLowerCase() === 'admin';
 
     function showAlert(type, title, message, ttlMs = 4500){
-      const stack = el("alertStack");
-      const card = document.createElement("div");
-      card.className = `alert-card ${type || "info"}`;
-      const icon =
-        type === "success" ? "bi-check-circle-fill text-success" :
-        type === "warning" ? "bi-exclamation-triangle-fill text-warning" :
-        type === "danger"  ? "bi-x-circle-fill text-danger" :
-                             "bi-info-circle-fill text-primary";
-
+      const stack = el('alertStack');
+      const card = document.createElement('div');
+      card.className = `alert-card ${type || 'info'}`;
+      const icon = type === 'success' ? 'bi-check-circle-fill text-success' :
+                   type === 'warning' ? 'bi-exclamation-triangle-fill text-warning' :
+                   type === 'danger'  ? 'bi-x-circle-fill text-danger' : 'bi-info-circle-fill text-primary';
       card.innerHTML = `
         <i class="bi ${icon} fs-5 mt-1"></i>
         <div class="flex-grow-1">
-          <div class="fw-bold text-dark">${esc(title || "Aviso")}</div>
-          <div class="small text-secondary">${esc(message || "")}</div>
+          <div class="fw-bold text-dark">${esc(title || 'Aviso')}</div>
+          <div class="small text-secondary">${esc(message || '')}</div>
         </div>
-        <button class="btn-close ms-2" aria-label="Cerrar" style="font-size:.7em"></button>
+        <button class="btn-close ms-2" aria-label="cerrar" style="font-size:.7em"></button>
       `;
       stack.appendChild(card);
-
-      const close = () => { card.style.opacity="0"; setTimeout(()=>card.remove(),220); };
-      card.querySelector(".btn-close").addEventListener("click", close);
+      const close = () => { card.style.opacity='0'; setTimeout(()=>card.remove(),300); };
+      card.querySelector('.btn-close').addEventListener('click', close);
       if (ttlMs) setTimeout(() => { if(card.isConnected) close(); }, ttlMs);
     }
 
     function humanize(err){
-      const msg = (err?.message || err?.error_description || String(err || "")).trim();
-      const low = msg.toLowerCase();
-      const code = err?.code;
-
-      // Auth
-      if (low.includes("invalid login credentials")) return "Correo o contraseña incorrectos.";
-      if (low.includes("email not confirmed")) return "Tu correo aún no está confirmado.";
-
-      // Postgres codes (cuando supabase-js lo expone)
-      if (code === "23505") return "Registro duplicado (clave única).";
-      if (code === "23503") return "Referencia inválida (FK): revisa campaña/canal/pieza.";
-      if (code === "22P02") return "Formato inválido (UUID/fecha/número).";
-      if (code === "23502") return "Faltan campos obligatorios (NOT NULL).";
-
-      // RLS / permisos
-      if (low.includes("row level security") || low.includes("rls") || low.includes("permission denied")) {
-        return "Permiso denegado por RLS. Tu usuario debe tener rol admin/editor según las políticas.";
-      }
-
-      // ENUM
-      if (low.includes("invalid input value for enum")) {
-        return "Valor inválido para ENUM. Debe coincidir con tus enums (bimester/format/triage/outcome).";
-      }
-
-      return msg || "Error desconocido.";
+      const raw = (err?.message || err?.error_description || String(err || ''));
+      const low = raw.toLowerCase();
+      if (low.includes('invalid login credentials')) return 'Correo o contraseña incorrectos.';
+      if (low.includes('email not confirmed')) return 'Tu correo aún no está confirmado.';
+      if (low.includes('row-level security')) return 'No tienes permisos (RLS). Revisa rol/policies.';
+      if (low.includes('invalid input value for enum')) return 'Valor inválido para ENUM. Ajusta los valores del select (bimestre/formato/status).';
+      if (low.includes('null value in column') || low.includes('violates not-null')) return 'Faltan datos obligatorios (por ejemplo fechas).';
+      return raw;
     }
 
-    // Helpers fecha local ↔ timestamptz
-    function localDateTimeToISO(value){ // value: "YYYY-MM-DDTHH:mm"
-      if (!value) return null;
-      const d = new Date(value);
-      // Date(value) interpreta local; toISOString convierte a UTC para timestamptz: OK
-      return d.toISOString();
-    }
-    function isoToLocalInput(iso){
-      if(!iso) return "";
-      const d = new Date(iso);
-      const pad = (n)=> String(n).padStart(2,"0");
-      return `${d.getFullYear()}-${pad(d.getMonth()+1)}-${pad(d.getDate())}T${pad(d.getHours())}:${pad(d.getMinutes())}`;
+    function statusBadge(v){
+      const s = String(v||'').toLowerCase();
+      let cls = 'st-neutral';
+      if (['activa','activo','publicado','cerrada','cerrado','retained','retenido','convertido'].some(x=>s.includes(x))) cls='st-ok';
+      if (['pendiente','nuevo','idea','en_produccion','en seguimiento'].some(x=>s.includes(x))) cls='st-warn';
+      if (['descartado','cancelado','no show','fallido'].some(x=>s.includes(x))) cls='st-bad';
+      return `<span class="badge-status ${cls}">${esc(v||'—')}</span>`;
     }
 
-    function statusBadge(s){
-      const v = String(s || "").toLowerCase();
-      let cls = "st-gray";
-      if (v.includes("plan") || v.includes("idea")) cls = "st-gray";
-      if (v.includes("act") || v.includes("prog")) cls = "st-blue";
-      if (v.includes("pub") || v.includes("ok") || v.includes("reten")) cls = "st-green";
-      if (v.includes("paus")) cls = "st-amber";
-      if (v.includes("cerr") || v.includes("desc")) cls = "st-red";
-      return `<span class="badge-status ${cls}">${esc(s || "-")}</span>`;
-    }
-
+    // === State ===
     const state = {
-      user: null,
-      profile: null,
-      campaigns: [],
-      channels: [],
-      pieces: [],
-      metrics: [],
-      leads: [],
-      ready: { campaigns:false, channels:false, pieces:false, metrics:false, leads:false }
+      user:null,
+      profile:null,
+      campaigns:[],
+      channels:[],
+      pieces:[],
+      metrics:[],
+      leads:[]
     };
 
-    function campaignLabel(c){
-      const b = c?.[MAP.campaigns.bimester] ?? "";
-      const n = c?.[MAP.campaigns.name] ?? "";
-      return `${b} · ${n}`.trim();
-    }
-    function pieceLabel(p){
-      const n = p?.[MAP.pieces.name] ?? "";
-      const h = p?.[MAP.pieces.hook_copy] ?? "";
-      return (n ? n : h).slice(0, 60);
-    }
-    function channelLabel(ch){
-      return ch?.[MAP.channels.name] ?? "-";
-    }
-
-    async function ensureReady(){
-      // Orden: campaigns + channels + pieces (para selects), luego metrics/leads
-      if(!state.ready.campaigns) await loadCampaigns();
-      if(!state.ready.channels) await loadChannels();
-      if(!state.ready.pieces) await loadPieces();
-    }
-
-    function setWhoami(){
-      el("whoami").textContent = state.profile?.full_name || state.user?.email || "Usuario";
-    }
-
+    // === Auth/session ===
     async function handleSession(session){
       state.user = session?.user || null;
-
-      if(!state.user){
-        el("loginView").classList.remove("hidden");
-        el("appView").classList.add("hidden");
-        el("btnLogout").disabled = true;
-        el("whoami").textContent = "No autenticado";
+      if (!state.user){
+        el('loginView').classList.remove('hidden');
+        el('appView').classList.add('hidden');
+        el('whoami').textContent = '...';
+        el('btnLogout').disabled = true;
         return;
       }
 
+      // profile
       try{
-        const { data, error } = await supabase.from("profiles").select("*").eq("id", state.user.id).maybeSingle();
+        const { data: prof, error } = await supabase
+          .from(MAP.profiles.table)
+          .select('*')
+          .eq(MAP.profiles.id, state.user.id)
+          .maybeSingle();
         if (error) throw error;
-        state.profile = data || null;
-      }catch(_){
+        state.profile = prof || null;
+      }catch(err){
         state.profile = null;
+        showAlert('warning','Perfil', 'No se pudo cargar tu perfil (profiles).');
       }
 
-      el("loginView").classList.add("hidden");
-      el("appView").classList.remove("hidden");
-      el("btnLogout").disabled = false;
-      setWhoami();
+      el('loginView').classList.add('hidden');
+      el('appView').classList.remove('hidden');
+      el('whoami').textContent = state.profile?.full_name || state.user.email || 'Usuario';
+      el('btnLogout').disabled = false;
 
-      // Carga inicial
       await refreshAll();
     }
 
-    function parseHashParams(){
-      // Supabase recovery usa fragment (#) con access_token / type=recovery
-      const hash = window.location.hash || "";
-      const clean = hash.startsWith("#") ? hash.slice(1) : hash;
-      return new URLSearchParams(clean);
-    }
-    function clearHash(){
-      history.replaceState(null, document.title, window.location.pathname + window.location.search);
-    }
-
     async function init(){
-      // Si viene en modo recovery, supabase emitirá PASSWORD_RECOVERY en onAuthStateChange
       const { data } = await supabase.auth.getSession();
       await handleSession(data.session);
-
       supabase.auth.onAuthStateChange(async (event, session) => {
-        if (event === "PASSWORD_RECOVERY") {
-          // abre modal de nueva contraseña
-          new bootstrap.Modal(el("setNewPassModal")).show();
-        }
+        if (event === 'PASSWORD_RECOVERY') openSetNewPasswordModal();
         await handleSession(session);
       });
-
-      // fallback: si hash indica recovery, muestra modal
-      const hp = parseHashParams();
-      if (hp.get("type") === "recovery") {
-        new bootstrap.Modal(el("setNewPassModal")).show();
-      }
     }
 
-    // ---------------- AUTH UI ----------------
-    el("btnSignIn").addEventListener("click", async () => {
-      const email = el("loginEmail").value.trim();
-      const password = el("loginPass").value;
-      if(!email || !password) return showAlert("warning","Faltan datos","Ingresa correo y contraseña.");
+    function openSetNewPasswordModal(){
+      // limpia
+      el('np1').value=''; el('np2').value='';
+      new bootstrap.Modal(el('setNewPassModal'), {backdrop:'static'}).show();
+    }
+
+    // === Login ===
+    el('btnSignIn').addEventListener('click', async ()=>{
+      const email = el('loginEmail').value.trim();
+      const password = el('loginPass').value;
+      if (!email || !password) return showAlert('warning','Faltan datos','Ingresa tu correo y contraseña.');
       showLoading(true);
       try{
         const { error } = await supabase.auth.signInWithPassword({ email, password });
-        if(error) throw error;
-        showAlert("success","Bienvenido","Sesión iniciada.");
+        if (error) throw error;
       }catch(err){
-        showAlert("danger","Error", humanize(err));
+        showAlert('danger','Error', humanize(err));
       }finally{
         showLoading(false);
       }
     });
 
-    el("btnLogout").addEventListener("click", async () => {
+    el('btnLogout').addEventListener('click', async () => {
       showLoading(true);
-      try{
-        const { error } = await supabase.auth.signOut();
-        if(error) throw error;
-        // UI se ajusta por handleSession al no haber sesión
-        await handleSession(null);
-      }catch(err){
-        showAlert("danger","Error", humanize(err));
-      }finally{
-        showLoading(false);
-      }
+      try{ await supabase.auth.signOut(); }
+      finally{ showLoading(false); window.location.reload(); }
     });
 
-    el("btnForgotPass").addEventListener("click", () => new bootstrap.Modal(el("forgotPassModal")).show());
+    el('btnForgotPass').addEventListener('click', () => new bootstrap.Modal(el('forgotPassModal')).show());
 
-    el("btnSendResetEmail").addEventListener("click", async () => {
-      const email = el("fp_email").value.trim();
-      if(!email) return showAlert("warning","Email requerido","Ingresa tu correo.");
+    el('btnSendResetEmail').addEventListener('click', async ()=>{
+      const email = el('fp_email').value.trim();
+      if (!email) return showAlert('warning','Email requerido','Ingresa tu correo.');
       showLoading(true);
       try{
-        // En GitHub Pages, origin suele ser https://usuario.github.io
         const redirectTo = window.location.origin + window.location.pathname;
         const { error } = await supabase.auth.resetPasswordForEmail(email, { redirectTo });
         if(error) throw error;
-        bootstrap.Modal.getInstance(el("forgotPassModal"))?.hide();
-        showAlert("success","Enviado","Revisa tu correo (incluye spam).");
+        bootstrap.Modal.getInstance(el('forgotPassModal'))?.hide();
+        showAlert('success','Enviado','Revisa tu bandeja de entrada.');
       }catch(err){
-        showAlert("danger","Error", humanize(err));
+        showAlert('danger','Error', humanize(err));
       }finally{
         showLoading(false);
       }
     });
 
-    el("btnSetNewPass").addEventListener("click", async () => {
-      const p1 = el("np1").value;
-      const p2 = el("np2").value;
-      if(!p1 || p1.length < 6) return showAlert("warning","Seguridad","Mínimo 6 caracteres.");
-      if(p1 !== p2) return showAlert("warning","Validación","Las contraseñas no coinciden.");
-
+    el('btnSetNewPass').addEventListener('click', async ()=>{
+      const p1 = el('np1').value; const p2 = el('np2').value;
+      if (!p1 || p1.length < 6) return showAlert('warning','Seguridad','Mínimo 6 caracteres.');
+      if (p1 !== p2) return showAlert('warning','Error','Las contraseñas no coinciden.');
       showLoading(true);
       try{
         const { error } = await supabase.auth.updateUser({ password: p1 });
-        if(error) throw error;
-
-        // Cierra modal y limpia hash para que no se quede “pegado”
-        bootstrap.Modal.getInstance(el("setNewPassModal"))?.hide();
-        clearHash();
-
-        showAlert("success","Listo","Contraseña actualizada. Inicia sesión.");
+        if (error) throw error;
+        bootstrap.Modal.getInstance(el('setNewPassModal'))?.hide();
+        showAlert('success','Listo','Contraseña actualizada.');
       }catch(err){
-        showAlert("danger","Error", humanize(err));
+        showAlert('danger','Error', humanize(err));
       }finally{
         showLoading(false);
       }
     });
 
-    el("btnCancelRecovery").addEventListener("click", async () => {
-      clearHash();
-      bootstrap.Modal.getInstance(el("setNewPassModal"))?.hide();
-      showAlert("info","Listo","Saliste del flujo de recuperación.");
-    });
-
-    // ---------------- DATA LOAD ----------------
+    // === Data load ===
     async function refreshAll(){
       showLoading(true);
       try{
-        state.ready = { campaigns:false, channels:false, pieces:false, metrics:false, leads:false };
-        await loadCampaigns();
-        await loadChannels();
-        await loadPieces();
-        await loadMetrics();
-        await loadLeads();
-        bindSelects();
+        await Promise.all([loadCampaigns(), loadChannels(), loadPieces(), loadMetrics(), loadLeads()]);
+        rebuildAllSelects();
+        bindFilters();
         applyPiecesFilters();
         applyLeadsFilters();
-        updateMetricLabelsFromSelectedPiece();
+        applyMetricsFilters();
       }catch(err){
-        showAlert("danger","Error", humanize(err));
+        showAlert('danger','Error de conexión', humanize(err));
       }finally{
         showLoading(false);
       }
     }
 
     async function loadCampaigns(){
-      try{
-        const { data, error } = await supabase.from(MAP.campaigns.table).select("*").order(MAP.campaigns.start, { ascending:false });
-        if(error) throw error;
-        state.campaigns = data || [];
-        state.ready.campaigns = true;
-        renderCampaigns(state.campaigns);
-      }catch(err){
-        state.campaigns = [];
-        renderCampaigns([]);
-        throw err;
-      }
+      const { data, error } = await supabase
+        .from(MAP.campaigns.table)
+        .select('*')
+        .order(MAP.campaigns.created_at, { ascending:false });
+      if (error) throw error;
+      state.campaigns = data || [];
+      renderCampaigns(state.campaigns);
     }
 
     async function loadChannels(){
-      try{
-        const { data, error } = await supabase.from(MAP.channels.table).select("*").order(MAP.channels.id, { ascending:true });
-        if(error) throw error;
-        state.channels = data || [];
-        state.ready.channels = true;
-      }catch(err){
-        state.channels = [];
-        state.ready.channels = true; // evita bucles; solo sin canales
-        // no lanzamos error fatal: sin canales se puede navegar, pero piezas/métricas se limitan
-      }
+      const { data, error } = await supabase
+        .from(MAP.channels.table)
+        .select('*')
+        .order(MAP.channels.id, { ascending:true });
+      if (error) throw error;
+      state.channels = data || [];
     }
 
     async function loadPieces(){
-      try{
-        const { data, error } = await supabase.from(MAP.pieces.table).select("*").order(MAP.pieces.created_at, { ascending:false });
-        if(error) throw error;
-        state.pieces = data || [];
-        state.ready.pieces = true;
-        renderPieces(state.pieces); // luego filtramos en UI
-      }catch(err){
-        state.pieces = [];
-        renderPieces([]);
-        throw err;
-      }
+      const { data, error } = await supabase
+        .from(MAP.pieces.table)
+        .select('*')
+        .order(MAP.pieces.created_at, { ascending:false });
+      if (error) throw error;
+      state.pieces = data || [];
+      renderPieces(state.pieces);
     }
 
     async function loadMetrics(){
-      try{
-        // carga general (luego puedes filtrar por rango/pieza con btnReloadMetrics)
-        const { data, error } = await supabase.from(MAP.metrics.table).select("*").order(MAP.metrics.date, { ascending:false }).limit(300);
-        if(error) throw error;
-        state.metrics = data || [];
-        state.ready.metrics = true;
-        renderMetrics(state.metrics);
-      }catch(err){
-        state.metrics = [];
-        renderMetrics([]);
-        throw err;
-      }
+      const { data, error } = await supabase
+        .from(MAP.metrics.table)
+        .select('*')
+        .order(MAP.metrics.date, { ascending:false });
+      if (error) throw error;
+      state.metrics = data || [];
+      renderMetrics(state.metrics);
     }
 
     async function loadLeads(){
-      try{
-        const { data, error } = await supabase.from(MAP.leads.table).select("*").order(MAP.leads.created_at, { ascending:false }).limit(500);
-        if(error) throw error;
-        state.leads = data || [];
-        state.ready.leads = true;
-        renderLeads(state.leads);
-      }catch(err){
-        state.leads = [];
-        renderLeads([]);
-        throw err;
-      }
+      const { data, error } = await supabase
+        .from(MAP.leads.table)
+        .select('*')
+        .order(MAP.leads.created_at, { ascending:false });
+      if (error) throw error;
+      state.leads = data || [];
+      renderLeads(state.leads);
     }
 
-    // ---------------- RENDER ----------------
+    // === Render ===
     function renderCampaigns(rows){
-      const tb = el("tblCampaigns").querySelector("tbody");
-      tb.innerHTML = rows.map(r => `
-        <tr>
-          <td><span class="badge bg-light text-dark border fw-semibold">${esc(r[MAP.campaigns.bimester])}</span></td>
-          <td class="fw-bold text-primary">${esc(r[MAP.campaigns.name])}</td>
-          <td class="mini truncate-2" style="max-width:260px">${esc(r[MAP.campaigns.objective] || "")}</td>
-          <td class="small">${esc(r[MAP.campaigns.start])}</td>
-          <td class="small">${esc(r[MAP.campaigns.end])}</td>
-          <td>${statusBadge(r[MAP.campaigns.status])}</td>
-          <td class="text-end">
-            <button class="btn btn-light icon-btn" title="Editar" aria-label="Editar campaña" onclick="editCamp('${r[MAP.campaigns.id]}')">
-              <i class="bi bi-pencil-fill text-muted"></i>
-            </button>
-            <button class="btn btn-light icon-btn ms-1" title="Borrar" aria-label="Borrar campaña" onclick="delCamp('${r[MAP.campaigns.id]}')">
-              <i class="bi bi-trash-fill text-danger opacity-75"></i>
-            </button>
-          </td>
-        </tr>
-      `).join("");
+      const tbody = el('tblCampaigns').querySelector('tbody');
+      tbody.innerHTML = rows.map(r => {
+        const canDelete = isAdmin();
+        const actions = `
+          <button class="btn btn-sm btn-white border" title="Editar" onclick="editCamp('${r[MAP.campaigns.id]}')">
+            <i class="bi bi-pencil-fill text-muted"></i>
+          </button>
+          ${canDelete ? `
+            <button class="btn btn-sm btn-white border ms-1" title="Eliminar" onclick="delCamp('${r[MAP.campaigns.id]}')">
+              <i class="bi bi-trash-fill text-danger opacity-50"></i>
+            </button>` : ``}
+        `;
+        return `
+          <tr>
+            <td class="fw-bold text-primary">${esc(r[MAP.campaigns.name])}</td>
+            <td><span class="badge bg-light text-dark border"> ${esc(r[MAP.campaigns.bimester])} </span></td>
+            <td class="small">${esc(fmtDate(r[MAP.campaigns.start]))} → ${esc(fmtDate(r[MAP.campaigns.end]))}</td>
+            <td class="text-muted small text-truncate" style="max-width:260px;">${esc(r[MAP.campaigns.objective]||'')}</td>
+            <td>${statusBadge(r[MAP.campaigns.status])}</td>
+            <td class="text-end">${actions}</td>
+          </tr>
+        `;
+      }).join('');
     }
 
     function renderPieces(rows){
-      const tb = el("tblPieces").querySelector("tbody");
-      tb.innerHTML = rows.map(r => {
-        const camp = state.campaigns.find(c => c[MAP.campaigns.id] === r[MAP.pieces.campaign_id]);
-        const ch = state.channels.find(x => String(x[MAP.channels.id]) === String(r[MAP.pieces.channel_id]));
+      const tbody = el('tblPieces').querySelector('tbody');
+      tbody.innerHTML = rows.map(r => {
+        const c = state.campaigns.find(x => x[MAP.campaigns.id] == r[MAP.pieces.campaign_id]);
+        const ch = state.channels.find(x => x[MAP.channels.id] == r[MAP.pieces.channel_id]);
+        const canDelete = isAdmin();
+        const actions = `
+          <button class="btn btn-sm btn-white border" title="Editar" onclick="editPiece('${r[MAP.pieces.id]}')">
+            <i class="bi bi-pencil-fill text-muted"></i>
+          </button>
+          ${canDelete ? `
+            <button class="btn btn-sm btn-white border ms-1" title="Eliminar" onclick="delPiece('${r[MAP.pieces.id]}')">
+              <i class="bi bi-trash-fill text-danger opacity-50"></i>
+            </button>` : ``}
+        `;
         return `
           <tr>
-            <td class="fw-bold">${esc(r[MAP.pieces.name])}</td>
-            <td class="mini">${esc(camp ? camp[MAP.campaigns.name] : "—")}</td>
-            <td><span class="badge bg-light text-dark border">${esc(ch ? ch[MAP.channels.name] : "—")}</span></td>
-            <td><span class="badge bg-light text-dark border">${esc(r[MAP.pieces.format])}</span></td>
-            <td>${statusBadge(r[MAP.pieces.status])}</td>
-            <td class="truncate-2 small" style="max-width:300px" title="${esc(r[MAP.pieces.hook_copy] || "")}">${esc(r[MAP.pieces.hook_copy] || "")}</td>
-            <td class="text-end">
-              <button class="btn btn-light icon-btn" title="Editar" aria-label="Editar pieza" onclick="editPiece('${r[MAP.pieces.id]}')">
-                <i class="bi bi-pencil-fill text-muted"></i>
-              </button>
-              <button class="btn btn-light icon-btn ms-1" title="Borrar" aria-label="Borrar pieza" onclick="delPiece('${r[MAP.pieces.id]}')">
-                <i class="bi bi-trash-fill text-danger opacity-75"></i>
-              </button>
+            <td>
+              <div class="fw-bold">${esc(r[MAP.pieces.name])}</div>
+              <div class="mini truncate-2">${esc(r[MAP.pieces.hook_copy]||'')}</div>
             </td>
+            <td class="small text-muted">${esc(c?.[MAP.campaigns.name] || '—')}</td>
+            <td>${esc(ch?.[MAP.channels.name] || '—')}</td>
+            <td><span class="badge bg-light text-dark border fw-normal">${esc(r[MAP.pieces.format] || '—')}</span></td>
+            <td>${statusBadge(r[MAP.pieces.status])}</td>
+            <td class="text-end">${actions}</td>
           </tr>
         `;
-      }).join("");
+      }).join('');
     }
 
     function renderMetrics(rows){
-      const tb = el("tblMetrics").querySelector("tbody");
-      tb.innerHTML = rows.map(r => {
-        const p = state.pieces.find(x => x[MAP.pieces.id] === r[MAP.metrics.piece_id]);
-        const ch = p ? state.channels.find(x => String(x[MAP.channels.id]) === String(p[MAP.pieces.channel_id])) : null;
-        const m1 = ch?.[MAP.channels.metric1] || "Volumen";
-        const m2 = ch?.[MAP.channels.metric2] || "Interacciones";
+      const tbody = el('tblMetrics').querySelector('tbody');
+      tbody.innerHTML = rows.map(r => {
+        const p = state.pieces.find(x => x[MAP.pieces.id] == r[MAP.metrics.piece_id]);
+        const canEdit = true;
         return `
           <tr>
             <td class="text-start">
-              <div class="fw-bold small">${esc(p ? p[MAP.pieces.name] : "—")}</div>
-              <div class="mini truncate-2">${esc(p ? (p[MAP.pieces.hook_copy] || "") : "")}</div>
+              <div class="small fw-bold">${esc(p?.[MAP.pieces.name] || '—')}</div>
+              <div class="mini text-muted truncate-2">${esc(p?.[MAP.pieces.hook_copy] || '')}</div>
             </td>
-            <td class="mono">${esc(r[MAP.metrics.date])}</td>
+            <td class="mono small">${esc(fmtDate(r[MAP.metrics.date]))}</td>
             <td>${esc(r[MAP.metrics.volume] ?? 0)}</td>
             <td>${esc(r[MAP.metrics.interactions] ?? 0)}</td>
             <td>${esc(r[MAP.metrics.spend] ?? 0)}</td>
             <td class="text-end">
-              <button class="btn btn-light icon-btn" title="Editar" aria-label="Editar métrica" onclick="editMetric('${r[MAP.metrics.id]}')">
-                <i class="bi bi-pencil-fill text-muted"></i>
-              </button>
+              ${canEdit ? `<button class="btn btn-sm btn-white border" title="Editar" onclick="editMetric('${r[MAP.metrics.id]}')"><i class="bi bi-pencil-fill text-muted"></i></button>` : ``}
             </td>
           </tr>
         `;
-      }).join("");
+      }).join('');
     }
 
     function renderLeads(rows){
-      const tb = el("tblLeads").querySelector("tbody");
-      tb.innerHTML = rows.map(r => `
-        <tr>
-          <td class="small text-muted">${esc(r[MAP.leads.created_at] ? new Date(r[MAP.leads.created_at]).toLocaleString() : "")}</td>
-          <td class="fw-bold text-primary">${esc(r[MAP.leads.full_name])}</td>
-          <td>${esc(r[MAP.leads.phone] || "")}</td>
-          <td class="small">${esc(r[MAP.leads.email] || "")}</td>
-          <td class="small"><span class="badge bg-light text-dark border">${esc(r[MAP.leads.source_detail] || "—")}</span></td>
-          <td>${statusBadge(r[MAP.leads.triage_status])}</td>
-          <td>${statusBadge(r[MAP.leads.clinical_outcome])}</td>
-          <td class="text-end">
-            <button class="btn btn-light icon-btn" title="Editar" aria-label="Editar lead" onclick="editLead('${r[MAP.leads.id]}')">
-              <i class="bi bi-pencil-fill text-muted"></i>
-            </button>
-            <button class="btn btn-light icon-btn ms-1" title="Borrar" aria-label="Borrar lead" onclick="delLead('${r[MAP.leads.id]}')">
-              <i class="bi bi-trash-fill text-danger opacity-75"></i>
-            </button>
-          </td>
-        </tr>
-      `).join("");
+      const tbody = el('tblLeads').querySelector('tbody');
+      tbody.innerHTML = rows.map(r => {
+        const canDelete = isAdmin();
+        const actions = `
+          <button class="btn btn-sm btn-white border" title="Editar" onclick="editLead('${r[MAP.leads.id]}')">
+            <i class="bi bi-pencil-fill text-muted"></i>
+          </button>
+          ${canDelete ? `
+            <button class="btn btn-sm btn-white border ms-1" title="Eliminar" onclick="delLead('${r[MAP.leads.id]}')">
+              <i class="bi bi-trash-fill text-danger opacity-50"></i>
+            </button>` : ``}
+        `;
+        const contact = `${esc(r[MAP.leads.phone]||'—')}<div class="mini">${esc(r[MAP.leads.email]||'')}</div>`;
+        return `
+          <tr>
+            <td class="small text-muted">${esc(fmtDT(r[MAP.leads.created_at]))}</td>
+            <td class="fw-bold text-primary">${esc(r[MAP.leads.full_name])}</td>
+            <td>${contact}</td>
+            <td><span class="badge bg-light text-dark border">${esc(r[MAP.leads.source_detail]||'—')}</span></td>
+            <td>${statusBadge(r[MAP.leads.triage_status])}</td>
+            <td>${statusBadge(r[MAP.leads.clinical_outcome])}</td>
+            <td class="text-end">${actions}</td>
+          </tr>
+        `;
+      }).join('');
     }
 
-    // ---------------- SELECTS / FILTERS ----------------
-    function bindSelects(){
-      // Campaign selects
-      const campAll = `<option value="">Todas</option>` + state.campaigns.map(c => `<option value="${c[MAP.campaigns.id]}">${esc(campaignLabel(c))}</option>`).join("");
-      const campPick = `<option value="">(Ninguna)</option>` + state.campaigns.map(c => `<option value="${c[MAP.campaigns.id]}">${esc(campaignLabel(c))}</option>`).join("");
-
-      el("fCamp").innerHTML = campAll;
-      el("p_campaign").innerHTML = campPick;
-      el("ld_campaign").innerHTML = campPick;
-      el("lCamp").innerHTML = campAll;
-
-      // Channels selects
-      const chAll = `<option value="">Todos</option>` + state.channels.map(ch => `<option value="${ch[MAP.channels.id]}">${esc(channelLabel(ch))}</option>`).join("");
-      const chPick = `<option value="">(Seleccionar)</option>` + state.channels.map(ch => `<option value="${ch[MAP.channels.id]}">${esc(channelLabel(ch))}</option>`).join("");
-      el("fChannel").innerHTML = chAll;
-      el("p_channel").innerHTML = chPick;
-
-      // Pieces selects
-      const piecePick = `<option value="">(Seleccionar)</option>` + state.pieces.map(p => `<option value="${p[MAP.pieces.id]}">${esc(pieceLabel(p))}</option>`).join("");
-      const pieceAll = `<option value="">Todas</option>` + state.pieces.map(p => `<option value="${p[MAP.pieces.id]}">${esc(pieceLabel(p))}</option>`).join("");
-
-      el("mPiece").innerHTML = piecePick;
-      el("mx_piece").innerHTML = piecePick;
-      el("ld_piece").innerHTML = piecePick;
-      el("lPiece").innerHTML = pieceAll;
+    // === Select builders (sin adivinar: usa lo existente + fallback) ===
+    function distinct(list){
+      return Array.from(new Set((list||[]).filter(v=>v!==null && v!==undefined && String(v).trim()!=='' ).map(v=>String(v))));
     }
 
+    function rebuildAllSelects(){
+      // Campaign options
+      const campAll = `<option value="">Todas</option>` + state.campaigns.map(c=>`<option value="${c[MAP.campaigns.id]}">${esc(c[MAP.campaigns.name])}</option>`).join('');
+      el('fCamp').innerHTML = campAll;
+      el('lCamp').innerHTML = campAll;
+
+      const campPick = `<option value="">(Seleccionar)</option>` + state.campaigns.map(c=>`<option value="${c[MAP.campaigns.id]}">${esc(c[MAP.campaigns.name])}</option>`).join('');
+      el('p_campaign').innerHTML = campPick;
+      el('ld_campaign').innerHTML = campPick;
+
+      // Channels
+      const chAll = `<option value="">Todos</option>` + state.channels.map(ch=>`<option value="${ch[MAP.channels.id]}">${esc(ch[MAP.channels.name])}</option>`).join('');
+      el('fChannel').innerHTML = chAll;
+
+      const chPick = `<option value="">(Seleccionar)</option>` + state.channels.map(ch=>`<option value="${ch[MAP.channels.id]}">${esc(ch[MAP.channels.name])}</option>`).join('');
+      el('p_channel_id').innerHTML = chPick;
+
+      // Formats from DB + fallback
+      const formatsDb = distinct(state.pieces.map(p=>p[MAP.pieces.format]));
+      const formatsFallback = ['reel','post','story','carousel','video','flyer','blog','podcast'];
+      const formats = distinct([...formatsDb, ...formatsFallback]);
+
+      el('fFormat').innerHTML = `<option value="">Todos</option>` + formats.map(v=>`<option value="${esc(v)}">${esc(v)}</option>`).join('');
+      el('p_format').innerHTML = `<option value="">(Seleccionar)</option>` + formats.map(v=>`<option value="${esc(v)}">${esc(v)}</option>`).join('');
+
+      // Bimesters from DB + fallback
+      const bDb = distinct(state.campaigns.map(c=>c[MAP.campaigns.bimester]));
+      const bFallback = ['b1','b2','b3','b4','b5','b6','1','2','3','4','5','6','B1','B2','B3','B4','B5','B6'];
+      const bims = distinct([...bDb, ...bFallback]);
+      el('c_bim').innerHTML = bims.map(v=>`<option value="${esc(v)}">${esc(v)}</option>`).join('');
+
+      // Pieces options
+      const piecePick = `<option value="">(Seleccionar)</option>` + state.pieces.map(p=>`<option value="${p[MAP.pieces.id]}">${esc(p[MAP.pieces.name])}</option>`).join('');
+      el('mPiece').innerHTML = piecePick;
+      el('mx_piece').innerHTML = piecePick;
+      el('ld_piece').innerHTML = piecePick;
+      el('lPiece').innerHTML = piecePick;
+
+      // Lead enums (usa los existentes + fallback)
+      const triageDb = distinct(state.leads.map(l=>l[MAP.leads.triage_status]));
+      const triageFallback = ['nuevo','contactado','en_seguimiento','cerrado','descartado'];
+      const triage = distinct([...triageDb, ...triageFallback]);
+      el('ld_triage_status').innerHTML = triage.map(v=>`<option value="${esc(v)}">${esc(v)}</option>`).join('');
+
+      const outDb = distinct(state.leads.map(l=>l[MAP.leads.clinical_outcome]));
+      const outFallback = ['pendiente','cita','showup','no_show','convertido','perdido'];
+      const out = distinct([...outDb, ...outFallback]);
+      el('ld_clinical_outcome').innerHTML = out.map(v=>`<option value="${esc(v)}">${esc(v)}</option>`).join('');
+    }
+
+    // === Filters ===
     function applyPiecesFilters(){
-      const camp = el("fCamp").value;
-      const ch = el("fChannel").value;
-      const st = (el("fPieceStatus").value || "").trim().toLowerCase();
-      const q = (el("fQ").value || "").trim().toLowerCase();
+      const camp = el('fCamp').value;
+      const ch = el('fChannel').value;
+      const fmt = el('fFormat').value;
+      const q = el('fQ').value.trim().toLowerCase();
 
       const filtered = state.pieces.filter(r => {
-        if (camp && String(r[MAP.pieces.campaign_id] || "") !== String(camp)) return false;
-        if (ch && String(r[MAP.pieces.channel_id] || "") !== String(ch)) return false;
-        if (st && !String(r[MAP.pieces.status] || "").toLowerCase().includes(st)) return false;
-        if (q) {
-          const blob = JSON.stringify({
-            name: r[MAP.pieces.name],
-            hook: r[MAP.pieces.hook_copy],
-            ad: r[MAP.pieces.ad_id],
-            pillar: r[MAP.pieces.pillar]
-          }).toLowerCase();
+        if (camp && String(r[MAP.pieces.campaign_id]||'') !== String(camp)) return false;
+        if (ch && String(r[MAP.pieces.channel_id]||'') !== String(ch)) return false;
+        if (fmt && String(r[MAP.pieces.format]||'') !== String(fmt)) return false;
+        if (q){
+          const blob = JSON.stringify(r).toLowerCase();
           if (!blob.includes(q)) return false;
         }
         return true;
       });
-
       renderPieces(filtered);
     }
 
     function applyLeadsFilters(){
-      const camp = el("lCamp").value;
-      const piece = el("lPiece").value;
-      const q = (el("lQ").value || "").trim().toLowerCase();
+      const camp = el('lCamp').value;
+      const piece = el('lPiece').value;
+      const q = el('lQ').value.trim().toLowerCase();
 
-      const filtered = state.leads.filter(r => {
-        if (camp && String(r[MAP.leads.campaign_id] || "") !== String(camp)) return false;
-        if (piece && String(r[MAP.leads.piece_id] || "") !== String(piece)) return false;
-        if (q) {
-          const blob = JSON.stringify({
-            name: r[MAP.leads.full_name],
-            phone: r[MAP.leads.phone],
-            email: r[MAP.leads.email],
-            source: r[MAP.leads.source_detail]
-          }).toLowerCase();
+      const filtered = state.leads.filter(r=>{
+        if (camp && String(r[MAP.leads.campaign_id]||'') !== String(camp)) return false;
+        if (piece && String(r[MAP.leads.piece_id]||'') !== String(piece)) return false;
+        if (q){
+          const blob = `${r[MAP.leads.full_name]||''} ${r[MAP.leads.phone]||''} ${r[MAP.leads.email]||''} ${r[MAP.leads.source_detail]||''}`.toLowerCase();
           if (!blob.includes(q)) return false;
         }
         return true;
       });
-
       renderLeads(filtered);
     }
 
-    function updateMetricLabelsFromSelectedPiece(){
-      const pieceId = el("mPiece").value || el("mx_piece").value;
-      const p = state.pieces.find(x => String(x[MAP.pieces.id]) === String(pieceId));
-      const ch = p ? state.channels.find(x => String(x[MAP.channels.id]) === String(p[MAP.pieces.channel_id])) : null;
-      const m1 = ch?.[MAP.channels.metric1] || "Volumen";
-      const m2 = ch?.[MAP.channels.metric2] || "Interacciones";
+    function applyMetricsFilters(){
+      // Para simplicidad: filtra en cliente (rápido con pocos registros)
+      const pid = el('mPiece').value;
+      const from = el('mFrom').value;
+      const to = el('mTo').value;
 
-      el("thM1").textContent = m1;
-      el("thM2").textContent = m2;
-      el("lblM1").textContent = m1;
-      el("lblM2").textContent = m2;
+      let rows = [...state.metrics];
+      if (pid) rows = rows.filter(r => String(r[MAP.metrics.piece_id]) === String(pid));
+      if (from) rows = rows.filter(r => String(r[MAP.metrics.date]).slice(0,10) >= from);
+      if (to) rows = rows.filter(r => String(r[MAP.metrics.date]).slice(0,10) <= to);
+
+      renderMetrics(rows);
+      updateMetricLabelsForPiece(pid);
     }
 
-    // ---------------- CRUD: CAMPAIGNS ----------------
-    window.editCamp = (id) => openCampaignModal(state.campaigns.find(x => String(x[MAP.campaigns.id]) === String(id)));
+    function updateMetricLabelsForPiece(pieceId){
+      const p = state.pieces.find(x => String(x[MAP.pieces.id]) === String(pieceId));
+      const ch = p ? state.channels.find(x => String(x[MAP.channels.id]) === String(p[MAP.pieces.channel_id])) : null;
+      const m1 = ch?.[MAP.channels.metric1] || 'Volumen';
+      const m2 = ch?.[MAP.channels.metric2] || 'Interacciones';
+      el('metricLabel1').textContent = m1;
+      el('metricLabel2').textContent = m2;
+      el('thM1').textContent = m1;
+      el('thM2').textContent = m2;
+      el('lblM1').textContent = m1;
+      el('lblM2').textContent = m2;
+    }
+
+    // === CRUD: Campaigns ===
+    function openCampaignModal(row=null){
+      el('c_id').value = row?.[MAP.campaigns.id] || '';
+      el('c_name').value = row?.[MAP.campaigns.name] || '';
+      el('c_bim').value = row?.[MAP.campaigns.bimester] || (el('c_bim').options[0]?.value || '');
+      el('c_status').value = row?.[MAP.campaigns.status] || 'planificada';
+      el('c_start').value = fmtDate(row?.[MAP.campaigns.start]) || '';
+      el('c_end').value = fmtDate(row?.[MAP.campaigns.end]) || '';
+      el('c_objective').value = row?.[MAP.campaigns.objective] || '';
+      new bootstrap.Modal(el('campaignModal')).show();
+    }
+
+    window.editCamp = (id) => {
+      const row = state.campaigns.find(x => String(x[MAP.campaigns.id]) === String(id));
+      openCampaignModal(row);
+    };
+
     window.delCamp = async (id) => {
-      if(!confirm("¿Borrar campaña?")) return;
+      if (!isAdmin()) return showAlert('warning','Permisos','Solo admin puede eliminar.');
+      if (!confirm('¿Borrar campaña?')) return;
       showLoading(true);
       try{
         const { error } = await supabase.from(MAP.campaigns.table).delete().eq(MAP.campaigns.id, id);
-        if(error) throw error;
-        showAlert("success","Listo","Campaña eliminada.");
+        if (error) throw error;
         await loadCampaigns();
-        bindSelects();
+        rebuildAllSelects();
+        showAlert('success','Eliminado','Campaña eliminada.');
       }catch(err){
-        showAlert("danger","Error", humanize(err));
+        showAlert('danger','Error', humanize(err));
       }finally{
         showLoading(false);
       }
     };
 
-    function openCampaignModal(row=null){
-      el("c_id").value = row?.[MAP.campaigns.id] || "";
-      el("c_name").value = row?.[MAP.campaigns.name] || "";
-      el("c_bim").value = row?.[MAP.campaigns.bimester] || "";
-      el("c_status").value = row?.[MAP.campaigns.status] || "";
-      el("c_start").value = row?.[MAP.campaigns.start] || "";
-      el("c_end").value = row?.[MAP.campaigns.end] || "";
-      el("c_objective").value = row?.[MAP.campaigns.objective] || "";
-      el("c_anchor_event").value = row?.[MAP.campaigns.anchor_event] || "";
-      el("c_lead_magnet").value = row?.[MAP.campaigns.lead_magnet] || "";
-      el("c_budget").value = row?.[MAP.campaigns.budget_planned] ?? 0;
-      new bootstrap.Modal(el("campaignModal")).show();
-    }
+    el('btnSaveCampaign').onclick = async () => {
+      // Validación fuerte: fechas obligatorias + orden
+      const name = el('c_name').value.trim();
+      const bim = el('c_bim').value;
+      const start = el('c_start').value;
+      const end = el('c_end').value;
 
-    el("btnSaveCampaign").addEventListener("click", async () => {
-      const name = (el("c_name").value || "").trim();
-      const bim = (el("c_bim").value || "").trim();
-      const start = el("c_start").value;
-      const end = el("c_end").value;
+      if (!name) return showAlert('warning','Falta nombre','Ingresa el nombre de la campaña.');
+      if (!bim) return showAlert('warning','Falta bimestre','Selecciona un bimestre válido (ENUM).');
+      if (!start || !end) return showAlert('warning','Fechas obligatorias','Inicio y fin son obligatorios.');
+      if (end < start) return showAlert('warning','Fechas inválidas','La fecha fin no puede ser menor que inicio.');
 
-      if(!name) return showAlert("warning","Validación","Nombre es requerido.");
-      if(!bim) return showAlert("warning","Validación","Bimestre es requerido (ENUM).");
-      if(!start || !end) return showAlert("warning","Validación","Inicio y fin son requeridos.");
+      const payload = {};
+      payload[MAP.campaigns.name] = name;
+      payload[MAP.campaigns.bimester] = bim;
+      payload[MAP.campaigns.status] = el('c_status').value.trim() || 'planificada';
+      payload[MAP.campaigns.start] = start;
+      payload[MAP.campaigns.end] = end;
+      payload[MAP.campaigns.objective] = el('c_objective').value.trim() || null;
 
-      const payload = {
-        [MAP.campaigns.name]: name,
-        [MAP.campaigns.bimester]: bim,
-        [MAP.campaigns.start]: start,
-        [MAP.campaigns.end]: end,
-        [MAP.campaigns.status]: (el("c_status").value || "").trim() || null,
-        [MAP.campaigns.objective]: (el("c_objective").value || "").trim() || null,
-        [MAP.campaigns.anchor_event]: (el("c_anchor_event").value || "").trim() || null,
-        [MAP.campaigns.lead_magnet]: (el("c_lead_magnet").value || "").trim() || null,
-        [MAP.campaigns.budget_planned]: Number(el("c_budget").value || 0)
-      };
-
-      const id = el("c_id").value;
+      const id = el('c_id').value;
       showLoading(true);
       try{
         const q = id
@@ -1325,125 +1162,80 @@
           : supabase.from(MAP.campaigns.table).insert(payload);
 
         const { error } = await q;
-        if(error) throw error;
+        if (error) throw error;
 
-        bootstrap.Modal.getInstance(el("campaignModal"))?.hide();
-        showAlert("success","Guardado","Campaña guardada.");
+        bootstrap.Modal.getInstance(el('campaignModal'))?.hide();
         await loadCampaigns();
-        bindSelects();
+        rebuildAllSelects();
+        showAlert('success','Guardado','Campaña guardada.');
       }catch(err){
-        showAlert("danger","Error", humanize(err));
+        showAlert('danger','Error', humanize(err));
       }finally{
         showLoading(false);
       }
-    });
+    };
 
-    // Seed campañas base (NO duplica por combinación bimester+start_date+end_date+name)
-    el("btnSeed").addEventListener("click", async () => {
-      if(!confirm("Creará campañas base si no existen. ¿Continuar?")) return;
+    // === CRUD: Pieces ===
+    function openPieceModal(row=null){
+      el('p_id').value = row?.[MAP.pieces.id] || '';
+      el('p_campaign').value = row?.[MAP.pieces.campaign_id] || '';
+      el('p_channel_id').value = row?.[MAP.pieces.channel_id] || '';
+      el('p_name').value = row?.[MAP.pieces.name] || '';
+      el('p_format').value = row?.[MAP.pieces.format] || '';
+      el('p_pillar').value = row?.[MAP.pieces.pillar] || '';
+      el('p_status').value = row?.[MAP.pieces.status] || 'idea';
+      el('p_hook_copy').value = row?.[MAP.pieces.hook_copy] || '';
+      el('p_visual_style').value = row?.[MAP.pieces.visual_style] || '';
+      el('p_cta_destination').value = row?.[MAP.pieces.cta_destination] || '';
+      el('p_ad_id').value = row?.[MAP.pieces.ad_id] || '';
+      new bootstrap.Modal(el('pieceModal')).show();
+    }
 
-      // OJO: bimester es ENUM → el valor debe existir en tu enum.
-      // Si tu enum NO es B1..B6, cambia estos valores a los reales.
-      const BIM = ["B1","B2","B3","B4","B5","B6"];
-
-      showLoading(true);
-      try{
-        // Crea 6 campañas genéricas (si ya existen por name+bimester+start/end iguales, no crea)
-        // Como no tenemos constraint único para ON CONFLICT, hacemos verificación previa.
-        for(const b of BIM){
-          const name = `Campaña Base ${b}`;
-          const { data: exist, error: e1 } = await supabase
-            .from(MAP.campaigns.table)
-            .select("id")
-            .eq(MAP.campaigns.name, name)
-            .eq(MAP.campaigns.bimester, b)
-            .limit(1);
-
-          if(e1) throw e1;
-          if(exist && exist.length) continue;
-
-          // Fechas placeholders (ajústalas luego)
-          const { error: e2 } = await supabase.from(MAP.campaigns.table).insert({
-            [MAP.campaigns.name]: name,
-            [MAP.campaigns.bimester]: b,
-            [MAP.campaigns.start]: "2026-01-01",
-            [MAP.campaigns.end]: "2026-01-15",
-            [MAP.campaigns.status]: "planificada"
-          });
-          if(e2) throw e2;
-        }
-
-        await loadCampaigns();
-        bindSelects();
-        showAlert("success","Listo","Seed aplicado (sin duplicar por nombre+bimestre).");
-      }catch(err){
-        showAlert("danger","Error", humanize(err));
-      }finally{
-        showLoading(false);
-      }
-    });
-
-    // ---------------- CRUD: PIECES ----------------
-    window.editPiece = async (id) => {
-      await ensureReady();
-      const row = state.pieces.find(r => String(r[MAP.pieces.id]) === String(id));
-      if(!row) return;
-
-      el("p_id").value = row[MAP.pieces.id];
-      el("p_campaign").value = row[MAP.pieces.campaign_id] || "";
-      el("p_channel").value = row[MAP.pieces.channel_id] || "";
-      el("p_name").value = row[MAP.pieces.name] || "";
-      el("p_format").value = row[MAP.pieces.format] || "";
-      el("p_pillar").value = row[MAP.pieces.pillar] || "";
-      el("p_hook_copy").value = row[MAP.pieces.hook_copy] || "";
-      el("p_visual").value = row[MAP.pieces.visual_style] || "";
-      el("p_cta").value = row[MAP.pieces.cta_destination] || "";
-      el("p_ad_id").value = row[MAP.pieces.ad_id] || "";
-      el("p_status").value = row[MAP.pieces.status] || "";
-
-      new bootstrap.Modal(el("pieceModal")).show();
+    window.editPiece = (id) => {
+      const row = state.pieces.find(x => String(x[MAP.pieces.id]) === String(id));
+      openPieceModal(row);
     };
 
     window.delPiece = async (id) => {
-      if(!confirm("¿Borrar pieza?")) return;
+      if (!isAdmin()) return showAlert('warning','Permisos','Solo admin puede eliminar.');
+      if (!confirm('¿Borrar pieza?')) return;
       showLoading(true);
       try{
         const { error } = await supabase.from(MAP.pieces.table).delete().eq(MAP.pieces.id, id);
-        if(error) throw error;
-        showAlert("success","Listo","Pieza eliminada.");
+        if (error) throw error;
         await loadPieces();
-        bindSelects();
+        rebuildAllSelects();
         applyPiecesFilters();
+        showAlert('success','Eliminado','Pieza eliminada.');
       }catch(err){
-        showAlert("danger","Error", humanize(err));
+        showAlert('danger','Error', humanize(err));
       }finally{
         showLoading(false);
       }
     };
 
-    el("btnSavePiece").addEventListener("click", async () => {
-      const name = (el("p_name").value || "").trim();
-      const channelId = el("p_channel").value;
-      const format = (el("p_format").value || "").trim();
+    el('btnSavePiece').onclick = async () => {
+      const campaign_id = el('p_campaign').value || null;
+      const channel_id = el('p_channel_id').value ? Number(el('p_channel_id').value) : null;
+      const name = el('p_name').value.trim();
+      const format = el('p_format').value;
 
-      if(!name) return showAlert("warning","Validación","Nombre es requerido.");
-      if(!channelId) return showAlert("warning","Validación","Canal es requerido.");
-      if(!format) return showAlert("warning","Validación","Formato (ENUM) es requerido.");
+      if (!name) return showAlert('warning','Falta nombre','La pieza requiere nombre.');
+      if (!format) return showAlert('warning','Falta formato','Selecciona un formato válido (ENUM).');
 
-      const payload = {
-        [MAP.pieces.campaign_id]: el("p_campaign").value || null,
-        [MAP.pieces.channel_id]: Number(channelId),
-        [MAP.pieces.name]: name,
-        [MAP.pieces.format]: format,
-        [MAP.pieces.pillar]: (el("p_pillar").value || "").trim() || null,
-        [MAP.pieces.hook_copy]: (el("p_hook_copy").value || "").trim() || null,
-        [MAP.pieces.visual_style]: (el("p_visual").value || "").trim() || null,
-        [MAP.pieces.cta_destination]: (el("p_cta").value || "").trim() || null,
-        [MAP.pieces.ad_id]: (el("p_ad_id").value || "").trim() || null,
-        [MAP.pieces.status]: (el("p_status").value || "").trim() || null
-      };
+      const payload = {};
+      payload[MAP.pieces.campaign_id] = campaign_id;
+      payload[MAP.pieces.channel_id] = channel_id;
+      payload[MAP.pieces.name] = name;
+      payload[MAP.pieces.format] = format;
+      payload[MAP.pieces.pillar] = el('p_pillar').value.trim() || null;
+      payload[MAP.pieces.hook_copy] = el('p_hook_copy').value.trim() || null;
+      payload[MAP.pieces.visual_style] = el('p_visual_style').value.trim() || null;
+      payload[MAP.pieces.cta_destination] = el('p_cta_destination').value.trim() || null;
+      payload[MAP.pieces.ad_id] = el('p_ad_id').value.trim() || null;
+      payload[MAP.pieces.status] = el('p_status').value.trim() || null;
 
-      const id = el("p_id").value;
+      const id = el('p_id').value;
       showLoading(true);
       try{
         const q = id
@@ -1451,177 +1243,125 @@
           : supabase.from(MAP.pieces.table).insert(payload);
 
         const { error } = await q;
-        if(error) throw error;
+        if (error) throw error;
 
-        bootstrap.Modal.getInstance(el("pieceModal"))?.hide();
-        showAlert("success","Guardado","Pieza guardada.");
+        bootstrap.Modal.getInstance(el('pieceModal'))?.hide();
         await loadPieces();
-        bindSelects();
+        rebuildAllSelects();
         applyPiecesFilters();
+        showAlert('success','Guardado','Pieza guardada.');
       }catch(err){
-        showAlert("danger","Error", humanize(err));
+        showAlert('danger','Error', humanize(err));
       }finally{
         showLoading(false);
       }
-    });
-
-    // ---------------- CRUD: METRICS ----------------
-    window.editMetric = async (id) => {
-      await ensureReady();
-      const r = state.metrics.find(x => String(x[MAP.metrics.id]) === String(id));
-      if(!r) return;
-
-      el("mx_id").value = r[MAP.metrics.id];
-      el("mx_piece").value = r[MAP.metrics.piece_id];
-      el("mx_date").value = r[MAP.metrics.date];
-      el("mx_volume").value = r[MAP.metrics.volume] ?? 0;
-      el("mx_interactions").value = r[MAP.metrics.interactions] ?? 0;
-      el("mx_spend").value = r[MAP.metrics.spend] ?? 0;
-
-      updateMetricLabelsFromSelectedPiece();
-      new bootstrap.Modal(el("metricModal")).show();
     };
 
-    el("btnSaveMetric").addEventListener("click", async () => {
-      const pieceId = el("mx_piece").value;
-      const date = el("mx_date").value;
-      if(!pieceId) return showAlert("warning","Validación","Selecciona una pieza.");
-      if(!date) return showAlert("warning","Validación","Fecha es requerida.");
+    // === CRUD: Metrics (unique piece_id+date) ===
+    window.editMetric = (id) => {
+      const r = state.metrics.find(x => String(x[MAP.metrics.id]) === String(id));
+      el('mx_id').value = r?.[MAP.metrics.id] || '';
+      el('mx_piece').value = r?.[MAP.metrics.piece_id] || '';
+      el('mx_date').value = fmtDate(r?.[MAP.metrics.date]) || '';
+      el('mx_volume').value = r?.[MAP.metrics.volume] ?? 0;
+      el('mx_interactions').value = r?.[MAP.metrics.interactions] ?? 0;
+      el('mx_spend').value = r?.[MAP.metrics.spend] ?? 0;
+      updateMetricLabelsForPiece(el('mx_piece').value);
+      new bootstrap.Modal(el('metricModal')).show();
+    };
 
-      const payload = {
-        [MAP.metrics.piece_id]: pieceId,
-        [MAP.metrics.date]: date,
-        [MAP.metrics.volume]: Number(el("mx_volume").value || 0),
-        [MAP.metrics.interactions]: Number(el("mx_interactions").value || 0),
-        [MAP.metrics.spend]: Number(el("mx_spend").value || 0)
-      };
+    el('btnSaveMetric').onclick = async () => {
+      const piece_id = el('mx_piece').value;
+      const date = el('mx_date').value;
+      if (!piece_id) return showAlert('warning','Falta pieza','Selecciona la pieza.');
+      if (!date) return showAlert('warning','Falta fecha','Selecciona la fecha.');
 
-      const id = el("mx_id").value;
+      const payload = {};
+      payload[MAP.metrics.piece_id] = piece_id;
+      payload[MAP.metrics.date] = date;
+      payload[MAP.metrics.volume] = Number(el('mx_volume').value || 0);
+      payload[MAP.metrics.interactions] = Number(el('mx_interactions').value || 0);
+      payload[MAP.metrics.spend] = Number(el('mx_spend').value || 0);
+
+      const id = el('mx_id').value;
       showLoading(true);
       try{
-        let q;
-        if(id){
-          q = supabase.from(MAP.metrics.table).update(payload).eq(MAP.metrics.id, id);
-        }else{
-          // UNIQUE (piece_id, date) existe → upsert es lo correcto
-          q = supabase.from(MAP.metrics.table).upsert(payload, { onConflict: `${MAP.metrics.piece_id},${MAP.metrics.date}` });
-        }
+        const q = id
+          ? supabase.from(MAP.metrics.table).update(payload).eq(MAP.metrics.id, id)
+          : supabase.from(MAP.metrics.table).upsert(payload, { onConflict: `${MAP.metrics.piece_id},${MAP.metrics.date}` });
+
         const { error } = await q;
-        if(error) throw error;
+        if (error) throw error;
 
-        bootstrap.Modal.getInstance(el("metricModal"))?.hide();
-        showAlert("success","Guardado","Métrica guardada.");
+        bootstrap.Modal.getInstance(el('metricModal'))?.hide();
         await loadMetrics();
+        applyMetricsFilters();
+        showAlert('success','Guardado','Métrica guardada.');
       }catch(err){
-        showAlert("danger","Error", humanize(err));
+        showAlert('danger','Error', humanize(err));
       }finally{
         showLoading(false);
       }
-    });
+    };
 
-    // Reload metrics con filtros
-    el("btnReloadMetrics").addEventListener("click", async () => {
-      showLoading(true);
-      try{
-        let q = supabase.from(MAP.metrics.table).select("*");
-
-        const pieceId = el("mPiece").value;
-        const from = el("mFrom").value;
-        const to = el("mTo").value;
-
-        if(pieceId) q = q.eq(MAP.metrics.piece_id, pieceId);
-        if(from) q = q.gte(MAP.metrics.date, from);
-        if(to) q = q.lte(MAP.metrics.date, to);
-
-        const { data, error } = await q.order(MAP.metrics.date, { ascending:false }).limit(500);
-        if(error) throw error;
-
-        state.metrics = data || [];
-        renderMetrics(state.metrics);
-        updateMetricLabelsFromSelectedPiece();
-      }catch(err){
-        showAlert("danger","Error", humanize(err));
-      }finally{
-        showLoading(false);
-      }
-    });
-
-    // ---------------- CRUD: LEADS ----------------
-    window.editLead = async (id) => {
-      await ensureReady();
+    // === CRUD: Leads ===
+    window.editLead = (id) => {
       const r = state.leads.find(x => String(x[MAP.leads.id]) === String(id));
-      if(!r) return;
-
-      el("ld_id").value = r[MAP.leads.id];
-      el("ld_full_name").value = r[MAP.leads.full_name] || "";
-      el("ld_phone").value = r[MAP.leads.phone] || "";
-      el("ld_email").value = r[MAP.leads.email] || "";
-      el("ld_source_detail").value = r[MAP.leads.source_detail] || "";
-      el("ld_campaign").value = r[MAP.leads.campaign_id] || "";
-      el("ld_piece").value = r[MAP.leads.piece_id] || "";
-      el("ld_triage_status").value = r[MAP.leads.triage_status] || "";
-      el("ld_clinical_outcome").value = r[MAP.leads.clinical_outcome] || "";
-      el("ld_triage_notes").value = r[MAP.leads.triage_notes] || "";
-      el("ld_appointment_local").value = isoToLocalInput(r[MAP.leads.appointment_date]);
-      el("ld_ticket_value").value = r[MAP.leads.ticket_value] ?? 0;
-      el("ld_is_retained").checked = !!r[MAP.leads.is_retained];
-
-      new bootstrap.Modal(el("leadModal")).show();
+      el('ld_id').value = r?.[MAP.leads.id] || '';
+      el('ld_full_name').value = r?.[MAP.leads.full_name] || '';
+      el('ld_phone').value = r?.[MAP.leads.phone] || '';
+      el('ld_email').value = r?.[MAP.leads.email] || '';
+      el('ld_source_detail').value = r?.[MAP.leads.source_detail] || '';
+      el('ld_campaign').value = r?.[MAP.leads.campaign_id] || '';
+      el('ld_piece').value = r?.[MAP.leads.piece_id] || '';
+      el('ld_triage_status').value = r?.[MAP.leads.triage_status] || (el('ld_triage_status').options[0]?.value || '');
+      el('ld_clinical_outcome').value = r?.[MAP.leads.clinical_outcome] || (el('ld_clinical_outcome').options[0]?.value || '');
+      el('ld_triage_notes').value = r?.[MAP.leads.triage_notes] || '';
+      const ap = r?.[MAP.leads.appointment_date];
+      el('ld_appointment_date').value = ap ? new Date(ap).toISOString().slice(0,16) : '';
+      el('ld_ticket_value').value = r?.[MAP.leads.ticket_value] ?? 0;
+      el('ld_is_retained').checked = !!r?.[MAP.leads.is_retained];
+      new bootstrap.Modal(el('leadModal')).show();
     };
 
     window.delLead = async (id) => {
-      if(!confirm("¿Borrar lead?")) return;
+      if (!isAdmin()) return showAlert('warning','Permisos','Solo admin puede eliminar.');
+      if (!confirm('¿Borrar lead?')) return;
       showLoading(true);
       try{
         const { error } = await supabase.from(MAP.leads.table).delete().eq(MAP.leads.id, id);
-        if(error) throw error;
-        showAlert("success","Listo","Lead eliminado.");
+        if (error) throw error;
         await loadLeads();
         applyLeadsFilters();
+        showAlert('success','Eliminado','Lead eliminado.');
       }catch(err){
-        showAlert("danger","Error", humanize(err));
+        showAlert('danger','Error', humanize(err));
       }finally{
         showLoading(false);
       }
     };
 
-    function isValidEmail(email){
-      if(!email) return true;
-      return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email.trim());
-    }
+    el('btnSaveLead').onclick = async () => {
+      const full_name = el('ld_full_name').value.trim();
+      if (!full_name) return showAlert('warning','Falta nombre','El lead requiere nombre.');
 
-    el("btnSaveLead").addEventListener("click", async () => {
-      const full = (el("ld_full_name").value || "").trim();
-      const email = (el("ld_email").value || "").trim();
-      const phone = (el("ld_phone").value || "").trim();
-      const apLocal = el("ld_appointment_local").value;
+      const payload = {};
+      payload[MAP.leads.full_name] = full_name;
+      payload[MAP.leads.phone] = el('ld_phone').value.trim() || null;
+      payload[MAP.leads.email] = el('ld_email').value.trim() || null;
+      payload[MAP.leads.source_detail] = el('ld_source_detail').value.trim() || null;
+      payload[MAP.leads.campaign_id] = el('ld_campaign').value || null;
+      payload[MAP.leads.piece_id] = el('ld_piece').value || null;
+      payload[MAP.leads.triage_status] = el('ld_triage_status').value || null;
+      payload[MAP.leads.clinical_outcome] = el('ld_clinical_outcome').value || null;
+      payload[MAP.leads.triage_notes] = el('ld_triage_notes').value.trim() || null;
+      payload[MAP.leads.ticket_value] = Number(el('ld_ticket_value').value || 0);
+      payload[MAP.leads.is_retained] = !!el('ld_is_retained').checked;
 
-      if(!full) return showAlert("warning","Validación","Nombre completo es requerido.");
-      if(email && !isValidEmail(email)) return showAlert("warning","Validación","Email con formato inválido.");
+      const ap = el('ld_appointment_date').value;
+      payload[MAP.leads.appointment_date] = ap ? new Date(ap).toISOString() : null;
 
-      // Si se llena cita, exigir que sea futura
-      if(apLocal){
-        const dt = new Date(apLocal);
-        if(Number.isNaN(dt.getTime())) return showAlert("warning","Validación","Fecha/hora de cita inválida.");
-        if(dt.getTime() < Date.now() - 60*1000) return showAlert("warning","Validación","La cita debe ser futura.");
-      }
-
-      const payload = {
-        [MAP.leads.full_name]: full,
-        [MAP.leads.phone]: phone || null,
-        [MAP.leads.email]: email || null,
-        [MAP.leads.source_detail]: (el("ld_source_detail").value || "").trim() || null,
-        [MAP.leads.campaign_id]: el("ld_campaign").value || null,
-        [MAP.leads.piece_id]: el("ld_piece").value || null,
-        [MAP.leads.triage_status]: (el("ld_triage_status").value || "").trim() || null,   // ENUM -> debe coincidir
-        [MAP.leads.triage_notes]: (el("ld_triage_notes").value || "").trim() || null,
-        [MAP.leads.clinical_outcome]: (el("ld_clinical_outcome").value || "").trim() || null, // ENUM -> debe coincidir
-        [MAP.leads.appointment_date]: localDateTimeToISO(apLocal),
-        [MAP.leads.ticket_value]: Number(el("ld_ticket_value").value || 0),
-        [MAP.leads.is_retained]: !!el("ld_is_retained").checked
-      };
-
-      const id = el("ld_id").value;
+      const id = el('ld_id').value;
       showLoading(true);
       try{
         const q = id
@@ -1629,131 +1369,89 @@
           : supabase.from(MAP.leads.table).insert(payload);
 
         const { error } = await q;
-        if(error) throw error;
+        if (error) throw error;
 
-        bootstrap.Modal.getInstance(el("leadModal"))?.hide();
-        showAlert("success","Guardado","Lead guardado.");
+        bootstrap.Modal.getInstance(el('leadModal'))?.hide();
         await loadLeads();
         applyLeadsFilters();
+        showAlert('success','Guardado','Lead guardado.');
       }catch(err){
-        showAlert("danger","Error", humanize(err));
+        showAlert('danger','Error', humanize(err));
       }finally{
         showLoading(false);
       }
-    });
+    };
 
-    // ---------------- UI BINDINGS ----------------
-    function bindUI(){
-      el("btnNewCampaign").addEventListener("click", async () => {
-        await ensureReady();
-        // Limpia
-        el("c_id").value = "";
-        el("c_name").value = "";
-        el("c_bim").value = "";
-        el("c_status").value = "";
-        el("c_start").value = "";
-        el("c_end").value = "";
-        el("c_objective").value = "";
-        el("c_anchor_event").value = "";
-        el("c_lead_magnet").value = "";
-        el("c_budget").value = "0";
-        new bootstrap.Modal(el("campaignModal")).show();
-      });
+    // === Seed ===
+    el('btnSeed').onclick = async () => {
+      if(!confirm('Seed creará campañas base. ¿Continuar?')) return;
+      showLoading(true);
+      try{
+        // Si ya hay campañas, no duplica (UX)
+        if (state.campaigns.length > 0){
+          showAlert('warning','Seed','Ya existen campañas. No se creó nada.');
+          return;
+        }
+        // OJO: bimestre debe coincidir con tu ENUM; aquí dejamos un valor seguro: el primero del select
+        const b = el('c_bim').options[0]?.value || 'b1';
+        const today = new Date();
+        const y = today.getFullYear();
+        for(let i=1;i<=6;i++){
+          // Fechas obligatorias: ejemplo por bimestre (no perfecto, pero válido)
+          const start = new Date(y, (i-1)*2, 1);
+          const end = new Date(y, (i*2), 0);
+          const payload = {
+            [MAP.campaigns.name]: `Campaña Base ${i}`,
+            [MAP.campaigns.bimester]: b,  // cámbialo si tu enum no acepta este valor
+            [MAP.campaigns.start]: start.toISOString().slice(0,10),
+            [MAP.campaigns.end]: end.toISOString().slice(0,10),
+            [MAP.campaigns.status]: 'planificada'
+          };
+          const { error } = await supabase.from(MAP.campaigns.table).insert(payload);
+          if (error) throw error;
+        }
+        await loadCampaigns();
+        rebuildAllSelects();
+        showAlert('success','Seed','Campañas base creadas.');
+      }catch(err){
+        showAlert('danger','Error', humanize(err));
+      }finally{
+        showLoading(false);
+      }
+    };
 
-      el("btnNewPiece").addEventListener("click", async () => {
-        await ensureReady();
-        el("p_id").value = "";
-        el("p_campaign").value = "";
-        el("p_channel").value = "";
-        el("p_name").value = "";
-        el("p_format").value = "";
-        el("p_pillar").value = "";
-        el("p_hook_copy").value = "";
-        el("p_visual").value = "";
-        el("p_cta").value = "";
-        el("p_ad_id").value = "";
-        el("p_status").value = "idea";
-        new bootstrap.Modal(el("pieceModal")).show();
-      });
+    // === Buttons & filters ===
+    function bindFilters(){
+      el('btnNewCampaign').onclick = () => openCampaignModal();
+      el('btnNewPiece').onclick = () => openPieceModal();
+      el('btnNewMetric').onclick = () => { el('mx_id').value=''; el('mx_date').value=''; el('mx_volume').value=0; el('mx_interactions').value=0; el('mx_spend').value=0; new bootstrap.Modal(el('metricModal')).show(); };
+      el('btnNewLead').onclick = () => { el('ld_id').value=''; el('ld_full_name').value=''; el('ld_phone').value=''; el('ld_email').value=''; el('ld_source_detail').value=''; el('ld_triage_notes').value=''; el('ld_ticket_value').value=0; el('ld_is_retained').checked=false; new bootstrap.Modal(el('leadModal')).show(); };
 
-      el("btnNewMetric").addEventListener("click", async () => {
-        await ensureReady();
-        el("mx_id").value = "";
-        el("mx_piece").value = "";
-        el("mx_date").value = "";
-        el("mx_volume").value = 0;
-        el("mx_interactions").value = 0;
-        el("mx_spend").value = 0;
-        updateMetricLabelsFromSelectedPiece();
-        new bootstrap.Modal(el("metricModal")).show();
-      });
+      // Pieces filters
+      ['fCamp','fChannel','fFormat'].forEach(id => el(id)?.addEventListener('change', applyPiecesFilters));
+      el('fQ')?.addEventListener('input', applyPiecesFilters);
 
-      el("btnNewLead").addEventListener("click", async () => {
-        await ensureReady();
-        el("ld_id").value = "";
-        el("ld_full_name").value = "";
-        el("ld_phone").value = "";
-        el("ld_email").value = "";
-        el("ld_source_detail").value = "";
-        el("ld_campaign").value = "";
-        el("ld_piece").value = "";
-        el("ld_triage_status").value = "nuevo";
-        el("ld_clinical_outcome").value = "pendiente";
-        el("ld_triage_notes").value = "";
-        el("ld_appointment_local").value = "";
-        el("ld_ticket_value").value = 0;
-        el("ld_is_retained").checked = false;
-        new bootstrap.Modal(el("leadModal")).show();
-      });
+      // Leads filters
+      ['lCamp','lPiece'].forEach(id => el(id)?.addEventListener('change', applyLeadsFilters));
+      el('lQ')?.addEventListener('input', applyLeadsFilters);
 
-      el("btnReloadCampaigns").addEventListener("click", async () => {
-        showLoading(true);
-        try{ await loadCampaigns(); bindSelects(); }
-        catch(err){ showAlert("danger","Error", humanize(err)); }
-        finally{ showLoading(false); }
-      });
+      // Metrics filters
+      ['mPiece','mFrom','mTo'].forEach(id => el(id)?.addEventListener('change', applyMetricsFilters));
 
-      el("btnReloadPieces").addEventListener("click", async () => {
-        showLoading(true);
-        try{ await loadPieces(); bindSelects(); applyPiecesFilters(); }
-        catch(err){ showAlert("danger","Error", humanize(err)); }
-        finally{ showLoading(false); }
-      });
+      // Reload buttons (NO se quedan pegados: siempre try/finally)
+      el('btnReloadCampaigns').onclick = async ()=>{ showLoading(true); try{ await loadCampaigns(); rebuildAllSelects(); }catch(e){ showAlert('danger','Error',humanize(e)); } finally{ showLoading(false); } };
+      el('btnReloadPieces').onclick = async ()=>{ showLoading(true); try{ await loadPieces(); rebuildAllSelects(); applyPiecesFilters(); }catch(e){ showAlert('danger','Error',humanize(e)); } finally{ showLoading(false); } };
+      el('btnReloadMetrics').onclick = async ()=>{ showLoading(true); try{ await loadMetrics(); applyMetricsFilters(); }catch(e){ showAlert('danger','Error',humanize(e)); } finally{ showLoading(false); } };
+      el('btnReloadLeads').onclick = async ()=>{ showLoading(true); try{ await loadLeads(); applyLeadsFilters(); }catch(e){ showAlert('danger','Error',humanize(e)); } finally{ showLoading(false); } };
 
-      el("btnReloadLeads").addEventListener("click", async () => {
-        showLoading(true);
-        try{ await loadLeads(); applyLeadsFilters(); }
-        catch(err){ showAlert("danger","Error", humanize(err)); }
-        finally{ showLoading(false); }
-      });
-
-      // Filters
-      ["fCamp","fChannel","fPieceStatus"].forEach(id => el(id).addEventListener("change", applyPiecesFilters));
-      el("fQ").addEventListener("input", applyPiecesFilters);
-
-      ["lCamp","lPiece"].forEach(id => el(id).addEventListener("change", applyLeadsFilters));
-      el("lQ").addEventListener("input", applyLeadsFilters);
-
-      // Metric labels
-      el("mPiece").addEventListener("change", () => {
-        updateMetricLabelsFromSelectedPiece();
-      });
-      el("mx_piece").addEventListener("change", () => {
-        updateMetricLabelsFromSelectedPiece();
-      });
-
-      // Close modals: avoid stuck UI
-      ["campaignModal","pieceModal","metricModal","leadModal"].forEach(mid => {
-        el(mid).addEventListener("hidden.bs.modal", () => {
-          // noop — pero evita que queden overlays por errores raros
-          document.body.classList.remove("modal-open");
-          document.querySelectorAll(".modal-backdrop").forEach(x => x.remove());
-        });
-      });
+      // metric labels react
+      el('mx_piece')?.addEventListener('change', ()=> updateMetricLabelsForPiece(el('mx_piece').value));
     }
 
-    // ---------------- BOOT ----------------
-    bindUI();
+    // === expose for inline buttons ===
+    window.openCampaignModal = openCampaignModal;
+    window.openPieceModal = openPieceModal;
+
     init();
   </script>
 </body>
